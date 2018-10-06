@@ -16,24 +16,32 @@ public:
     //constructors
     CTable();
     CTable(string newName, int tableLength);
-
     CTable(const CTable& copyOther);                //copy constructor
-    CTable& operator=(const CTable& copyOther);     //copy assignment
-
     //__________________________________________________________________
 
     //destructor
     ~CTable();
     //__________________________________________________________________
 
+    //Methods
+    CTable& operator=(const CTable& copyOther);     //copy assignment
     void setName(string newName);
     int& operator[](int index);
     int getSize() const;
+    void setSize(int newSize);
+    bool setVaule(int value, int index);
+    int getValue(int index, bool* opSuccess);
+    CTable clone();
+
+
+    //___________________________________________________________________
 
 private:
+    //methods
+    bool indexCheck(int index);
     //constants
-    const int DEFAULT_SIZE = 10;
-    const string DEFAULT_NAME = "Table1";
+    const int DEFAULT_SIZE;
+    const string DEFAULT_NAME;
 
     //class fields
     int* elem;
