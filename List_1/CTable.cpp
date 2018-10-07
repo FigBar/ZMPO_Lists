@@ -4,6 +4,7 @@
 
 #include "CTable.h"
 #include "iostream"
+#include "sstream"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ CTable::CTable() : DEFAULT_SIZE(10), DEFAULT_NAME("Table1"){
     elem = new int[DEFAULT_SIZE];
     name = DEFAULT_NAME;
     size = DEFAULT_SIZE;
+    initializeWithZeros(0, size);
 
     cout <<"bezp: " << name << "\n";
 }
@@ -21,6 +23,7 @@ CTable::CTable(string newName, int tableLength) : DEFAULT_SIZE(10), DEFAULT_NAME
     elem = new int[tableLength];
     name = newName;
     size = tableLength;
+    initializeWithZeros(0, size);
 
     cout << "parametr: " << name << "\n";
 
@@ -111,8 +114,38 @@ CTable CTable::clone() {
     return CTable(*this);
 }
 
+string CTable::toString() {
+    stringstream objectOutput;
+    objectOutput << "[ ";
+    objectOutput << name;
+    objectOutput << " len: " << size;
+    objectOutput << " values: ";
+
+    for (int i = 0; i < size ; ++i) {
+        objectOutput << elem[i];
+
+        if(i != size -1){
+            objectOutput<< ", ";
+        }
+    }
+    objectOutput << " ]";
+
+    return objectOutput.str();
+}
+
 bool CTable::indexCheck(int index) {
     return (index >=0 && index < size);
+}
+
+bool CTable::initializeWithZeros(int start, int end) {
+
+    if(start >= 0 && start < end){
+        for (int i = start; i < end ; ++i) {
+            elem[i] = 0;
+        }
+        return true;
+    } else
+        return false;
 }
 
 

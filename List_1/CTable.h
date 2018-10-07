@@ -32,6 +32,7 @@ public:
     bool setVaule(int value, int index);
     int getValue(int index, bool* opSuccess);
     CTable clone();
+    string toString();
 
 
     //___________________________________________________________________
@@ -39,6 +40,7 @@ public:
 private:
     //methods
     bool indexCheck(int index);
+    bool initializeWithZeros(int start, int end);
     //constants
     const int DEFAULT_SIZE;
     const string DEFAULT_NAME;
