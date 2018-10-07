@@ -13,43 +13,57 @@ using namespace std;
 class CTable {
 
 public:
-    //constructors
+    //Constructors
     CTable();
+
     CTable(string newName, int tableLength);
-    CTable(const CTable& copyOther);                //copy constructor
+
+    CTable(const CTable &copyOther);                //copy constructor
     //__________________________________________________________________
 
-    //destructor
+    //Destructor
     ~CTable();
     //__________________________________________________________________
 
+    //Operators
+    CTable &operator=(const CTable &copyOther);     //copy assignment
+
+    int &operator[](int index);
+
     //Methods
-    CTable& operator=(const CTable& copyOther);     //copy assignment
     void setName(string newName);
-    int& operator[](int index);
-    int getSize() const;
-    void setSize(int newSize);
+
+    string getName();
+
+    int getSize();
+
+    bool setSize(int newSize);
+
     bool setVaule(int value, int index);
-    int getValue(int index, bool* opSuccess);
-    CTable clone();
+
+    int getValue(int index, bool *opSuccess);
+
+    CTable *clone();
+
     string toString();
 
 
     //___________________________________________________________________
 
 private:
-    //methods
+    //Methods
     bool indexCheck(int index);
+
     bool initializeWithZeros(int start, int end);
-    //constants
+
+    //Constants
     const int DEFAULT_SIZE;
     const string DEFAULT_NAME;
 
-    //class fields
-    int* elem;
+    //Class fields
+    int *elem;
     int size;
     string name;
-
 
 
 };
