@@ -1,3 +1,0 @@
-/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir

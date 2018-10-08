@@ -7,6 +7,7 @@
 
 #include "vector"
 #include "CTable.h"
+
 using namespace std;
 
 class CRun {
@@ -14,18 +15,24 @@ class CRun {
 public:
 
     CRun();
+
     ~CRun();
 
     void start();
+
     void addParametrizedSingleCTable(string givenName, int givenLength);
+
     void addSingleCTable();
-    char yesOrNo();
+
+    bool yesOrNo();
+
     string provideString();
+
     int provideInt();
 
 private:
-    vector<CTable*> tableVector;
-    bool* success;
+    vector<CTable *> tableVector;
+    //bool *success;
 };
 
 

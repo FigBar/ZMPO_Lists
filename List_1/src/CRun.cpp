@@ -6,10 +6,11 @@
 #include "CTable.h"
 #include <vector>
 #include <iostream>
+#include <limits>
 
 CRun::CRun() {
 
-    *success = true;
+    //*success = true;
 
 }
 
@@ -19,6 +20,8 @@ CRun::~CRun() {
         delete tableVector[i];
     }
     tableVector.clear();
+
+    //delete success;
 }
 
 void CRun::start() {
@@ -36,15 +39,16 @@ void CRun::start() {
                   << "6. Clone a specified CTable object and append it to the list" << "\n"
                   << "7. Get information about specified CTable object" << "\n"
                   << "8. Insert a number to a specified CTable" << "\n"
-                  << "9. End program" << "\n";
+                  << "9. Print all CTable objects" << "\n"
+                  << "10. End program" << "\n\n";
 
-        bool opNumber;
+
         std::cout << "Please provide the number of operation you want to be carried out." << "\n";
-        std::cin >> opNumber;
+        int opNumber = provideInt();
 
         switch (opNumber) {
             case 0:
-                if (yesOrNo() == 'Y' || yesOrNo() == 'y') {
+                if (yesOrNo()) {
                     cout << "Now let's give your CTable a name." << "\n";
                     string givenName = provideString();
 
@@ -56,31 +60,50 @@ void CRun::start() {
                     addSingleCTable();
                 }
                 break;
+
             case 1:
                 int amount;
-                cout << "How many CTable object do you want to create" << "\n";
+                cout << "How many CTable object do you want to create?" << "\n";
                 cin >> amount;
 
-                if (yesOrNo() == 'Y' || yesOrNo() == 'y') {
-                    cout << "Now let's give your CTable a name." << "\n";
-                    string givenName = provideString();
+                if (yesOrNo()) {
+                    for (int i = 0; i < amount; ++i) {
+                        cout << "Now let's give your CTable a name." << "\n";
+                        string givenName = provideString();
 
-                    cout << "Ok, what should be its length?" << "\n";
-                    int givenInt = provideInt();
+                        cout << "Ok, what should be its length?" << "\n";
+                        int givenInt = provideInt();
 
-                    for (int i = 0; i < amount - 1; ++i) {
                         addParametrizedSingleCTable(givenName, givenInt);
                     }
                 } else {
-                    for (int i = 0; i < amount - 1; ++i) {
+                    for (int i = 0; i < amount; ++i) {
                         addSingleCTable();
                     }
                 }
                 break;
+
+            case 2:
+                for (int i = 0; i < tableVector.size(); ++i) {
+                    delete tableVector[i];
+                }
+                tableVector.clear();
+                break;
+
             case 9:
+
+                for(CTable* table : tableVector){
+                    cout << table->toString() << endl;
+                }
+                break;
+
+            case 10:
                 toContinue = false;
+                break;
+
             default:
                 cout << "Try again :/" << "\n\n";
+                break;
 
 
         }
@@ -114,17 +137,23 @@ string CRun::provideString() {
 int CRun::provideInt() {
 
     int givenInt;
-    cout << "Please provide an integer value." << "\n";
-    cin >> givenInt;
 
+    cout << "Please provide an integer value." << "\n";
+
+    while (!(cin >> givenInt)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Try again, you provided wrong data." << endl;
+    }
     return givenInt;
 }
 
-char CRun::yesOrNo() {
+bool CRun::yesOrNo() {
 
     string choice;
     cout << "Do you want to create a parametrized object? (Yes/No)" << "\n";
     cin >> choice;
 
-    return choice.at(0);
+    return (choice.at(0) == 'Y' || choice.at(0) == 'y');
+
 }

@@ -1,4 +1,0 @@
-/home/fig_bar98/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/182.4505.18/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1"
--- Configuring done
--- Generating done
--- Build files have been written to: /home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug
