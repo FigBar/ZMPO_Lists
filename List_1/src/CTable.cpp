@@ -40,7 +40,7 @@ CTable::CTable(const CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1
     name = copyOther.name + "_copy";
 
     for (int i = 0; i != size; ++i) {
-        elem[i] = copyOther.elem[i];
+        *(elem + i) = *(copyOther.elem + i);
     }
 
     cout << "kopiuj: " << name << "\n";
@@ -65,7 +65,7 @@ CTable &CTable::operator=(const CTable &copyOther)
     int *p = new int[copyOther.size];
 
     for (int i = 0; i != copyOther.size; ++i) {
-        p[i] = copyOther.elem[i];
+        *(p + i) = *(copyOther.elem + i);
     }
 
     delete[] elem;
@@ -99,8 +99,10 @@ bool CTable::setSize(int newSize)
     if (0 <= newSize) {
         int *p = new int[newSize];
 
-        for (int i = 0; i != this->size; ++i) {
-            p[i] = this->elem[i];
+        int overflowAwareSize = (newSize < size) ? newSize : size;
+
+        for (int i = 0; i != overflowAwareSize; ++i) {
+            *(p + i) = *(this->elem + i);
         }
 
         delete[] elem;

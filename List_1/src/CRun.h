@@ -14,11 +14,18 @@ class CRun {
 public:
 
     CRun();
+    ~CRun();
 
-   void addToVector(int numberOfElements);
+    void start();
+    void addParametrizedSingleCTable(string givenName, int givenLength);
+    void addSingleCTable();
+    char yesOrNo();
+    string provideString();
+    int provideInt();
 
 private:
     vector<CTable*> tableVector;
+    bool* success;
 };
 
 
