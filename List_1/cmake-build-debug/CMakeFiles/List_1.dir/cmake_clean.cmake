@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/List_1.dir/main.cpp.o"
-  "CMakeFiles/List_1.dir/CTable.cpp.o"
+  "CMakeFiles/List_1.dir/src/main.cpp.o"
+  "CMakeFiles/List_1.dir/src/CTable.cpp.o"
+  "CMakeFiles/List_1.dir/src/CRun.cpp.o"
   "List_1.pdb"
   "List_1"
 )

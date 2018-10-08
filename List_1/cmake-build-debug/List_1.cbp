@@ -84,13 +84,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/CTable.cpp">
+		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CRun.cpp">
 			<Option target="List_1"/>
 		</Unit>
-		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/CTable.h">
+		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CRun.h">
 			<Option target="List_1"/>
 		</Unit>
-		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/main.cpp">
+		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CTable.cpp">
+			<Option target="List_1"/>
+		</Unit>
+		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CTable.h">
+			<Option target="List_1"/>
+		</Unit>
+		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/main.cpp">
 			<Option target="List_1"/>
 		</Unit>
 		<Unit filename="/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/CMakeLists.txt">

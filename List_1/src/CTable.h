@@ -7,7 +7,7 @@
 #ifndef LIST_1_CTABLE_H
 #define LIST_1_CTABLE_H
 
-#endif //LIST_1_CTABLE_H
+
 using namespace std;
 
 class CTable {
@@ -67,3 +67,5 @@ private:
 
 
 };
+
+#endif //LIST_1_CTABLE_H

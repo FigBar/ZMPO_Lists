@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/CTable.cpp" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir/CTable.cpp.o"
-  "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/main.cpp" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir/main.cpp.o"
+  "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CRun.cpp" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir/src/CRun.cpp.o"
+  "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/CTable.cpp" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir/src/CTable.cpp.o"
+  "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/src/main.cpp" "/home/fig_bar98/Documents/III Semester/ZMPO/ZMPO_Lists/List_1/cmake-build-debug/CMakeFiles/List_1.dir/src/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

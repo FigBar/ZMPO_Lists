@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/List_1.dir/main.cpp.o CMakeFiles/List_1.dir/CTable.cpp.o  -o List_1 
+/usr/bin/c++  -g   CMakeFiles/List_1.dir/src/main.cpp.o CMakeFiles/List_1.dir/src/CTable.cpp.o CMakeFiles/List_1.dir/src/CRun.cpp.o  -o List_1 
