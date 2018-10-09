@@ -39,7 +39,7 @@ public:
 
     bool setSize(int newSize);
 
-    bool setVaule(int value, int index);
+    bool setVaule(int index, int value);
 
     int getValue(int index, bool *opSuccess);
 

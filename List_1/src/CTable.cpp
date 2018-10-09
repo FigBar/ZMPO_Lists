@@ -121,7 +121,7 @@ int CTable::getSize()
     return size;
 }
 
-bool CTable::setVaule(int value, int index)
+bool CTable::setVaule(int index, int value)
 {
 
     if (indexCheck(index)) {
