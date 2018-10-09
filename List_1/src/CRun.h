@@ -24,6 +24,16 @@ public:
 
     void addSingleCTable();
 
+    bool removeCTable(int index);
+
+    bool changeSize(int index, int newSize);
+
+    bool changeName(int index, string newName);
+
+    bool appendClone(int index);
+
+    bool setValueInCTable(int vectorIndex, int index, int newValue);
+
     bool yesOrNo();
 
     string provideString();
@@ -32,7 +42,6 @@ public:
 
 private:
     vector<CTable *> tableVector;
-    //bool *success;
 };
 
 
