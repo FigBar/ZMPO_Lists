@@ -26,6 +26,8 @@ public:
 
     void addSingleCTable();
 
+    void deleteAll();
+
     bool removeCTable(int index);
 
     bool changeSize(int index, int newSize);

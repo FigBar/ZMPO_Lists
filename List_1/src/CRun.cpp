@@ -65,90 +65,116 @@ void CRun::start() {
                 break;
 
             case 2:
-                for (int i = 0; i < tableVector.size(); ++i) {
-                    delete tableVector[i];
-                }
-                tableVector.clear();
+                deleteAll();
                 break;
 
             case 3:
-                cout << "Please provide the number of CTable object you want to remove." << endl;
                 int index;
-                index = Tools::provideAnInt(0, tableVector.size()-1);
-                if (removeCTable(index)) {
-                    cout << "Operation carried out successfully" << endl;
+                if(!tableVector.empty()) {
+                    cout << "Please provide the number of CTable object you want to remove." << endl;
+                    index = Tools::provideAnInt(0, tableVector.size() - 1);
+                    if (removeCTable(index)) {
+                        cout << "Operation carried out successfully" << endl;
+                    } else {
+                        cout << "Operation failed, you provided invalid index :/" << endl;
+                    };
                 } else {
-                    cout << "Operation failed, you provided invalid index :/" << endl;
-                };
+                    cout << "There's nothing to remove." << endl;
+                }
                 break;
 
             case 4:
-                cout << "Please provide index of CTable you want to modify" << endl;
-                index = Tools::provideAnInt(0, tableVector.size()-1);
-                cout << "Now provide new length of chosen CTable" << endl;
-                int newSize;
-                newSize = Tools::provideInt(1, INT_MAX);
+                if(!tableVector.empty()) {
+                    cout << "Please provide index of CTable you want to modify" << endl;
+                    index = Tools::provideAnInt(0, tableVector.size() - 1);
+                    cout << "Now provide new length of chosen CTable" << endl;
+                    int newSize;
+                    newSize = Tools::provideInt(1, INT_MAX);
 
-                if (changeSize(index, newSize)) {
-                    cout << "Operation carried out successfully" << endl;
+                    if (changeSize(index, newSize)) {
+                        cout << "Operation carried out successfully" << endl;
+                    } else {
+                        cout << "Operation failed, you provided invalid index or invalid table length :/" << endl;
+                    };
                 } else {
-                    cout << "Operation failed, you provided invalid index or invalid table length :/" << endl;
-                };
+                    cout << "The list of CTables is empty" << endl;
+                }
                 break;
 
             case 5:
-                cout << "Please provide index of CTable you want to modify" << endl;
-                index = Tools::provideAnInt(0, tableVector.size()-1);
-                cout << "Please provide new name of chosen CTable" << endl;
-                if (changeName(index, Tools::provideString())) {
-                    cout << "Operation carried out successfully" << endl;
+                if(!tableVector.empty()) {
+                    cout << "Please provide index of CTable you want to modify" << endl;
+                    index = Tools::provideAnInt(0, tableVector.size() - 1);
+                    cout << "Please provide new name of chosen CTable" << endl;
+                    if (changeName(index, Tools::provideString())) {
+                        cout << "Operation carried out successfully" << endl;
+                    } else {
+                        cout << "Operation failed, you provided invalid index :/" << endl;
+                    };
                 } else {
-                    cout << "Operation failed, you provided invalid index :/" << endl;
-                };
+                    cout << "The list of CTables is empty" << endl;
+                }
                 break;
 
             case 6:
-                cout << "Please provide index of CTable you want to clone" << endl;
-                index = Tools::provideAnInt(0, tableVector.size()-1);
-                if (appendClone(index)) {
-                    cout << "Operation carried out successfully" << endl;
+                if(!tableVector.empty()) {
+                    cout << "Please provide index of CTable you want to clone" << endl;
+                    index = Tools::provideAnInt(0, tableVector.size() - 1);
+                    if (appendClone(index)) {
+                        cout << "Operation carried out successfully" << endl;
+                    } else {
+                        cout << "Operation failed, you provided invalid index :/" << endl;
+                    };
                 } else {
-                    cout << "Operation failed, you provided invalid index :/" << endl;
-                };
+                    cout << "The list of CTables is empty" << endl;
+                }
                 break;
 
             case 7:
-                cout << "Please provide index of CTable you want to get information about" << endl;
-                index = Tools::provideAnInt(0, tableVector.size()-1);
-                if (index >= 0 && index < tableVector.size()) {
-                    cout << tableVector[index]->toString() << endl;
+                if(!tableVector.empty()) {
+                    cout << "Please provide index of CTable you want to get information about" << endl;
+                    index = Tools::provideAnInt(0, tableVector.size() - 1);
+                    if (index >= 0 && index < tableVector.size()) {
+                        cout << tableVector[index]->toString() << endl;
 
-                } else
-                    cout << "Operation failed, you provided invalid index :/" << endl;
+                    } else
+                        cout << "Operation failed, you provided invalid index :/" << endl;
+                } else {
+                    cout << "The list of CTables is empty" << endl;
+                }
                 break;
 
             case 8:
-                int vectorIndex;
-                int value;
-                cout << "Please provide index of CTable to which you want to assign a new value" << endl;
-                vectorIndex = Tools::provideAnInt(0, tableVector.size()-1);
-                cout << "Now provide CTable's index you want to assign to" << endl;
-                index = Tools::provideAnInt(0, tableVector.at(vectorIndex)->getSize()-1);
-                cout << "At final, please provide the value you want to assign" << endl;
-                value = Tools::provideInt(-INT_MAX, INT_MAX);
+                if(!tableVector.empty()) {
+                    int vectorIndex;
+                    int value;
+                    cout << "Please provide index of CTable to which you want to assign a new value" << endl;
+                    vectorIndex = Tools::provideAnInt(0, tableVector.size() - 1);
+                    cout << "Now provide CTable's index you want to assign to" << endl;
+                    index = Tools::provideAnInt(0, tableVector.at(vectorIndex)->getSize() - 1);
+                    cout << "At final, please provide the value you want to assign" << endl;
+                    value = Tools::provideInt(-INT_MAX, INT_MAX);
 
-                if (setValueInCTable(vectorIndex, index, value)) {
-                    cout << "Operation carried out successfully" << endl;
+                    if (setValueInCTable(vectorIndex, index, value)) {
+                        cout << "Operation carried out successfully" << endl;
+                    } else {
+                        cout << "Operation failed, you provided invalid index :/" << endl;
+                    };
                 } else {
-                    cout << "Operation failed, you provided invalid index :/" << endl;
-                };
+                    cout << "The list of CTables is empty" << endl;
+                }
                 break;
 
             case 9:
-                for (int i = 0; i < tableVector.size(); ++i) {
-                    cout << i << ". " << tableVector[i]->toString() << endl;
+                if(!tableVector.empty()) {
+                    cout << "------LIST_OF_CTABLE_OBJECTS------" << endl;
+                    for (int i = 0; i < tableVector.size(); ++i) {
+                        cout << i << ". " << tableVector[i]->toString() << endl;
+                    }
+                    break;
+                } else {
+                    cout << "The list of CTables is empty" << endl;
                 }
-                break;
 
             case 10:
                 toContinue = false;
@@ -212,6 +238,16 @@ bool CRun::removeCTable(int index) {
     } else return false;
 
 
+}
+
+void CRun::deleteAll() {
+    if (tableVector.size() == 0)
+        cout << "There's nothing to delete" << endl;
+
+    for (int i = 0; i < tableVector.size(); ++i) {
+        delete tableVector[i];
+    }
+    tableVector.clear();
 }
 
 void CRun::addParametrizedSingleCTable(string givenName, int givenLength) {
