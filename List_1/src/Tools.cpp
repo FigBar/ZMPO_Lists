@@ -3,7 +3,9 @@
 //
 
 #include <iostream>
+#include <sstream>
 #include "Tools.h"
+
 using namespace std;
 
 bool Tools::indexCheck(int index, int start, int end) {
@@ -12,7 +14,7 @@ bool Tools::indexCheck(int index, int start, int end) {
 
 bool Tools::initializeWithZeros(int *table, int start, int end) {
     if (0 <= start && start < end) {
-        for (int i = start; i <end; ++i) {
+        for (int i = start; i < end; ++i) {
             table[i] = 0;
         }
         return true;
@@ -30,8 +32,8 @@ bool Tools::yesOrNo() {
 
         input = answer.at(0);
 
-        if(input == 'Y' || input == 'y') return  true;
-        if(input == 'N' || input == 'n') return false;
+        if (input == 'Y' || input == 'y') return true;
+        if (input == 'N' || input == 'n') return false;
     } while (input == 'Y' || input == 'y' || input == 'N' || input == 'n');
 
     return false;
@@ -42,27 +44,30 @@ int Tools::provideAnInt(int lowerBound, int higherBound) {
 
     int answer;
 
-    while(!(cin >> answer) || answer < lowerBound || higherBound < answer){
-        cin.clear();
-        cin.ignore();
-        cout << "Try again: ";
-    }
-    cout << endl;
-    cin.clear();
+    bool valid;
+    do{
+        string string1;
+        stringstream stringstream1;
+        getline(cin, string1);
+        stringstream1 << string1;
+        valid = !(stringstream1 >> answer);
+    } while (valid || answer < lowerBound || higherBound < answer);
     return answer;
 }
 
 int Tools::provideInt(int lowerBound, int higherBound) {
 
     int answer;
+    bool valid;
+    do{
+        string string1;
+        stringstream stringstream1;
+        getline(cin, string1);
+        stringstream1 << string1;
+        valid = !(stringstream1 >> answer);
+    } while (valid || answer < lowerBound || higherBound < answer);
 
-    while(!(cin >> answer) || answer < lowerBound || higherBound < answer){
-        cin.clear();
-        cin.ignore();
-        cout << "Try again: ";
-    }
-    cout << endl;
-    cin.clear();
+
     return answer;
 }
 
