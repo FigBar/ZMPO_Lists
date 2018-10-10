@@ -20,6 +20,8 @@ public:
 
     void start();
 
+    void menu();
+
     void addParametrizedSingleCTable(string givenName, int givenLength);
 
     void addSingleCTable();
@@ -33,12 +35,6 @@ public:
     bool appendClone(int index);
 
     bool setValueInCTable(int vectorIndex, int index, int newValue);
-
-    bool yesOrNo();
-
-    string provideString();
-
-    int provideInt();
 
 private:
     vector<CTable *> tableVector;

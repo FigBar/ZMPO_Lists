@@ -5,6 +5,7 @@
 #include "CTable.h"
 #include "iostream"
 #include "sstream"
+#include "Tools.h"
 
 using namespace std;
 
@@ -16,7 +17,7 @@ CTable::CTable() : DEFAULT_SIZE(10), DEFAULT_NAME("Table1") {
     elem = new int[DEFAULT_SIZE];
     name = DEFAULT_NAME;
     size = DEFAULT_SIZE;
-    initializeWithZeros(0, size);
+    Tools::initializeWithZeros(elem, 0, size);
 
     cout << "bezp: " << name << "\n";
 }
@@ -26,7 +27,7 @@ CTable::CTable(string newName, int tableLength) : DEFAULT_SIZE(10), DEFAULT_NAME
     elem = new int[tableLength];
     name = newName;
     size = tableLength;
-    initializeWithZeros(0, size);
+    Tools::initializeWithZeros(elem, 0, size);
 
     cout << "parametr: " << name << "\n";
 
@@ -96,7 +97,7 @@ string CTable::getName()
 
 bool CTable::setSize(int newSize)
 {
-    if (0 <= newSize) {
+    if (0 < newSize) {
         int *p = new int[newSize];
 
         int overflowAwareSize = (newSize < size) ? newSize : size;
@@ -108,7 +109,7 @@ bool CTable::setSize(int newSize)
         delete[] elem;
         elem = p;
 
-        initializeWithZeros(size, newSize);
+        Tools::initializeWithZeros(elem, size, newSize);
         size = newSize;
 
         return true;
@@ -124,7 +125,7 @@ int CTable::getSize()
 bool CTable::setVaule(int index, int value)
 {
 
-    if (indexCheck(index)) {
+    if (Tools::indexCheck(index, 0, size)) {
         elem[index] = value;
         return true;
     } else
@@ -136,7 +137,7 @@ bool CTable::setVaule(int index, int value)
  */
 int CTable::getValue(int index, bool *opSuccess)
 {
-    if (indexCheck(index)) {
+    if (Tools::indexCheck(index, 0, size)) {
         *opSuccess = true;
         return elem[index];
     } else {
@@ -170,25 +171,8 @@ string CTable::toString()
     return objectOutput.str();
 }
 
-/*
- * Private Methods
- */
-bool CTable::indexCheck(int index)
-{
-    return (index >= 0 && index < size);
-}
 
-bool CTable::initializeWithZeros(int start, int end)
-{
 
-    if (start >= 0 && start < end) {
-        for (int i = start; i <end; ++i) {
-            elem[i] = 0;
-        }
-        return true;
-    } else
-        return false;
-}
 
 
 

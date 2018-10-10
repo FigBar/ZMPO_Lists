@@ -51,10 +51,6 @@ public:
     //___________________________________________________________________
 
 private:
-    //Methods
-    bool indexCheck(int index);
-
-    bool initializeWithZeros(int start, int end);
 
     //Constants
     const int DEFAULT_SIZE;

@@ -4,9 +4,11 @@
 
 #include "CRun.h"
 #include "CTable.h"
+#include "Tools.h"
 #include <vector>
 #include <iostream>
 #include <limits>
+#include <climits>
 
 CRun::CRun() {
 
@@ -24,31 +26,18 @@ void CRun::start() {
 
     while (toContinue) {
 
-        std::cout << "------MENU------" << endl
-                  << "0. Create a single CTable object" << endl
-                  << "1. Create an unrestricted number of CTable objects" << endl
-                  << "2. Delete all CTable objects" << endl
-                  << "3. Delete a specified CTable object" << endl
-                  << "4. Set size of a specified CTable object" << endl
-                  << "5. Set name to a specified CTable object" << endl
-                  << "6. Clone a specified CTable object and append it to the list" << endl
-                  << "7. Get information about specified CTable object" << endl
-                  << "8. Insert a number to a specified CTable" << endl
-                  << "9. Print all CTable objects" << endl
-                  << "10. End program" << endl << endl;
-
-
+        menu();
         std::cout << "Please provide the number of operation you want to be carried out." << endl;
-        int opNumber = provideInt();
+        int opNumber = Tools::provideAnInt(0, 10);
 
         switch (opNumber) {
             case 0:
-                if (yesOrNo()) {
+                if (Tools::yesOrNo()) {
                     cout << "Now let's give your CTable a name." << endl;
-                    string givenName = provideString();
+                    string givenName = Tools::provideString();
 
                     cout << "Ok, what should be its length?" << endl;
-                    int givenInt = provideInt();
+                    int givenInt = Tools::provideInt(0, INT_MAX);
                     addParametrizedSingleCTable(givenName, givenInt);
 
                 } else {
@@ -59,13 +48,13 @@ void CRun::start() {
             case 1:
                 int amount;
                 cout << "How many CTable object do you want to create?" << endl;
-                amount = provideInt();
-                if (yesOrNo()) {
+                amount = Tools::provideInt(0, INT_MAX);
+                if (Tools::yesOrNo()) {
                     for (int i = 0; i < amount; ++i) {
                         cout << "Now let's give your CTable a name." << "\n";
-                        string givenName = provideString();
+                        string givenName = Tools::provideString();
                         cout << "Ok, what should be its length?" << endl;
-                        int givenInt = provideInt();
+                        int givenInt = Tools::provideInt(0, INT_MAX);
                         addParametrizedSingleCTable(givenName, givenInt);
                     }
                 } else {
@@ -85,7 +74,7 @@ void CRun::start() {
             case 3:
                 cout << "Please provide the number of CTable object you want to remove." << endl;
                 int index;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.size()-1);
                 if (removeCTable(index)) {
                     cout << "Operation carried out successfully" << endl;
                 } else {
@@ -95,23 +84,23 @@ void CRun::start() {
 
             case 4:
                 cout << "Please provide index of CTable you want to modify" << endl;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.size()-1);
                 cout << "Now provide new length of chosen CTable" << endl;
                 int newSize;
-                newSize = provideInt();
+                newSize = Tools::provideInt(1, INT_MAX);
 
                 if (changeSize(index, newSize)) {
                     cout << "Operation carried out successfully" << endl;
                 } else {
-                    cout << "Operation failed, you provided invalid index :/" << endl;
+                    cout << "Operation failed, you provided invalid index or invalid table length :/" << endl;
                 };
                 break;
 
             case 5:
                 cout << "Please provide index of CTable you want to modify" << endl;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.size()-1);
                 cout << "Please provide new name of chosen CTable" << endl;
-                if (changeName(index, provideString())) {
+                if (changeName(index, Tools::provideString())) {
                     cout << "Operation carried out successfully" << endl;
                 } else {
                     cout << "Operation failed, you provided invalid index :/" << endl;
@@ -120,7 +109,7 @@ void CRun::start() {
 
             case 6:
                 cout << "Please provide index of CTable you want to clone" << endl;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.size()-1);
                 if (appendClone(index)) {
                     cout << "Operation carried out successfully" << endl;
                 } else {
@@ -130,7 +119,7 @@ void CRun::start() {
 
             case 7:
                 cout << "Please provide index of CTable you want to get information about" << endl;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.size()-1);
                 if (index >= 0 && index < tableVector.size()) {
                     cout << tableVector[index]->toString() << endl;
 
@@ -142,11 +131,11 @@ void CRun::start() {
                 int vectorIndex;
                 int value;
                 cout << "Please provide index of CTable to which you want to assign a new value" << endl;
-                vectorIndex = provideInt();
+                vectorIndex = Tools::provideAnInt(0, tableVector.size()-1);
                 cout << "Now provide CTable's index you want to assign to" << endl;
-                index = provideInt();
+                index = Tools::provideAnInt(0, tableVector.at(vectorIndex)->getSize()-1);
                 cout << "At final, please provide the value you want to assign" << endl;
-                value = provideInt();
+                value = Tools::provideInt(-INT_MAX, INT_MAX);
 
                 if (setValueInCTable(vectorIndex, index, value)) {
                     cout << "Operation carried out successfully" << endl;
@@ -172,6 +161,21 @@ void CRun::start() {
 
         }
     }
+}
+
+void CRun::menu() {
+    std::cout << "------MENU------" << endl
+              << "0. Create a single CTable object" << endl
+              << "1. Create an unrestricted number of CTable objects" << endl
+              << "2. Delete all CTable objects" << endl
+              << "3. Delete a specified CTable object" << endl
+              << "4. Set size of a specified CTable object" << endl
+              << "5. Set name to a specified CTable object" << endl
+              << "6. Clone a specified CTable object and append it to the list" << endl
+              << "7. Get information about specified CTable object" << endl
+              << "8. Insert a number to a specified CTable" << endl
+              << "9. Print all CTable objects" << endl
+              << "10. End program" << endl << endl;
 }
 
 bool CRun::setValueInCTable(int vectorIndex, int index, int newValue) {
@@ -205,7 +209,7 @@ bool CRun::removeCTable(int index) {
         delete tableVector.at(index);
         tableVector.erase(tableVector.begin() + index);
         return true;
-    } else false;
+    } else return false;
 
 
 }
@@ -224,35 +228,5 @@ void CRun::addSingleCTable() {
     tableVector.push_back(pointer);
 }
 
-string CRun::provideString() {
 
-    string givenName;
-    cout << "Please provide a string." << endl;
-    cin >> givenName;
 
-    return givenName;
-}
-
-int CRun::provideInt() {
-
-    int givenInt;
-
-    cout << "Please provide an integer value." << endl;
-
-    while (!(cin >> givenInt)) {
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "Try again, you provided wrong data." << endl;
-    }
-    return givenInt;
-}
-
-bool CRun::yesOrNo() {
-
-    string choice;
-    cout << "Do you want to create a parametrized object? (Yes/No)" << endl;
-    cin >> choice;
-
-    return (choice.at(0) == 'Y' || choice.at(0) == 'y');
-
-}
