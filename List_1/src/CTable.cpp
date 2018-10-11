@@ -33,8 +33,7 @@ CTable::CTable(string newName, int tableLength) : DEFAULT_SIZE(10), DEFAULT_NAME
 
 }
 
-CTable::CTable(const CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1")
-{
+CTable::CTable(CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1") {
 
     elem = new int[copyOther.size];
     size = copyOther.size;
@@ -51,8 +50,7 @@ CTable::CTable(const CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1
 /*
  * Destructor
  */
-CTable::~CTable()
-{
+CTable::~CTable() {
     delete[] elem;
 
     cout << "usuwam: " << name << "\n";
@@ -61,8 +59,7 @@ CTable::~CTable()
 /*
  * Operators
  */
-CTable &CTable::operator=(const CTable &copyOther)
-{
+CTable &CTable::operator=(CTable &copyOther) {
     int *p = new int[copyOther.size];
 
     for (int i = 0; i != copyOther.size; ++i) {
@@ -76,8 +73,7 @@ CTable &CTable::operator=(const CTable &copyOther)
     return *this;
 }
 
-int &CTable::operator[](int index)
-{
+int &CTable::operator[](int index) {
     return elem[index];
 
 }
@@ -85,18 +81,15 @@ int &CTable::operator[](int index)
 /*
  * Public Methods
  */
-void CTable::setName(string newName)
-{
+void CTable::setName(string newName) {
     CTable::name = newName;
 }
 
-string CTable::getName()
-{
+string CTable::getName() {
     return name;
 }
 
-bool CTable::setSize(int newSize)
-{
+bool CTable::setSize(int newSize) {
     if (0 < newSize) {
         int *p = new int[newSize];
 
@@ -117,13 +110,11 @@ bool CTable::setSize(int newSize)
         return false;
 }
 
-int CTable::getSize()
-{
+int CTable::getSize() {
     return size;
 }
 
-bool CTable::setVaule(int index, int value)
-{
+bool CTable::setVaule(int index, int value) {
 
     if (Tools::indexCheck(index, 0, size)) {
         elem[index] = value;
@@ -135,8 +126,7 @@ bool CTable::setVaule(int index, int value)
 /*
  * -1 is the code of unsuccessful operation
  */
-int CTable::getValue(int index, bool *opSuccess)
-{
+int CTable::getValue(int index, bool *opSuccess) {
     if (Tools::indexCheck(index, 0, size)) {
         *opSuccess = true;
         return elem[index];
@@ -146,13 +136,11 @@ int CTable::getValue(int index, bool *opSuccess)
     }
 }
 
-CTable *CTable::clone()
-{
+CTable *CTable::clone() {
     return new CTable(*this);
 }
 
-string CTable::toString()
-{
+string CTable::toString() {
     stringstream objectOutput;
     objectOutput << "[ ";
     objectOutput << name;

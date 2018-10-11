@@ -18,7 +18,7 @@ public:
 
     CTable(string newName, int tableLength);
 
-    CTable(const CTable &copyOther);                //copy constructor
+    CTable(CTable &copyOther);                //copy constructor
     //__________________________________________________________________
 
     //Destructor
@@ -26,7 +26,7 @@ public:
     //__________________________________________________________________
 
     //Operators
-    CTable &operator=(const CTable &copyOther);     //copy assignment
+    CTable &operator=(CTable &copyOther);     //copy assignment
 
     int &operator[](int index);
 
