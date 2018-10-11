@@ -75,7 +75,9 @@ string Tools::provideString() {
 
     string givenName;
     cout << "Please provide a string." << endl;
-    cin >> givenName;
+    while(givenName.empty()) {
+        getline(cin,  givenName);
+    }
 
     return givenName;
 }

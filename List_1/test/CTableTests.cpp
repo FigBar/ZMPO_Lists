@@ -5,6 +5,7 @@
 #define CATCH_CONFIG_MAIN
 #include "../lib/catch.hpp"
 #include "../src/CTable.h"
+#include "../src/Tools.h"
 
 SCENARIO("Test constructor")
 {
@@ -328,3 +329,43 @@ SCENARIO("Test toString")
         }
     }
 }
+
+SCENARIO("Test CollapsArray"){
+    GIVEN("CTable object"){
+        CTable table ("Name", 5);
+
+        CTable table2("Name", 4);
+
+        WHEN(""){
+            table.setVaule(0,5);
+            table.setVaule(1,3);
+            table.setVaule(2,1);
+            table.setVaule(3,7);
+            table.setVaule(4,4);
+
+
+            table2.setVaule(0,5);
+            table2.setVaule(1,3);
+            table2.setVaule(2,1);
+            table2.setVaule(3,7);
+
+            THEN(""){
+                table.halfArray();
+                bool x;
+
+                REQUIRE(table.getSize() == 3);
+                REQUIRE(table.getValue(0, &x) == 12);
+                REQUIRE(table.getValue(1, &x) == 7);
+                REQUIRE(table.getValue(2, &x) == 1);
+
+                table2.halfArray();
+                REQUIRE(table2.getSize() == 2);
+                REQUIRE(table2.getValue(0, &x) == 6);
+                REQUIRE(table2.getValue(1, &x) == 10);
+            }
+
+        }
+
+    }
+}
+

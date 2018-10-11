@@ -33,7 +33,7 @@ CTable::CTable(string newName, int tableLength) : DEFAULT_SIZE(10), DEFAULT_NAME
 
 }
 
-CTable::CTable(CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1") {
+CTable::CTable(const CTable &copyOther) : DEFAULT_SIZE(10), DEFAULT_NAME("Table1") {
 
     elem = new int[copyOther.size];
     size = copyOther.size;
@@ -59,7 +59,7 @@ CTable::~CTable() {
 /*
  * Operators
  */
-CTable &CTable::operator=(CTable &copyOther) {
+CTable &CTable::operator=(const CTable &copyOther) {
     int *p = new int[copyOther.size];
 
     for (int i = 0; i != copyOther.size; ++i) {
@@ -81,6 +81,32 @@ int &CTable::operator[](int index) {
 /*
  * Public Methods
  */
+void CTable::halfArray() {
+
+    int newSize;
+
+    if (size % 2 != 0) {
+        newSize = (size / 2) + 1;
+    } else {
+        newSize = size / 2;
+    }
+
+    int *newTable = new int[newSize];
+
+    for (int i = 0; i != newSize; ++i) {
+        if (newSize + i < size) {
+            *(newTable + i) = *(elem + (newSize + i)) + *(elem + i);
+        } else {
+            *(newTable + i) = *(elem + i);
+        }
+    }
+
+    delete[] elem;
+    elem = newTable;
+    size = newSize;
+
+}
+
 void CTable::setName(string newName) {
     CTable::name = newName;
 }
