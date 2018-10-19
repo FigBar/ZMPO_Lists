@@ -1,0 +1,9 @@
+//
+// Created by Bartosz Figiel on 19.10.2018.
+//
+
+#include "Menu.h"
+
+void Menu::Run() {
+
+}
