@@ -13,7 +13,7 @@ using namespace std;
 
 void createSingleTable::runCommand() {
     if (Utils::yesOrNo()) {
-        cout << "Now let's give your CTable a name." << endl;
+        cout << "Now let's give your Table a name." << endl;
         string givenName = Utils::provideString();
 
         cout << "Ok, what should be its length?" << endl;

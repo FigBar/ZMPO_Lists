@@ -14,7 +14,7 @@ class MenuItem {
 public:
 
     virtual void run() = 0;
-    virtual void toString()=0;
+    //virtual void toString()=0;
     virtual string getCommand()=0;
 
 protected:

@@ -8,11 +8,12 @@
 
 #include "../Command.h"
 #include<string>
+
 using namespace std;
 
 class createMultipleTables : public Command {
 public:
-    virtual void runCommand();
+    void runCommand();
 
     void addParametrizedSingleTable(string givenName, int givenLength);
 

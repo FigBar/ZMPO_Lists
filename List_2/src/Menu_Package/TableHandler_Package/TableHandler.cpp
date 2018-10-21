@@ -3,8 +3,9 @@
 //
 
 #include "TableHandler.h"
+vector<Table*> TableHandler:: tableVector;
 
-TableHandler::~TableHandler() {
+void TableHandler::destroyTableHandler() {
     for (int i = 0; i < tableVector.size() ; ++i) {
         delete tableVector[i];
     }

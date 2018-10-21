@@ -13,7 +13,7 @@ using namespace std;
 
 class createSingleTable : public Command {
 public:
-    virtual void runCommand();
+    void runCommand();
 
     void addParametrizedSingleTable(string givenName, int givenLength);
 

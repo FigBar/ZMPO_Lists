@@ -11,11 +11,11 @@
 
 void createMultipleTables::runCommand() {
     int amount;
-    cout << "How many CTable object do you want to create?" << endl;
+    cout << "How many Table object do you want to create?" << endl;
     amount = Utils::provideInt(0, INT_MAX);
     if (Utils::yesOrNo()) {
         for (int i = 0; i < amount; ++i) {
-            cout << "Now let's give your CTable a name." << "\n";
+            cout << "Now let's give your Table a name." << "\n";
             string givenName = Utils::provideString();
             cout << "Ok, what should be its length?" << endl;
             int givenInt = Utils::provideInt(0, INT_MAX);
