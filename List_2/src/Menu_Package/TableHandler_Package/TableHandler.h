@@ -13,7 +13,7 @@ using namespace std;
 class TableHandler {
 
 public:
-    void destroyTableHandler();
+    static void destroyTableHandler();
 
     static vector<Table*> tableVector;
 };

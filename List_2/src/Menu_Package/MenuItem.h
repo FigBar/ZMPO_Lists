@@ -7,15 +7,18 @@
 
 #include <string>
 
-using  namespace std;
+using namespace std;
 
 class MenuItem {
 
 public:
+    virtual ~MenuItem();
 
     virtual void run() = 0;
-    //virtual void toString()=0;
-    virtual string getCommand()=0;
+
+    virtual string getCommand() = 0;
+
+    virtual string getName() = 0;
 
 protected:
     string command;

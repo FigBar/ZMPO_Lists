@@ -9,7 +9,7 @@
 #include "Command_Package/Command.h"
 
 
-class MenuCommand : protected MenuItem {
+class MenuCommand : public MenuItem {
 
 public:
     MenuCommand(string nameGiven, string commandGiven);
@@ -22,6 +22,7 @@ public:
 
     string getCommand();
 
+    string getName();
 
 private:
     Command *command1;

@@ -8,11 +8,14 @@
 
 #include <vector>
 #include "MenuItem.h"
+
 using namespace std;
 
-class Menu : protected MenuItem {
+class Menu : public MenuItem {
 
 public:
+    Menu();
+
     Menu(string name, string command);
 
     ~Menu();
@@ -25,22 +28,17 @@ public:
 
     string getName();
 
+public:
+
     void initializeMenu();
 
-    bool ifCommandExists();
+    MenuItem *findMenuItem();
 
-    void findCommandAndRun();
-
-    void addMenu();
-
-    void addMenuCommand();
-
-
-
+    void addMenuItem(MenuItem *itemToAdd);
 
 
 private:
-    vector<MenuItem*> menuItems;
+    vector<MenuItem *> menuItems;
     string providedCommand;
 };
 

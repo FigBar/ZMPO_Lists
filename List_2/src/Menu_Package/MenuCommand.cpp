@@ -18,6 +18,7 @@ MenuCommand::MenuCommand(string nameGiven, string commandGiven, Command *comObje
 }
 
 MenuCommand::~MenuCommand() {
+    cout << "Deleting MenuCommand: " << this->getName() << endl;
     delete command1;
 }
 
@@ -31,7 +32,12 @@ void MenuCommand::run() {
 }
 
 string MenuCommand::getCommand() {
-    return command;
+    return this->command;
 }
+
+string MenuCommand::getName() {
+    return this->name;
+}
+
 
 
