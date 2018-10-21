@@ -14,13 +14,6 @@ public:
 
     static bool initializeWithZeros(int *table, int start, int end);
 
-    static bool yesOrNo();
-
-    static int provideAnInt(int lowerBound, int higherBound);
-
-    static int provideInt(int lowerBound, int higherBound);
-
-    static string provideString();
 };
 
 

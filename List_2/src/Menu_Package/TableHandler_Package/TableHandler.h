@@ -4,12 +4,18 @@
 
 #ifndef LIST_2_TABLEHANDLER_H
 #define LIST_2_TABLEHANDLER_H
+
 #include<vector>
+#include "../../Table_Package/Table.h"
+
 using namespace std;
+
 class TableHandler {
 
-protected:
- static vector<Table> tableVector;
+public:
+    ~TableHandler();
+
+    static vector<Table*> tableVector;
 };
 
 

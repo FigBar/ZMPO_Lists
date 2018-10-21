@@ -8,7 +8,7 @@
 
 class Command {
 public:
-    virtual void runCommand() = 0;
+    virtual void runCommand();
 };
 
 

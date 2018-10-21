@@ -1,30 +1,14 @@
 //
-// Created by Bartosz Figiel on 19.10.2018.
+// Created by fig_bar98 on 21.10.18.
 //
 
-#include "Tools.h"
-
+#include "Utils.h"
 #include <iostream>
+#include <string>
 #include <sstream>
-#include "Tools.h"
-
 using namespace std;
 
-bool Tools::indexCheck(int index, int start, int end) {
-    return (index >= start && index < end);
-}
-
-bool Tools::initializeWithZeros(int *table, int start, int end) {
-    if (0 <= start && start < end) {
-        for (int i = start; i < end; ++i) {
-            table[i] = 0;
-        }
-        return true;
-    } else
-        return false;
-}
-
-bool Tools::yesOrNo() {
+bool Utils::yesOrNo() {
     string answer;
     char input;
 
@@ -41,7 +25,7 @@ bool Tools::yesOrNo() {
     return false;
 }
 
-int Tools::provideAnInt(int lowerBound, int higherBound) {
+int Utils::provideAnInt(int lowerBound, int higherBound) {
     cout << "Provide an integer between " << lowerBound << " and " << higherBound << ": ";
 
     int answer;
@@ -57,7 +41,7 @@ int Tools::provideAnInt(int lowerBound, int higherBound) {
     return answer;
 }
 
-int Tools::provideInt(int lowerBound, int higherBound) {
+int Utils::provideInt(int lowerBound, int higherBound) {
 
     int answer;
     bool valid;
@@ -73,7 +57,7 @@ int Tools::provideInt(int lowerBound, int higherBound) {
     return answer;
 }
 
-string Tools::provideString() {
+string Utils::provideString() {
 
     string givenName;
     cout << "Please provide a string." << endl;

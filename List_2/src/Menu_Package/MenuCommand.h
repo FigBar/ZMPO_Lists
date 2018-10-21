@@ -4,17 +4,27 @@
 
 #ifndef LIST_2_MENUCOMMAND_H
 #define LIST_2_MENUCOMMAND_H
+
 #include "MenuItem.h"
-#include "Command.h"
+#include "Command_Package/Command.h"
 
 
 class MenuCommand : protected MenuItem {
 
-protected:
-    void Run();
+public:
+    MenuCommand(string nameGiven, string commandGiven);
+
+    MenuCommand(string nameGiven, string commandGiven, Command *comObject);
+
+    ~MenuCommand();
+
+    void run();
+
+    string getCommand();
+
 
 private:
-    Command* command1;
+    Command *command1;
 };
 
 

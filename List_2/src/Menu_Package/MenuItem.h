@@ -13,9 +13,11 @@ class MenuItem {
 
 public:
 
-    virtual void Run() = 0;
+    virtual void run() = 0;
+    virtual void toString()=0;
+    virtual string getCommand()=0;
 
-private:
+protected:
     string command;
     string name;
 };

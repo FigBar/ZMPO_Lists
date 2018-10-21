@@ -12,11 +12,36 @@ using namespace std;
 
 class Menu : protected MenuItem {
 
-protected:
-    void Run();
+public:
+    Menu(string name, string command);
+
+    ~Menu();
+
+    void run();
+
+    void toString();
+
+    string getCommand();
+
+    string getName();
+
+    void initializeMenu();
+
+    bool ifCommandExists();
+
+    void findCommandAndRun();
+
+    void addMenu();
+
+    void addMenuCommand();
+
+
+
+
 
 private:
     vector<MenuItem*> menuItems;
+    string providedCommand;
 };
 
 
