@@ -8,11 +8,15 @@
 
 using namespace std;
 
+SetName::SetName(TableHandler &handler) : ListOneCommand(handler) {
+
+}
+
 void SetName::runCommand() {
     int index;
-    if (!TableHandler::tableVector.empty()) {
+    if (!handler->getVector().empty()) {
         cout << "Please provide index of Table you want to modify" << endl;
-        index = Utils::provideAnInt(0, TableHandler::tableVector.size() - 1);
+        index = Utils::provideAnInt(0, handler->getVector().size() - 1);
         cout << "Please provide new name of chosen Table" << endl;
         if (changeName(index, Utils::provideString())) {
             cout << "Operation carried out successfully" << endl;
@@ -25,8 +29,8 @@ void SetName::runCommand() {
 }
 
 bool SetName::changeName(int index, string newName) {
-    if (index >= 0 && index < TableHandler::tableVector.size()) {
-        TableHandler::tableVector[index]->setName(newName);
+    if (index >= 0 && index < handler->getVector().size()) {
+        handler->getVector()[index]->setName(newName);
         return true;
     } else return false;
 }

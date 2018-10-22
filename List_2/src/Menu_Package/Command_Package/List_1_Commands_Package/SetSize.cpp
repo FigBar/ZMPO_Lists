@@ -10,11 +10,15 @@
 
 using namespace std;
 
+SetSize::SetSize(TableHandler &handler) : ListOneCommand(handler) {
+
+}
+
 void SetSize::runCommand() {
     int index;
-    if (!TableHandler::tableVector.empty()) {
+    if (!handler->getVector().empty()) {
         cout << "Please provide index of Table you want to modify" << endl;
-        index = Utils::provideAnInt(0, TableHandler::tableVector.size() - 1);
+        index = Utils::provideAnInt(0, handler->getVector().size() - 1);
         cout << "Now provide new length of chosen Table" << endl;
         int newSize;
         newSize = Utils::provideInt(1, INT_MAX);
@@ -30,7 +34,7 @@ void SetSize::runCommand() {
 }
 
 bool SetSize::changeSize(int index, int newSize) {
-    if (index >= 0 && index < TableHandler::tableVector.size()) {
-        return TableHandler::tableVector[index]->setSize(newSize);
+    if (index >= 0 && index < handler->getVector().size()) {
+        return handler->getVector()[index]->setSize(newSize);
     } else return false;
 }

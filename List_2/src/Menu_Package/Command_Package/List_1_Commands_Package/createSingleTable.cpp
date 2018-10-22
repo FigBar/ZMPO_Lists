@@ -11,6 +11,10 @@
 
 using namespace std;
 
+createSingleTable::createSingleTable(TableHandler &handler) : ListOneCommand(handler) {
+
+}
+
 void createSingleTable::runCommand() {
     if (Utils::yesOrNo()) {
         cout << "Now let's give your Table a name." << endl;
@@ -28,11 +32,11 @@ void createSingleTable::runCommand() {
 void createSingleTable::addParametrizedSingleTable(string givenName, int givenLength) {
     Table *pointer;
     pointer = new Table(givenName, givenLength);
-    TableHandler::tableVector.push_back(pointer);
+    handler->getVector().push_back(pointer);
 }
 
 void createSingleTable::addSingleTable() {
     Table *pointer;
     pointer = new Table();
-    TableHandler::tableVector.push_back(pointer);
+    handler->getVector().push_back(pointer);
 }

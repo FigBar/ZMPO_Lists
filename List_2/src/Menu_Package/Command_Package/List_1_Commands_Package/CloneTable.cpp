@@ -7,11 +7,13 @@
 #include "../Utils.h"
 #include <iostream>
 
+CloneTable::CloneTable(TableHandler &handler) : ListOneCommand(handler) {}
+
 void CloneTable::runCommand() {
     int index;
-    if (!TableHandler::tableVector.empty()) {
+    if (!handler->getVector().empty()) {
         cout << "Please provide index of Table you want to clone" << endl;
-        index = Utils::provideAnInt(0, TableHandler::tableVector.size() - 1);
+        index = Utils::provideAnInt(0, handler->getVector().size() - 1);
         if (appendClone(index)) {
             cout << "Operation carried out successfully" << endl;
         } else {
@@ -23,8 +25,8 @@ void CloneTable::runCommand() {
 }
 
 bool CloneTable::appendClone(int index) {
-    if (index >= 0 && index < TableHandler::tableVector.size()) {
-        TableHandler::tableVector.push_back(TableHandler::tableVector[index]->clone());
+    if (index >= 0 && index < handler->getVector().size()) {
+        handler->getVector().push_back(handler->getVector()[index]->clone());
         return true;
     } else return false;
 }

@@ -7,9 +7,11 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
 
-class DeleteOne : public Command {
+class DeleteOne : public ListOneCommand {
 public:
+    DeleteOne(TableHandler &handler);
     void runCommand();
     void singleDelete();
     bool removeTable(int index);

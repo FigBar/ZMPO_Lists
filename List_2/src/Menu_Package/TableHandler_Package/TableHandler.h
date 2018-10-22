@@ -13,9 +13,10 @@ using namespace std;
 class TableHandler {
 
 public:
-    static void destroyTableHandler();
-
-    static vector<Table*> tableVector;
+    ~TableHandler();
+    vector<Table*> &getVector();
+private:
+    vector<Table*> tableVector;
 };
 
 

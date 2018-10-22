@@ -7,9 +7,11 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
 
-class InsertNumber : public Command {
+class InsertNumber : public ListOneCommand {
 public:
+    InsertNumber(TableHandler &handler);
     virtual void runCommand();
     bool setValueInTable(int vectorIndex, int index, int newValue);
 };

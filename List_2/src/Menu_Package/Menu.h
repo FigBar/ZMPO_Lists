@@ -8,6 +8,7 @@
 
 #include <vector>
 #include "MenuItem.h"
+#include "TableHandler_Package/TableHandler.h"
 
 using namespace std;
 
@@ -30,7 +31,7 @@ public:
 
 public:
 
-    void initializeMenu();
+    void initializeMenu(TableHandler &handler1);
 
     MenuItem *findMenuItem();
 

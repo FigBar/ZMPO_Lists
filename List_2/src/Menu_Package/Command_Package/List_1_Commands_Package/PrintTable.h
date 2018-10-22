@@ -7,9 +7,11 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
 
-class PrintTable : public Command {
+class PrintTable : public ListOneCommand {
 public:
+    PrintTable(TableHandler &handler);
     void runCommand();
 };
 

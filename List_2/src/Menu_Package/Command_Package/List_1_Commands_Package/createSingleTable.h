@@ -7,12 +7,16 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
+#include "../../TableHandler_Package/TableHandler.h"
 #include<string>
 
 using namespace std;
 
-class createSingleTable : public Command {
+class createSingleTable : public ListOneCommand {
 public:
+    createSingleTable(TableHandler &handler);
+
     void runCommand();
 
     void addParametrizedSingleTable(string givenName, int givenLength);

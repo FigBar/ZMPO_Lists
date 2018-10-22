@@ -9,6 +9,8 @@
 #include <iostream>
 #include <climits>
 
+createMultipleTables::createMultipleTables(TableHandler &handler) : ListOneCommand(handler){}
+
 void createMultipleTables::runCommand() {
     int amount;
     cout << "How many Table object do you want to create?" << endl;
@@ -31,11 +33,11 @@ void createMultipleTables::runCommand() {
 void createMultipleTables::addParametrizedSingleTable(string givenName, int givenLength) {
     Table *pointer;
     pointer = new Table(givenName, givenLength);
-    TableHandler::tableVector.push_back(pointer);
+    handler->getVector().push_back(pointer);
 }
 
 void createMultipleTables::addSingleTable() {
     Table *pointer;
     pointer = new Table();
-    TableHandler::tableVector.push_back(pointer);
+    handler->getVector().push_back(pointer);
 }

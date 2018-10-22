@@ -7,16 +7,20 @@
 #include <iostream>
 using namespace std;
 
+DeleteAll::DeleteAll(TableHandler &handler) : ListOneCommand(handler) {
+
+}
+
 void DeleteAll::runCommand() {
     deleteAll();
 }
 
 void DeleteAll::deleteAll() {
-    if (TableHandler::tableVector.empty())
+    if (handler->getVector().empty())
         cout << "There's nothing to delete" << endl;
 
-    for (int i = 0; i < TableHandler::tableVector.size(); ++i) {
-        delete TableHandler::tableVector[i];
+    for (int i = 0; i < handler->getVector().size(); ++i) {
+        delete handler->getVector()[i];
     }
-    TableHandler::tableVector.clear();
+    handler->getVector().clear();
 }

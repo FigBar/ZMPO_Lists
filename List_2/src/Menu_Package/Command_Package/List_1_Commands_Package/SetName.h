@@ -7,11 +7,13 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
 #include <string>
 using namespace std;
 
-class SetName : public Command {
+class SetName : public ListOneCommand {
 public:
+    SetName(TableHandler &handler);
     void runCommand();
     bool changeName(int index, string newName);
 };

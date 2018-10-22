@@ -7,9 +7,11 @@
 
 
 #include "../../MenuCommand.h"
+#include "ListOneCommand.h"
 
-class CloneTable : public Command {
+class CloneTable : public ListOneCommand {
 public:
+    CloneTable(TableHandler &handler);
     void runCommand();
     bool appendClone(int index);
 };

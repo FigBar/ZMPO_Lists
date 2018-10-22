@@ -7,9 +7,11 @@
 
 
 #include "../Command.h"
+#include "ListOneCommand.h"
 
-class SetSize : public Command {
+class SetSize : public ListOneCommand {
 public:
+    SetSize(TableHandler &handler);
     void runCommand();
     bool changeSize(int index, int newSize);
 };
