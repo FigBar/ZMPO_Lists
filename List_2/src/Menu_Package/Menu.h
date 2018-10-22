@@ -31,8 +31,6 @@ public:
 
 public:
 
-    void initializeMenu(TableHandler &handler1);
-
     MenuItem *findMenuItem();
 
     void addMenuItem(MenuItem *itemToAdd);

@@ -73,37 +73,7 @@ void Menu::toString() {
 }
 
 
-void Menu::initializeMenu(TableHandler &handler1) {
 
-    Menu *creationMenu;
-    creationMenu = new Menu("Create Tables", "create");
-    creationMenu->addMenuItem(new MenuCommand("Create one Table", "one", new createSingleTable(handler1)));
-    creationMenu->addMenuItem(new MenuCommand("Create multiple Tables", "multiple", new createMultipleTables(handler1)));
-    creationMenu->addMenuItem(new MenuCommand("Clone a Table and append it", "clone", new CloneTable(handler1)));
-
-    this->addMenuItem(creationMenu);
-
-    Menu *changeMenu;
-    changeMenu = new Menu("change Tables", "change");
-    changeMenu->addMenuItem(new MenuCommand("Set Name", "sName", new SetName(handler1)));
-    changeMenu->addMenuItem(new MenuCommand("Set Size", "sSize", new SetSize(handler1)));
-    changeMenu->addMenuItem(new MenuCommand("Insert Number", "insert", new InsertNumber(handler1)));
-    //changeMenu->addMenuItem(new MenuCommand("Default", "Default", new Command));
-
-    this->addMenuItem(changeMenu);
-
-    Menu *removeMenu;
-    removeMenu = new Menu("remove Tables", "remove");
-    removeMenu->addMenuItem(new MenuCommand("Delete one", "delete_one", new DeleteOne(handler1)));
-    removeMenu->addMenuItem(new MenuCommand("Delete all", "delete_all", new DeleteAll(handler1)));
-    this->addMenuItem(removeMenu);
-
-    Menu *printMenu;
-    printMenu = new Menu("print Tables", "print");
-    printMenu->addMenuItem(new MenuCommand("Print one", "print_one", new PrintTable(handler1)));
-    printMenu->addMenuItem(new MenuCommand("Print all", "print_all", new PrintAll(handler1)));
-    this->addMenuItem(printMenu);
-}
 
 
 MenuItem *Menu::findMenuItem() {
