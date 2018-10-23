@@ -8,5 +8,6 @@ int main() {
     mainMenu = Initializer::initialize(*handler1);
     mainMenu->run();
     delete handler1;
+    delete mainMenu;
     return 0;
 }

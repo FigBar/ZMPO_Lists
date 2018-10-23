@@ -20,7 +20,6 @@
 #include <sstream>
 
 using namespace std;
-#define MAIN_MENU_NAME "Main Menu"
 #define DEFAULT_NAME "Menu"
 #define DEFAULT_COMMAND "No commands"
 #define FINISH "back"
@@ -37,22 +36,20 @@ Menu::Menu(string nameGiven, string commandGiven) {
 
 Menu::~Menu() {
     for (int i = 0; i < menuItems.size(); ++i) {
-        cout << "deleting Menu: " + menuItems[i]->getName() << endl;
+
+        cout << "deleting Menu Item: " + menuItems[i]->getName() << endl;
         delete menuItems[i];
     }
+    cout << "delete Menu: " + this->getName() << endl;
     menuItems.clear();
 }
 
 void Menu::run() {
     this->toString();
     MenuItem *item;
-    while ((item = this->findMenuItem())!= nullptr){
+    while ((item = this->findMenuItem())){
         item->run();
         this->toString();
-    }
-    if(name == MAIN_MENU_NAME){
-        cout << "Finishing program." << endl;
-        delete this;
     }
 }
 
