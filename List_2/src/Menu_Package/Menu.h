@@ -33,12 +33,12 @@ public:
 
     MenuItem *findMenuItem();
 
-    void addMenuItem(MenuItem *itemToAdd);
+    bool addMenuItem(MenuItem *itemToAdd);
+    bool deleteMenuItem(string command);
 
 
 private:
     vector<MenuItem *> menuItems;
-    string providedCommand;
 };
 
 

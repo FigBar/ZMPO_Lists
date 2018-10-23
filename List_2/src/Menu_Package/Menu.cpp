@@ -85,7 +85,7 @@ MenuItem *Menu::findMenuItem() {
     return nullptr;
 }
 
-void Menu::addMenuItem(MenuItem *itemToAdd) {
+bool Menu::addMenuItem(MenuItem *itemToAdd) {
     bool contains = false;
     for (int i = 0; i < menuItems.size(); ++i) {
         if (menuItems[i]->getName() == itemToAdd->getName() || menuItems[i]->getCommand() == itemToAdd->getCommand())
@@ -93,6 +93,18 @@ void Menu::addMenuItem(MenuItem *itemToAdd) {
     }
     if (!contains)
         menuItems.push_back(itemToAdd);
+    return contains;
+}
+
+bool Menu::deleteMenuItem(string command) {
+    for (int i = 0; i < menuItems.size() ; ++i) {
+        if(menuItems[i]->getCommand() == command){
+            delete menuItems.at(i);
+            menuItems.erase(menuItems.begin() + i);
+            return true;
+        }
+    }
+    return false;
 }
 
 string Menu::getName() {
