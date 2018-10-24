@@ -5,6 +5,9 @@
 #ifndef LIST_2_MENUCOMMAND_H
 #define LIST_2_MENUCOMMAND_H
 
+#define DELETION_PROMPT "###Deleting MenuCommand: "
+#define EMPTY_COMMAND "Empty command"
+
 #include "MenuItem.h"
 #include "Command_Package/Command.h"
 

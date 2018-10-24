@@ -4,7 +4,7 @@
 
 #ifndef LIST_2_CLONETABLE_H
 #define LIST_2_CLONETABLE_H
-
+#define CLONE_REQUEST "Please provide index of Table you want to clone"
 
 #include "../../MenuCommand.h"
 #include "ListOneCommand.h"

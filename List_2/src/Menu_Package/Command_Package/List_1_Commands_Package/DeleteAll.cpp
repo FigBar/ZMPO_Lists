@@ -17,7 +17,7 @@ void DeleteAll::runCommand() {
 
 void DeleteAll::deleteAll() {
     if (handler->getVector().empty())
-        cout << "There's nothing to delete" << endl;
+        cout << DELETION_EMPTY_LIST << endl;
 
     for (int i = 0; i < handler->getVector().size(); ++i) {
         delete handler->getVector()[i];

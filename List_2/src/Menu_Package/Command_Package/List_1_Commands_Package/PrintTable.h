@@ -6,6 +6,8 @@
 #define LIST_2_PRINTTABLE_H
 
 
+#define PROVIDE_PRINT_INDEX "Please provide index of Table you want to get information about"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 

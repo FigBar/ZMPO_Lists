@@ -13,12 +13,12 @@ PrintTable::PrintTable(TableHandler &handler) : ListOneCommand(handler) {
 void PrintTable::runCommand() {
     int index;
     if (!handler->getVector().empty()) {
-        cout << "Please provide index of Table you want to get information about" << endl;
+        cout << PROVIDE_PRINT_INDEX << endl;
         index = Utils::provideAnInt(0, handler->getVector().size() - 1);
         if (index >= 0 && index < handler->getVector().size()) {
             cout << handler->getVector()[index]->toString() << endl;
         } else
-            cout << "Operation failed, you provided invalid index :/" << endl;
+            cout << OPERATION_FAILED << endl;
     } else {
-        cout << "The list of Tables is empty" << endl;
+        cout << EMPTY_LIST << endl;
     }}

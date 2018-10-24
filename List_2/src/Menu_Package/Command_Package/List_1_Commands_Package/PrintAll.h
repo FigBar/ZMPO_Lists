@@ -6,6 +6,8 @@
 #define LIST_2_PRINTALL_H
 
 
+#define LIST_HEADER "------LIST_OF_TABLE_OBJECTS------"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 

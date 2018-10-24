@@ -6,6 +6,10 @@
 #define LIST_2_SETNAME_H
 
 
+#define NEW_NAME_REQUEST "Please provide new name of chosen Table"
+
+#define MODIFIED_INDEX_REQUEST "Please provide index of Table you want to modify"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 #include <string>

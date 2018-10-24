@@ -6,6 +6,8 @@
 #define LIST_2_DELETEALL_H
 
 
+#define DELETION_EMPTY_LIST "There's nothing to delete"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 

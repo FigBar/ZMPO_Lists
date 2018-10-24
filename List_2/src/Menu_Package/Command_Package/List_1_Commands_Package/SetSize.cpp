@@ -17,19 +17,19 @@ SetSize::SetSize(TableHandler &handler) : ListOneCommand(handler) {
 void SetSize::runCommand() {
     int index;
     if (!handler->getVector().empty()) {
-        cout << "Please provide index of Table you want to modify" << endl;
+        cout << MODIFIED_INDEX_REQUEST << endl;
         index = Utils::provideAnInt(0, handler->getVector().size() - 1);
-        cout << "Now provide new length of chosen Table" << endl;
+        cout << NEW_LENGTH_REQUEST << endl;
         int newSize;
         newSize = Utils::provideInt(1, INT_MAX);
 
         if (changeSize(index, newSize)) {
-            cout << "Operation carried out successfully" << endl;
+            cout << OPERATION_SUCCESSED << endl;
         } else {
-            cout << "Operation failed, you provided invalid index or invalid table length :/" << endl;
+            cout << OPERATION_FAILED << endl;
         };
     } else {
-        cout << "The list of Tables is empty" << endl;
+        cout << EMPTY_LIST << endl;
     }
 }
 

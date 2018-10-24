@@ -4,7 +4,9 @@
 
 #ifndef LIST_2_LISTONECOMMAND_H
 #define LIST_2_LISTONECOMMAND_H
-
+#define OPERATION_FAILED "Operation failed, you provided invalid index :/"
+#define OPERATION_SUCCESSED "Operation carried out successfully"
+#define EMPTY_LIST "The list of Tables is empty"
 
 #include "../Command.h"
 #include "../../TableHandler_Package/TableHandler.h"

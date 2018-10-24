@@ -13,13 +13,13 @@ createMultipleTables::createMultipleTables(TableHandler &handler) : ListOneComma
 
 void createMultipleTables::runCommand() {
     int amount;
-    cout << "How many Table object do you want to create?" << endl;
+    cout << AMOUNT_REQUEST << endl;
     amount = Utils::provideInt(0, INT_MAX);
     if (Utils::yesOrNo()) {
         for (int i = 0; i < amount; ++i) {
-            cout << "Now let's give your Table a name." << "\n";
+            cout << NAME_REQUEST << "\n";
             string givenName = Utils::provideString();
-            cout << "Ok, what should be its length?" << endl;
+            cout << LENGTH_REQUEST << endl;
             int givenInt = Utils::provideInt(0, INT_MAX);
             addParametrizedSingleTable(givenName, givenInt);
         }

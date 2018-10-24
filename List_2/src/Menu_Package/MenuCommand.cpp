@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "MenuCommand.h"
-#define DEFAULT_COMMAND "Empty command";
+
 
 MenuCommand::MenuCommand(string nameGiven, string commandGiven) {
     name = nameGiven;
@@ -18,15 +18,15 @@ MenuCommand::MenuCommand(string nameGiven, string commandGiven, Command *comObje
 }
 
 MenuCommand::~MenuCommand() {
-    cout << "Deleting MenuCommand: " << this->getName() << endl;
+    cout << DELETION_PROMPT << this->getName() << endl;
     delete command1;
 }
 
 void MenuCommand::run() {
-    if(command1)
-        command1 ->runCommand();
+    if (command1)
+        command1->runCommand();
     else {
-        cout << DEFAULT_COMMAND;
+        cout << EMPTY_COMMAND;
         cout << endl;
     }
 }

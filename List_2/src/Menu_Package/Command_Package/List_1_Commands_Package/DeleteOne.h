@@ -6,6 +6,8 @@
 #define LIST_2_DELETEONE_H
 
 
+#define DELETION_INDEX_REQUEST "Please provide the number of Table object you want to remove."
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 

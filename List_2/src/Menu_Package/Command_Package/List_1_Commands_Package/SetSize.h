@@ -6,6 +6,10 @@
 #define LIST_2_SETSIZE_H
 
 
+#define MODIFIED_INDEX_REQUEST "Please provide index of Table you want to modify"
+
+#define NEW_LENGTH_REQUEST "Now provide new length of chosen Table"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 

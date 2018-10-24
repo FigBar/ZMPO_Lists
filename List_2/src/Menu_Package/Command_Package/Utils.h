@@ -5,6 +5,12 @@
 #ifndef LIST_2_UTILS_H
 #define LIST_2_UTILS_H
 
+#define YES_OR_NO "Do you want to create a parametrized object? (Y/N)?: "
+
+#define PROVIDE_INT "Provide an integer between "
+
+#define PROVIDE_STRING "Please provide a string."
+
 #include <string>
 
 using namespace std;

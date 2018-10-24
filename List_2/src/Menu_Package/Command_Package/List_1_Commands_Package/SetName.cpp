@@ -15,16 +15,16 @@ SetName::SetName(TableHandler &handler) : ListOneCommand(handler) {
 void SetName::runCommand() {
     int index;
     if (!handler->getVector().empty()) {
-        cout << "Please provide index of Table you want to modify" << endl;
+        cout << MODIFIED_INDEX_REQUEST << endl;
         index = Utils::provideAnInt(0, handler->getVector().size() - 1);
-        cout << "Please provide new name of chosen Table" << endl;
+        cout << NEW_NAME_REQUEST << endl;
         if (changeName(index, Utils::provideString())) {
-            cout << "Operation carried out successfully" << endl;
+            cout << OPERATION_SUCCESSED << endl;
         } else {
-            cout << "Operation failed, you provided invalid index :/" << endl;
+            cout << OPERATION_FAILED << endl;
         };
     } else {
-        cout << "The list of Tables is empty" << endl;
+        cout << EMPTY_LIST << endl;
     }
 }
 

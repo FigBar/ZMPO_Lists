@@ -5,6 +5,9 @@
 #ifndef LIST_2_CREATEMULTIPLETABLES_H
 #define LIST_2_CREATEMULTIPLETABLES_H
 
+#define AMOUNT_REQUEST "How many Table object do you want to create?"
+#define NAME_REQUEST "Now let's give your Table a name."
+#define LENGTH_REQUEST "Ok, what should be its length?"
 
 #include "../Command.h"
 #include "ListOneCommand.h"

@@ -19,14 +19,13 @@
 #include <iostream>
 #include <sstream>
 
+#define MENU_1 "Menu 1"
 using namespace std;
-#define DEFAULT_NAME "Menu"
-#define DEFAULT_COMMAND "No commands"
-#define FINISH "back"
+
 
 Menu::Menu() {
-    name = DEFAULT_NAME;
-    command = DEFAULT_COMMAND;
+    name = MENU_1;
+    command = COMMAND_1;
 }
 
 Menu::Menu(string nameGiven, string commandGiven) {
@@ -36,51 +35,46 @@ Menu::Menu(string nameGiven, string commandGiven) {
 
 Menu::~Menu() {
     for (int i = 0; i < menuItems.size(); ++i) {
-
-        cout << "deleting Menu Item: " + menuItems[i]->getName() << endl;
         delete menuItems[i];
     }
-    cout << "delete Menu: " + this->getName() << endl;
+    cout << DELETION_MENU_PROMPT + this->getName() << endl;
     menuItems.clear();
 }
 
 void Menu::run() {
     this->toString();
     MenuItem *item;
-    while ((item = this->findMenuItem())){
+    while ((item = this->findMenuItem())) {
         item->run();
         this->toString();
     }
 }
 
 void Menu::toString() {
-    cout << "Menu name: " << name << endl << "Menu command: " << command << endl;
-    cout << "_________________________________________________" << endl;
+    cout << MENU_NAME << name << endl << MENU_COMMAND << command << endl;
+    cout << MENU_SEPARATOR << endl;
     for (int i = 0; i < menuItems.size(); ++i) {
         stringstream stream1;
         stream1 << i + 1 << ". ";
-        stream1 << "Name: ";
+        stream1 << NAME;
         stream1 << menuItems[i]->getName() << endl;
-        stream1 << "Command: ";
+        stream1 << COMMAND;
         stream1 << menuItems[i]->getCommand() << endl;
         string str1 = stream1.str();
         cout << str1;
     }
-    cout <<"___________________________________________________" << endl;
+    cout << MENU_SEPARATOR << endl;
 }
-
-
-
 
 
 MenuItem *Menu::findMenuItem() {
     string givenCommand;
     while ((givenCommand = Utils::provideString()) != FINISH) {
         for (int i = 0; i < menuItems.size(); ++i) {
-            if(menuItems[i]->getCommand() == givenCommand)
+            if (menuItems[i]->getCommand() == givenCommand)
                 return menuItems[i];
         }
-        cout << "Invalid command, try again :/" << endl;
+        cout << INVALID_COMMAND << endl;
     }
     return nullptr;
 }
@@ -97,8 +91,8 @@ bool Menu::addMenuItem(MenuItem *itemToAdd) {
 }
 
 bool Menu::deleteMenuItem(string command) {
-    for (int i = 0; i < menuItems.size() ; ++i) {
-        if(menuItems[i]->getCommand() == command){
+    for (int i = 0; i < menuItems.size(); ++i) {
+        if (menuItems[i]->getCommand() == command) {
             delete menuItems.at(i);
             menuItems.erase(menuItems.begin() + i);
             return true;

@@ -13,7 +13,7 @@ bool Utils::yesOrNo() {
     char input;
 
     do {
-        cout << "Do you want to create a parametrized object? " << " (Y/N)?: ";
+        cout << YES_OR_NO;
         cin >> answer;
 
         input = answer.at(0);
@@ -26,7 +26,7 @@ bool Utils::yesOrNo() {
 }
 
 int Utils::provideAnInt(int lowerBound, int higherBound) {
-    cout << "Provide an integer between " << lowerBound << " and " << higherBound << ": ";
+    cout << PROVIDE_INT << lowerBound << " and " << higherBound << ": ";
 
     int answer;
 
@@ -60,7 +60,7 @@ int Utils::provideInt(int lowerBound, int higherBound) {
 string Utils::provideString() {
 
     string givenName;
-    cout << "Please provide a string." << endl;
+    cout << PROVIDE_STRING << endl;
     while(givenName.empty()) {
         getline(cin,  givenName);
     }

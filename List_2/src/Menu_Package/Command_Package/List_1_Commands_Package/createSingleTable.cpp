@@ -17,10 +17,10 @@ createSingleTable::createSingleTable(TableHandler &handler) : ListOneCommand(han
 
 void createSingleTable::runCommand() {
     if (Utils::yesOrNo()) {
-        cout << "Now let's give your Table a name." << endl;
+        cout << NAME_REQUEST << endl;
         string givenName = Utils::provideString();
 
-        cout << "Ok, what should be its length?" << endl;
+        cout << LENGTH_REQUEST << endl;
         int givenInt = Utils::provideInt(0, INT_MAX);
         addParametrizedSingleTable(givenName, givenInt);
 

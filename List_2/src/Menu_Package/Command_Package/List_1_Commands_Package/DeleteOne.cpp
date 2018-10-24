@@ -17,15 +17,15 @@ void DeleteOne::runCommand() {
 void DeleteOne::singleDelete() {
     int index;
     if (!handler->getVector().empty()) {
-        cout << "Please provide the number of Table object you want to remove." << endl;
+        cout << DELETION_INDEX_REQUEST << endl;
         index = Utils::provideAnInt(0, handler->getVector().size() - 1);
         if (removeTable(index)) {
-            cout << "Operation carried out successfully" << endl;
+            cout << OPERATION_SUCCESSED << endl;
         } else {
-            cout << "Operation failed, you provided invalid index :/" << endl;
+            cout << OPERATION_FAILED << endl;
         };
     } else {
-        cout << "There's nothing to remove." << endl;
+        cout << EMPTY_LIST << endl;
     }
 }
 

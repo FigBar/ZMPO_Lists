@@ -16,20 +16,20 @@ void InsertNumber::runCommand() {
         int index;
         int vectorIndex;
         int value;
-        cout << "Please provide index of Table to which you want to assign a new value" << endl;
+        cout << PROVIDE_TABLE_INDEX << endl;
         vectorIndex = Utils::provideAnInt(0, handler->getVector().size() - 1);
-        cout << "Now provide Table's index you want to assign to" << endl;
+        cout << PROVIDE_NUMBER_INDEX << endl;
         index = Utils::provideAnInt(0, handler->getVector().at(vectorIndex)->getSize() - 1);
-        cout << "At final, please provide the value you want to assign" << endl;
+        cout << PROVIDE_NEW_VALUE << endl;
         value = Utils::provideInt(-INT_MAX, INT_MAX);
 
         if (setValueInTable(vectorIndex, index, value)) {
-            cout << "Operation carried out successfully" << endl;
+            cout << OPERATION_SUCCESSED << endl;
         } else {
-            cout << "Operation failed, you provided invalid index :/" << endl;
+            cout << OPERATION_FAILED << endl;
         };
     } else {
-        cout << "The list of Tables is empty" << endl;
+        cout << EMPTY_LIST << endl;
     }
 }
 

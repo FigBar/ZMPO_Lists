@@ -6,6 +6,10 @@
 #define LIST_2_CREATESINGLETABLE_H
 
 
+#define NAME_REQUEST "Now let's give your Table a name."
+
+#define LENGTH_REQUEST "Ok, what should be its length?"
+
 #include "../Command.h"
 #include "ListOneCommand.h"
 #include "../../TableHandler_Package/TableHandler.h"
