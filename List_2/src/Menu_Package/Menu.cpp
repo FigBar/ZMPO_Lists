@@ -18,6 +18,7 @@
 #include "Command_Package/List_1_Commands_Package/PrintAll.h"
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #define MENU_1 "Menu 1"
 using namespace std;
@@ -70,6 +71,7 @@ void Menu::toString() {
 MenuItem *Menu::findMenuItem() {
     string givenCommand;
     while ((givenCommand = Utils::provideString()) != FINISH) {
+        transform(givenCommand.begin(), givenCommand.end(), givenCommand.begin(), ::tolower);
         for (int i = 0; i < menuItems.size(); ++i) {
             if (menuItems[i]->getCommand() == givenCommand)
                 return menuItems[i];
