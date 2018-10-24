@@ -6,6 +6,8 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <algorithm>
+
 using namespace std;
 
 bool Utils::yesOrNo() {
@@ -64,6 +66,6 @@ string Utils::provideString() {
     while(givenName.empty()) {
         getline(cin,  givenName);
     }
-
+    transform(givenName.begin(), givenName.end(), givenName.begin(), ::tolower);
     return givenName;
 }
