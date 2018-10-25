@@ -51,6 +51,7 @@ public:
 
 private:
     vector<MenuItem *> menuItems;
+    string provideCommand();
 };
 
 

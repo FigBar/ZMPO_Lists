@@ -70,8 +70,7 @@ void Menu::toString() {
 
 MenuItem *Menu::findMenuItem() {
     string givenCommand;
-    while ((givenCommand = Utils::provideString()) != FINISH) {
-        transform(givenCommand.begin(), givenCommand.end(), givenCommand.begin(), ::tolower);
+    while ((givenCommand = provideCommand()) != FINISH) {
         for (int i = 0; i < menuItems.size(); ++i) {
             if (menuItems[i]->getCommand() == givenCommand)
                 return menuItems[i];
@@ -101,6 +100,13 @@ bool Menu::deleteMenuItem(string command) {
         }
     }
     return false;
+}
+
+string Menu::provideCommand() {
+    string givenCommand;
+    givenCommand = Utils::provideString();
+    transform(givenCommand.begin(), givenCommand.end(), givenCommand.begin(), ::tolower);
+    return givenCommand;
 }
 
 string Menu::getName() {

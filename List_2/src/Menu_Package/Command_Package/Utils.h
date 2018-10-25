@@ -26,6 +26,8 @@ public:
     static int provideInt(int lowerBound, int higherBound);
 
     static string provideString();
+
+    static string provideCommand();
 };
 
 
