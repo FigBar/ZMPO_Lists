@@ -14,7 +14,7 @@
 class ListOneCommand : public Command {
 public:
     ListOneCommand(TableHandler &handler);
-    virtual ~ListOneCommand();
+
 
 protected:
     TableHandler *handler;
