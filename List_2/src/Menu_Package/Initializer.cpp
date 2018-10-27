@@ -14,6 +14,11 @@
 #include "Command_Package/List_1_Commands_Package/DeleteAll.h"
 #include "Command_Package/List_1_Commands_Package/PrintTable.h"
 #include "Command_Package/List_1_Commands_Package/PrintAll.h"
+#include "Command_Package/CalculatorPackage/Commands/ChangeA.h"
+#include "Command_Package/CalculatorPackage/Commands/ChangeB.h"
+#include "Command_Package/CalculatorPackage/Commands/Add.h"
+#include "Command_Package/CalculatorPackage/Commands/Substract.h"
+#include "Command_Package/CalculatorPackage/Commands/Reset.h"
 
 Menu *Initializer::initialize(TableHandler &handler1) {
     Menu *mainMenu = new Menu(MAIN_MENU, MAIN_COMMAND);
@@ -46,6 +51,23 @@ Menu *Initializer::initialize(TableHandler &handler1) {
     printMenu->addMenuItem(new MenuCommand(PRINT_1, PR_1_COM, new PrintTable(handler1)));
     printMenu->addMenuItem(new MenuCommand(PRINT_2, PR_2_COM, new PrintAll(handler1)));
     mainMenu->addMenuItem(printMenu);
+
+    return mainMenu;
+}
+
+Menu *Initializer::initializeCalculator(int &a, int &b) {
+    Menu *mainMenu = new Menu(MAIN_MENU, MAIN_COMMAND);
+
+    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe A", "zma", new ChangeA(a, b)));
+    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe B", "zmb", new ChangeB(a,b)));
+
+    Menu *opMenu = new Menu("Operacje", "op");
+    opMenu->addMenuItem(new MenuCommand("Dodaj", "dod", new Add(a,b)));
+    opMenu->addMenuItem(new MenuCommand("Odejmij", "ode", new Substract(a,b)));
+    opMenu->addMenuItem(new MenuCommand("default command", "defcom", new Command()));
+
+    mainMenu->addMenuItem(opMenu);
+    mainMenu->addMenuItem(new MenuCommand("Reset", "res", new Reset(a,b)));
 
     return mainMenu;
 }

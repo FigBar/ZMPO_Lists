@@ -3,7 +3,7 @@
 //
 
 #include "Menu.h"
-#include "Command_Package/Utils.h"
+/*#include "Command_Package/Utils.h"
 #include "TableHandler_Package/TableHandler.h"
 #include "MenuCommand.h"
 #include "Command_Package/List_1_Commands_Package/createSingleTable.h"
@@ -15,7 +15,8 @@
 #include "Command_Package/List_1_Commands_Package/DeleteOne.h"
 #include "Command_Package/List_1_Commands_Package/DeleteAll.h"
 #include "Command_Package/List_1_Commands_Package/PrintTable.h"
-#include "Command_Package/List_1_Commands_Package/PrintAll.h"
+#include "Command_Package/List_1_Commands_Package/PrintAll.h"*/
+#include "../utils/Utils.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>

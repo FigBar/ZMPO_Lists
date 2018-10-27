@@ -42,6 +42,7 @@
 class Initializer {
 public:
     static Menu *initialize(TableHandler &handler1);
+    static Menu *initializeCalculator(int &a, int &b);
 };
 
 
