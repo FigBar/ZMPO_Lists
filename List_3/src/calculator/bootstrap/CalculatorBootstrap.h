@@ -11,7 +11,7 @@
 
 class CalculatorBootstrap {
 public:
-    static Menu *initializeCalculator(int &a, int &b);
+    static Menu *initializeCalculator(MenuAnalyzer &analyzer, int &a, int &b);
 };
 
 

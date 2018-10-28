@@ -5,12 +5,13 @@
 #ifndef LIST_3_MENUANALYZER_H
 #define LIST_3_MENUANALYZER_H
 
+#include <string>
+using namespace std;
 
-#include "../user_interface/Menu.h"
-
+class Menu;
 class MenuAnalyzer {
 public:
-    void searchForCommand(const string &commandToFind, string &path);
+    void searchForCommand(Menu *menu, const string &commandToFind, string path);
     void setMainMenu (Menu &mainMenu);
 
 private:

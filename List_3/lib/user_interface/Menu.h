@@ -12,8 +12,7 @@
 #define MENU_NAME "Menu name: "
 #define MENU_COMMAND "Menu command: "
 #define MENU_SEPARATOR "#########################################"
-#define NAME "Name: "
-#define COMMAND "Command: "
+
 
 #define COMMAND_1 "Command 1"
 
@@ -49,7 +48,7 @@ public:
 
     string getName();
 
-public:
+    vector<MenuItem *> getVector();
 
     bool findMenuItemAndRun(const string &commandToRun);
 

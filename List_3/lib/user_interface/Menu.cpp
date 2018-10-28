@@ -21,7 +21,7 @@ Menu::Menu() {
 Menu::Menu(string nameGiven, string commandGiven, MenuAnalyzer &analyzer) {
     name = nameGiven;
     command = commandGiven;
-    *(this->analyzer) = analyzer;
+    this->analyzer = &analyzer;
 }
 
 Menu::~Menu() {
@@ -45,7 +45,7 @@ void Menu::run() {
             valid = showDescription(userChoice.substr(MIN_HELP_LENGTH, userChoice.length()));
         } else if (userChoice.length() > MIN_SEARCH_LENGTH && userChoice.substr(0, MIN_SEARCH_LENGTH) == SEARCH_COMMAND) {
             string path;
-            analyzer->searchForCommand(userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), path);
+            analyzer->searchForCommand(NULL, userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), path);
             valid = true;
         } else {
             valid = findMenuItemAndRun(userChoice);
@@ -121,6 +121,10 @@ string Menu::getName() {
 
 string Menu::getCommand() {
     return this->command;
+}
+
+vector<MenuItem *> Menu::getVector() {
+    return menuItems;
 }
 
 

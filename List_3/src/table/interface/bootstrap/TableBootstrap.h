@@ -24,7 +24,7 @@
 #define CH_1_COM "name"
 #define CHANGE_2 "Set Size"
 #define CH_2_COM "size"
-#define CHANGE_3 "Insert numbereturn nullptr;r"
+#define CHANGE_3 "Insert number"
 #define CH_3_COM "insert"
 #define DELETE_MENU "Delete Tables"
 #define DELETE_COMMAND "delete"
@@ -41,7 +41,7 @@
 
 class TableBootstrap {
 public:
-    static Menu *initializeTableMenu(TableHandler &handler1);
+    static Menu *initializeTableMenu(MenuAnalyzer &analyzer, TableHandler &handler1);
 };
 
 

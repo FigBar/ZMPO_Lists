@@ -7,7 +7,8 @@
 int main() {
     Menu *mainMenu;
     TableHandler *handler1 = new TableHandler();
-    mainMenu = TableBootstrap::initializeTableMenu(*handler1);
+    MenuAnalyzer *analyzer1 = new MenuAnalyzer();
+    mainMenu = TableBootstrap::initializeTableMenu(*analyzer1, *handler1);
     mainMenu->run();
     delete handler1;
    /* int *a = new int();
