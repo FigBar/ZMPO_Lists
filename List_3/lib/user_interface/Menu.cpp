@@ -3,25 +3,13 @@
 //
 
 #include "Menu.h"
-/*#include "Command_Package/Utils.h"
-#include "TableHandler_Package/TableHandler.h"
-#include "MenuCommand.h"
-#include "Command_Package/List_1_Commands_Package/createSingleTable.h"
-#include "Command_Package/List_1_Commands_Package/createMultipleTables.h"
-#include "Command_Package/List_1_Commands_Package/CloneTable.h"
-#include "Command_Package/List_1_Commands_Package/SetName.h"
-#include "Command_Package/List_1_Commands_Package/SetSize.h"
-#include "Command_Package/List_1_Commands_Package/InsertNumber.h"
-#include "Command_Package/List_1_Commands_Package/DeleteOne.h"
-#include "Command_Package/List_1_Commands_Package/DeleteAll.h"
-#include "Command_Package/List_1_Commands_Package/PrintTable.h"
-#include "Command_Package/List_1_Commands_Package/PrintAll.h"*/
 #include "../utils/Utils.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 
 #define MENU_1 "Menu 1"
+#define USERS_CHOICE_REQUEST "Please provide the command you want to execute: "
 using namespace std;
 
 
@@ -44,12 +32,24 @@ Menu::~Menu() {
 }
 
 void Menu::run() {
-    this->toString();
-    MenuItem *item;
-    while ((item = this->findMenuItem())) {
-        item->run();
+    string userChoice;
+    bool valid;
+    do {
         this->toString();
-    }
+        cout << USERS_CHOICE_REQUEST;
+
+        userChoice = Utils::provideString();
+        transform(userChoice.begin(), userChoice.end(), userChoice.begin(), ::tolower);
+        if (userChoice.length() > MIN_HELP_LENGTH && userChoice.substr(0, MIN_HELP_LENGTH) == HELP_COMMAND) {
+            valid = showDescription(userChoice.substr(MIN_HELP_LENGTH, userChoice.length()));
+        } else {
+            valid = findMenuItemAndRun(userChoice);
+        }
+
+        if (!valid && userChoice != FINISH)
+            cout << INVALID_COMMAND << endl;
+
+    } while (userChoice != FINISH);
 }
 
 void Menu::toString() {
@@ -91,24 +91,26 @@ bool Menu::deleteMenuItem(string command) {
     return false;
 }
 
-MenuItem *Menu::findMenuItem() {
-    string givenCommand;
-    while ((givenCommand = provideCommand()) != FINISH) {
-        for (int i = 0; i < menuItems.size(); ++i) {
-            if (menuItems[i]->getCommand() == givenCommand)
-                return menuItems[i];
+bool Menu::showDescription(const string &commandToFind) {
+    for (int i = 0; i < menuItems.size(); ++i) {
+        if (commandToFind == menuItems[i]->getCommand()) {
+            cout << endl << menuItems[i]->getName() << endl;
+            return true;
         }
-        cout << INVALID_COMMAND << endl;
     }
-    return nullptr;
+    return false;
 }
 
-string Menu::provideCommand() {
-    string givenCommand;
-    givenCommand = Utils::provideString();
-    transform(givenCommand.begin(), givenCommand.end(), givenCommand.begin(), ::tolower);
-    return givenCommand;
+bool Menu::findMenuItemAndRun(const string &commandToRun) {
+    for (int i = 0; i < menuItems.size(); ++i) {
+        if (menuItems[i]->getCommand() == commandToRun) {
+            menuItems[i]->run();
+            return true;
+        }
+    }
+    return false;
 }
+
 
 string Menu::getName() {
     return this->name;

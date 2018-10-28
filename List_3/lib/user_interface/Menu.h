@@ -17,6 +17,10 @@
 
 #define COMMAND_1 "Command 1"
 
+#define MIN_HELP_LENGTH 5
+
+#define HELP_COMMAND "help "
+
 #include <vector>
 #include "MenuItem.h"
 
@@ -42,7 +46,9 @@ public:
 
 public:
 
-    MenuItem *findMenuItem();
+    bool findMenuItemAndRun(const string &commandToRun);
+
+    bool showDescription(const string &commandToFind);
 
     bool addMenuItem(MenuItem *itemToAdd);
 
@@ -51,7 +57,7 @@ public:
 
 private:
     vector<MenuItem *> menuItems;
-    string provideCommand();
+
 };
 
 
