@@ -18,9 +18,10 @@ Menu::Menu() {
     command = COMMAND_1;
 }
 
-Menu::Menu(string nameGiven, string commandGiven) {
+Menu::Menu(string nameGiven, string commandGiven, MenuAnalyzer &analyzer) {
     name = nameGiven;
     command = commandGiven;
+    *(this->analyzer) = analyzer;
 }
 
 Menu::~Menu() {
@@ -36,12 +37,16 @@ void Menu::run() {
     bool valid;
     do {
         this->toString();
-        cout << USERS_CHOICE_REQUEST;
+        cout << USERS_CHOICE_REQUEST << endl;
 
         userChoice = Utils::provideString();
         transform(userChoice.begin(), userChoice.end(), userChoice.begin(), ::tolower);
         if (userChoice.length() > MIN_HELP_LENGTH && userChoice.substr(0, MIN_HELP_LENGTH) == HELP_COMMAND) {
             valid = showDescription(userChoice.substr(MIN_HELP_LENGTH, userChoice.length()));
+        } else if (userChoice.length() > MIN_SEARCH_LENGTH && userChoice.substr(0, MIN_SEARCH_LENGTH) == SEARCH_COMMAND) {
+            string path;
+            analyzer->searchForCommand(userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), path);
+            valid = true;
         } else {
             valid = findMenuItemAndRun(userChoice);
         }
@@ -58,10 +63,8 @@ void Menu::toString() {
     for (int i = 0; i < menuItems.size(); ++i) {
         stringstream stream1;
         stream1 << i + 1 << ". ";
-        stream1 << NAME;
-        stream1 << menuItems[i]->getName() << endl;
-        stream1 << COMMAND;
-        stream1 << menuItems[i]->getCommand() << endl;
+        stream1 << menuItems[i]->getName() << " ";
+        stream1 << "(" << menuItems[i]->getCommand() << ")" << endl;
         string str1 = stream1.str();
         cout << str1;
     }

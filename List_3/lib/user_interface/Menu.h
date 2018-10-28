@@ -21,8 +21,13 @@
 
 #define HELP_COMMAND "help "
 
+#define MIN_SEARCH_LENGTH 7
+
+#define SEARCH_COMMAND "search "
+
 #include <vector>
 #include "MenuItem.h"
+#include "../utils/MenuAnalyzer.h"
 
 
 using namespace std;
@@ -32,7 +37,7 @@ class Menu : public MenuItem {
 public:
     Menu();
 
-    Menu(string name, string command);
+    Menu(string name, string command, MenuAnalyzer &analyzer);
 
     ~Menu();
 
@@ -57,6 +62,7 @@ public:
 
 private:
     vector<MenuItem *> menuItems;
+    MenuAnalyzer *analyzer;
 
 };
 
