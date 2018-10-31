@@ -19,8 +19,10 @@
 #define HELP_COMMAND "help "
 #define MIN_SEARCH_LENGTH 7
 #define SEARCH_COMMAND "search "
-#define MIN_SAVE_LENGTH 5
+#define MIN_SERIALIZE_LENGTH 5
 #define SAVE_COMMAND "save "
+
+#define LOAD_COMMAND "load "
 
 #include <vector>
 #include "MenuItem.h"
@@ -33,6 +35,8 @@ class Menu : public MenuItem {
 
 public:
     Menu();
+
+    Menu(string name, string command);
 
     Menu(string name, string command, MenuAnalyzer &analyzer);
 

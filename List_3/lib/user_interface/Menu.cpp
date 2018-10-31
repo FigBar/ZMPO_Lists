@@ -20,6 +20,11 @@ Menu::Menu() {
     command = COMMAND_1;
 }
 
+Menu::Menu(string name, string command) {
+    this->name = name;
+    this->command = command;
+}
+
 Menu::Menu(string nameGiven, string commandGiven, MenuAnalyzer &analyzer) {
     name = nameGiven;
     command = commandGiven;
@@ -49,9 +54,15 @@ void Menu::run() {
                    userChoice.substr(0, MIN_SEARCH_LENGTH) == SEARCH_COMMAND) {
 
             analyzer->searchForCommand(NULL, userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), "", valid);
-        } else if (userChoice.length() > MIN_SAVE_LENGTH && userChoice.substr(0, MIN_SAVE_LENGTH) == SAVE_COMMAND) {
-            string fileName = userChoice.substr(MIN_SAVE_LENGTH, userChoice.length());
-            valid = MenuSerializer::serializeToFile(this, fileName);
+        } else if (userChoice.length() > MIN_SERIALIZE_LENGTH &&
+                   (userChoice.substr(0, MIN_SERIALIZE_LENGTH) == SAVE_COMMAND ||
+                    userChoice.substr(0, MIN_SERIALIZE_LENGTH) == LOAD_COMMAND)) {
+            string choice = userChoice.substr(0, MIN_SERIALIZE_LENGTH);
+            string fileName = userChoice.substr(MIN_SERIALIZE_LENGTH, userChoice.length());
+            if (choice == SAVE_COMMAND)
+                valid = MenuSerializer::serializeToFile(this, fileName);
+            else
+                valid = MenuSerializer::deserializeFromFile(this, fileName);
         } else {
             valid = findMenuItemAndRun(userChoice);
         }

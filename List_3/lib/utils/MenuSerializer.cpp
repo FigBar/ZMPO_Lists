@@ -18,15 +18,20 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
 }
 
 bool MenuSerializer::deserialize(Menu *toChange, string &menuTree) {
-    return false;
+    if(validate(menuTree)) {
+        *toChange = *createMenuFromString(menuTree);
+        return true;
+    } else
+         return false;
 }
 
 bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName) {
-    return false;
+    string menuTree = readFromFile(fileName);
+    return deserialize(toChange, menuTree);
 }
 
 bool MenuSerializer::validate(string menuTree) {
-    return false;
+    return true;
 }
 
 bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
@@ -39,6 +44,16 @@ bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
         toFileStream.close();
         return false;
     }
+}
+
+string MenuSerializer::readFromFile(string &fileName) {
+    ifstream fromFileStream(fileName);
+    string menuTree;
+    if(fromFileStream.is_open()){
+        getline(fromFileStream, menuTree);
+    }
+    fromFileStream.close();
+    return menuTree;
 }
 
 string MenuSerializer::transformMenuToString(Menu *toTransform) {
@@ -65,4 +80,80 @@ string MenuSerializer::transformMenuCommandToString(MenuCommand *toTransform) {
     return stringRepresentation.str();
 }
 
+Menu *MenuSerializer::createMenuFromString(string menuTree) {
+    string name;
+    string command;
+    readNameAndCommand(name, command, menuTree);
+    Menu *menu = new Menu(name, command);
+
+    while(!menuTree.empty()){
+        int subMenuEnd = findClosingChar(menuTree, menuTree[0]);
+        string subMenu = menuTree.substr(0, subMenuEnd + 1);
+        if(subMenuEnd + 2 < menuTree.length() - 1){
+            menuTree = menuTree.substr(subMenuEnd + 2, menuTree.length() - (subMenuEnd + 2));
+        } else {
+            menuTree = "";
+        }
+
+        if (subMenu[0] == '(') {
+            menu->addMenuItem(createMenuFromString(subMenu));
+        } else {
+            menu->addMenuItem(createMenuCommandFromString(subMenu));
+        }
+    }
+    return menu;
+}
+
+MenuCommand *MenuSerializer::createMenuCommandFromString(string menuCommandTree) {
+    MenuCommand *menuCommand;
+    string name;
+    string command;
+    readNameAndCommand(name, command, menuCommandTree);
+    string help = menuCommandTree.substr(1, menuCommandTree.length() - 2);
+    menuCommand = new MenuCommand(name, command, new Command(), help);
+    return menuCommand;
+}
+
+void MenuSerializer::readNameAndCommand(string &name, string &command, string &menuTree) {
+    menuTree = menuTree.substr(2, menuTree.length() - 3);
+    int nameEnd = findClosingChar(menuTree, '\'');
+    name = menuTree.substr(0, nameEnd) + "_loaded";
+    menuTree = menuTree.substr(nameEnd + 3, menuTree.length() - (nameEnd + 3));
+    int commandEnd = findClosingChar(menuTree, '\'');
+    command = menuTree.substr(0, commandEnd);
+    menuTree = menuTree.substr(commandEnd + 2, menuTree.length() - (commandEnd + 2));
+}
+
+int MenuSerializer::findClosingChar(string &menuTree, char opening) {
+    char closing;
+
+    switch (opening) {
+        case '\'':
+            for (int i = 0; i < menuTree.length(); ++i) {
+                if (menuTree[i] == opening)
+                    return i;
+            }
+            return -1;
+        case '(':
+            closing = ')';
+            break;
+        case '[':
+            closing = ']';
+            break;
+        default:
+            return -1;
+    }
+
+    int occurrencesBeforeClosing = 0;
+    for (int j = 0; j < menuTree.length(); ++j) {
+        if (menuTree[j] == opening) {
+            occurrencesBeforeClosing++;
+        } else if (menuTree[j] == closing) {
+            occurrencesBeforeClosing--;
+            if (occurrencesBeforeClosing == 0)
+                return j;
+        }
+    }
+    return -1;
+}
 

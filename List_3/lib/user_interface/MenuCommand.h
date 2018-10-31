@@ -17,6 +17,8 @@ class MenuCommand : public MenuItem {
 public:
     MenuCommand(string nameGiven, string commandGiven);
 
+    MenuCommand(string nameGiven, string commandGiven, string helpPrompt);
+
     MenuCommand(string nameGiven, string commandGiven, Command *comObject);
 
     MenuCommand(string nameGiven, string commandGiven, Command *comObject, string helpPrompt);

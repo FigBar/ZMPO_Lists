@@ -40,9 +40,19 @@ public:
 private:
     static string transformMenuToString(Menu *toTransform);
 
+    static Menu *createMenuFromString(string menuTree);
+
     static string transformMenuCommandToString(MenuCommand *toTransform);
 
+    static MenuCommand *createMenuCommandFromString(string menuCommandTree);
+
     static bool writeToFile(string &menuTree, string &fileName);
+
+    static string readFromFile(string &fileName);
+
+    static void readNameAndCommand(string &name, string &command, string &menuTree);
+
+    static int findClosingChar(string &menuTree, char opening);
 };
 
 

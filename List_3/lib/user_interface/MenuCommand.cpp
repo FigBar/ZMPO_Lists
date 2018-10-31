@@ -13,6 +13,12 @@ MenuCommand::MenuCommand(string nameGiven, string commandGiven) {
     this->helpPrompt = "Default help prompt";
 }
 
+MenuCommand::MenuCommand(string nameGiven, string commandGiven, string helpPrompt) {
+    name = nameGiven;
+    command = commandGiven;
+    this->helpPrompt = helpPrompt;
+}
+
 MenuCommand::MenuCommand(string nameGiven, string commandGiven, Command *comObject) {
     name = nameGiven;
     command = commandGiven;
