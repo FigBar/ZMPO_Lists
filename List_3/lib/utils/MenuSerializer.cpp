@@ -18,11 +18,13 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
 }
 
 bool MenuSerializer::deserialize(Menu *toChange, string &menuTree) {
-    if(validate(menuTree)) {
+    if (validate(menuTree)) {
         *toChange = *createMenuFromString(menuTree);
         return true;
-    } else
-         return false;
+    } else {
+        cout << "The file you tried to read does not exist or it has a invalid format!!!" << endl;
+        return false;
+    }
 }
 
 bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName) {
@@ -31,7 +33,8 @@ bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName) {
 }
 
 bool MenuSerializer::validate(string menuTree) {
-    return true;
+    return !menuTree.empty();
+    //TODO still need to implement a validation algorithm
 }
 
 bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
@@ -49,7 +52,7 @@ bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
 string MenuSerializer::readFromFile(string &fileName) {
     ifstream fromFileStream(fileName);
     string menuTree;
-    if(fromFileStream.is_open()){
+    if (fromFileStream.is_open()) {
         getline(fromFileStream, menuTree);
     }
     fromFileStream.close();
@@ -86,10 +89,10 @@ Menu *MenuSerializer::createMenuFromString(string menuTree) {
     readNameAndCommand(name, command, menuTree);
     Menu *menu = new Menu(name, command);
 
-    while(!menuTree.empty()){
+    while (!menuTree.empty()) {
         int subMenuEnd = findClosingChar(menuTree, menuTree[0]);
         string subMenu = menuTree.substr(0, subMenuEnd + 1);
-        if(subMenuEnd + 2 < menuTree.length() - 1){
+        if (subMenuEnd + 2 < menuTree.length() - 1) {
             menuTree = menuTree.substr(subMenuEnd + 2, menuTree.length() - (subMenuEnd + 2));
         } else {
             menuTree = "";
