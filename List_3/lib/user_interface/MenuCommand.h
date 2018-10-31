@@ -19,6 +19,8 @@ public:
 
     MenuCommand(string nameGiven, string commandGiven, Command *comObject);
 
+    MenuCommand(string nameGiven, string commandGiven, Command *comObject, string helpPrompt);
+
     ~MenuCommand();
 
     void run();
@@ -27,8 +29,11 @@ public:
 
     string getName();
 
+    string getHelp();
+
 private:
     Command *command1;
+    string helpPrompt;
 };
 
 

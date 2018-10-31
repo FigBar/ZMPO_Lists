@@ -12,17 +12,15 @@
 #define MENU_NAME "Menu name: "
 #define MENU_COMMAND "Menu command: "
 #define MENU_SEPARATOR "#########################################"
-
-
 #define COMMAND_1 "Command 1"
-
+#define MENU_1 "Menu 1"
+#define USERS_CHOICE_REQUEST "Please provide the command you want to execute: "
 #define MIN_HELP_LENGTH 5
-
 #define HELP_COMMAND "help "
-
 #define MIN_SEARCH_LENGTH 7
-
 #define SEARCH_COMMAND "search "
+#define MIN_SAVE_LENGTH 5
+#define SAVE_COMMAND "save "
 
 #include <vector>
 #include "MenuItem.h"

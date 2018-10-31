@@ -11,11 +11,11 @@ using namespace std;
 class Menu;
 class MenuAnalyzer {
 public:
-    void searchForCommand(Menu *menu, const string &commandToFind, string path);
+    void searchForCommand(Menu *menu, const string &commandToFind, string path, bool &found);
     void setMainMenu (Menu &mainMenu);
 
 private:
-    Menu *mainMenu;
+    Menu *mainMenu = NULL;
 };
 
 

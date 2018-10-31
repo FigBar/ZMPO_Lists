@@ -4,12 +4,14 @@
 
 #include "Menu.h"
 #include "../utils/Utils.h"
+#include "../utils/MenuAnalyzer.h"
+#include "MenuCommand.h"
+#include "../utils/MenuSerializer.h"
 #include <iostream>
 #include <sstream>
 #include <algorithm>
 
-#define MENU_1 "Menu 1"
-#define USERS_CHOICE_REQUEST "Please provide the command you want to execute: "
+
 using namespace std;
 
 
@@ -34,7 +36,7 @@ Menu::~Menu() {
 
 void Menu::run() {
     string userChoice;
-    bool valid;
+    bool valid = false;
     do {
         this->toString();
         cout << USERS_CHOICE_REQUEST << endl;
@@ -43,10 +45,13 @@ void Menu::run() {
         transform(userChoice.begin(), userChoice.end(), userChoice.begin(), ::tolower);
         if (userChoice.length() > MIN_HELP_LENGTH && userChoice.substr(0, MIN_HELP_LENGTH) == HELP_COMMAND) {
             valid = showDescription(userChoice.substr(MIN_HELP_LENGTH, userChoice.length()));
-        } else if (userChoice.length() > MIN_SEARCH_LENGTH && userChoice.substr(0, MIN_SEARCH_LENGTH) == SEARCH_COMMAND) {
-            string path;
-            analyzer->searchForCommand(NULL, userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), path);
-            valid = true;
+        } else if (userChoice.length() > MIN_SEARCH_LENGTH &&
+                   userChoice.substr(0, MIN_SEARCH_LENGTH) == SEARCH_COMMAND) {
+
+            analyzer->searchForCommand(NULL, userChoice.substr(MIN_SEARCH_LENGTH, userChoice.length()), "", valid);
+        } else if (userChoice.length() > MIN_SAVE_LENGTH && userChoice.substr(0, MIN_SAVE_LENGTH) == SAVE_COMMAND) {
+            string fileName = userChoice.substr(MIN_SAVE_LENGTH, userChoice.length());
+            valid = MenuSerializer::serializeToFile(this, fileName);
         } else {
             valid = findMenuItemAndRun(userChoice);
         }
@@ -97,8 +102,10 @@ bool Menu::deleteMenuItem(string command) {
 bool Menu::showDescription(const string &commandToFind) {
     for (int i = 0; i < menuItems.size(); ++i) {
         if (commandToFind == menuItems[i]->getCommand()) {
-            cout << endl << menuItems[i]->getName() << endl;
-            return true;
+            if (MenuCommand *menuCommand = dynamic_cast<MenuCommand *>(menuItems[i])) {
+                cout << endl << menuCommand->getHelp() << endl;
+                return true;
+            }
         }
     }
     return false;

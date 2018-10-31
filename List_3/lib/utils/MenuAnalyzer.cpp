@@ -7,7 +7,7 @@
 #include "../user_interface/Menu.h"
 #include <iostream>
 
-void MenuAnalyzer::searchForCommand(Menu *menu, const string &commandToFind, string path) {
+void MenuAnalyzer::searchForCommand(Menu *menu, const string &commandToFind, string path, bool &found) {
     if (!menu) {
         menu = mainMenu;
     }
@@ -18,9 +18,10 @@ void MenuAnalyzer::searchForCommand(Menu *menu, const string &commandToFind, str
     for (int i = 0; i < menuItems.size(); ++i) {
         if (menuItems[i]->getCommand() == commandToFind) {
             cout << path << "->" << menuItems[i]->getCommand() << endl;
+            found = true;
         }
         if (Menu *next = dynamic_cast<Menu *>(menuItems[i])) {
-            searchForCommand(next, commandToFind, path);
+            searchForCommand(next, commandToFind, path, found);
         }
     }
 }
