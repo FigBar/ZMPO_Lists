@@ -6,18 +6,13 @@
 #define LIST_3_MENUSERIALIZER_H
 
 #define OP_PARENTHESIS "("
-
 #define APOSTROPHE "'"
-
 #define COMA ","
-
 #define SEMICOLON ";"
-
 #define CL_PARENTHESIS ")"
-
 #define OP_SQ_BRACKET "["
-
 #define CL_SQ_BRACKET "]"
+#define READING_FAILED_PROMPT "The file you tried to read does not exist or it has a invalid format!!!"
 
 #include <string>
 #include "../user_interface/Menu.h"
@@ -31,16 +26,16 @@ public:
 
     static bool serializeToFile(Menu *startPoint, string &fileName);
 
-    static bool deserialize(Menu *toChange, string &menuTree);
+    static bool deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer);
 
-    static bool deserializeFromFile(Menu *toChange, string &fileName);
+    static bool deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer);
 
     static bool validate(string menuTree);
 
 private:
     static string transformMenuToString(Menu *toTransform);
 
-    static Menu *createMenuFromString(string menuTree);
+    static Menu *createMenuFromString(string menuTree, MenuAnalyzer &analyzer);
 
     static string transformMenuCommandToString(MenuCommand *toTransform);
 

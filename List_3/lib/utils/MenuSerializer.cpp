@@ -17,19 +17,19 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
     return writeToFile(menuTree, fileName);
 }
 
-bool MenuSerializer::deserialize(Menu *toChange, string &menuTree) {
+bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer) {
     if (validate(menuTree)) {
-        *toChange = *createMenuFromString(menuTree);
+        *toChange = *createMenuFromString(menuTree, analyzer);
         return true;
     } else {
-        cout << "The file you tried to read does not exist or it has a invalid format!!!" << endl;
+        cout << READING_FAILED_PROMPT << endl;
         return false;
     }
 }
 
-bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName) {
+bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer) {
     string menuTree = readFromFile(fileName);
-    return deserialize(toChange, menuTree);
+    return deserialize(toChange, menuTree, analyzer);
 }
 
 bool MenuSerializer::validate(string menuTree) {
@@ -83,11 +83,11 @@ string MenuSerializer::transformMenuCommandToString(MenuCommand *toTransform) {
     return stringRepresentation.str();
 }
 
-Menu *MenuSerializer::createMenuFromString(string menuTree) {
+Menu *MenuSerializer::createMenuFromString(string menuTree, MenuAnalyzer &analyzer) {
     string name;
     string command;
     readNameAndCommand(name, command, menuTree);
-    Menu *menu = new Menu(name, command);
+    Menu *menu = new Menu(name, command, analyzer);
 
     while (!menuTree.empty()) {
         int subMenuEnd = findClosingChar(menuTree, menuTree[0]);
@@ -99,7 +99,7 @@ Menu *MenuSerializer::createMenuFromString(string menuTree) {
         }
 
         if (subMenu[0] == '(') {
-            menu->addMenuItem(createMenuFromString(subMenu));
+            menu->addMenuItem(createMenuFromString(subMenu, analyzer));
         } else {
             menu->addMenuItem(createMenuCommandFromString(subMenu));
         }

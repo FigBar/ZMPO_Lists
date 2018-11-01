@@ -62,7 +62,7 @@ void Menu::run() {
             if (choice == SAVE_COMMAND)
                 valid = MenuSerializer::serializeToFile(this, fileName);
             else
-                valid = MenuSerializer::deserializeFromFile(this, fileName);
+                valid = MenuSerializer::deserializeFromFile(this, fileName, *(this->analyzer));
         } else {
             valid = findMenuItemAndRun(userChoice);
         }
