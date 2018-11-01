@@ -26,11 +26,11 @@ public:
 
     static bool serializeToFile(Menu *startPoint, string &fileName);
 
-    static bool deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer);
+    static bool deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName);
 
     static bool deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer);
 
-    static bool validate(string menuTree);
+    static bool validate(string menuTree, string fileName);
 
 private:
     static string transformMenuToString(Menu *toTransform);
@@ -48,6 +48,8 @@ private:
     static void readNameAndCommand(string &name, string &command, string &menuTree);
 
     static int findClosingChar(string &menuTree, char opening);
+
+    static bool areParenthesisBalanced(string toValidate, string fileName);
 };
 
 

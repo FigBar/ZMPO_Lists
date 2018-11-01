@@ -74,8 +74,8 @@ void Menu::run() {
 }
 
 void Menu::toString() {
-    cout << MENU_NAME << name << endl << MENU_COMMAND << command << endl;
-    cout << MENU_SEPARATOR << endl;
+    cout << endl << MENU_NAME << name << " (" << command << ")" << endl;
+    cout << MENU_OPTIONS_PROMPT << endl;
     for (int i = 0; i < menuItems.size(); ++i) {
         stringstream stream1;
         stream1 << i + 1 << ". ";

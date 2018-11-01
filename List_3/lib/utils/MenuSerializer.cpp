@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <bits/stdc++.h>
 
 string MenuSerializer::serialize(Menu *startPoint) {
     return transformMenuToString(startPoint);
@@ -17,8 +18,8 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
     return writeToFile(menuTree, fileName);
 }
 
-bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer) {
-    if (validate(menuTree)) {
+bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName) {
+    if (validate(menuTree, fileName)) {
         delete toChange;
         *toChange = *createMenuFromString(menuTree, analyzer);
         return true;
@@ -30,11 +31,11 @@ bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer 
 
 bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer) {
     string menuTree = readFromFile(fileName);
-    return deserialize(toChange, menuTree, analyzer);
+    return deserialize(toChange, menuTree, analyzer, fileName);
 }
 
-bool MenuSerializer::validate(string menuTree) {
-    return !menuTree.empty();
+bool MenuSerializer::validate(string menuTree, string fileName) {
+    return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty());
     //TODO still need to implement a validation algorithm
 }
 
@@ -159,5 +160,44 @@ int MenuSerializer::findClosingChar(string &menuTree, char opening) {
         }
     }
     return -1;
+}
+
+bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) {
+    stack<char> openingStack;
+    char x;
+    for (int i = 0; i < toValidate.length(); ++i) {
+        if (toValidate[i] == '(' || toValidate[i] == '[')
+            openingStack.push(toValidate[i]);
+
+        switch (toValidate[i]) {
+            case ')':
+                x = openingStack.top();
+                openingStack.pop();
+                if (x != '(') {
+                    cout << "There is no matching opening parenthesis for ')' on position " << i << " in file: "
+                         << fileName << endl;
+                    return false;
+                }
+                break;
+            case ']':
+                x = openingStack.top();
+                openingStack.pop();
+                if (x != '[') {
+                    cout << "There is no matching opening parenthesis for ']' on position " << i << " in file: "
+                         << fileName << endl;
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    if (openingStack.empty())
+        return true;
+    else {
+        cout << "There is a missing closing parenthesis for " << openingStack.top() << " at the end of file: "
+             << fileName << endl;
+        return false;
+    }
 }
 

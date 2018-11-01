@@ -10,8 +10,9 @@
 #define INVALID_COMMAND "Invalid command, try again :/"
 #define FINISH "back"
 #define MENU_NAME "Menu name: "
-#define MENU_COMMAND "Menu command: "
-#define MENU_SEPARATOR "#########################################"
+
+#define MENU_SEPARATOR      "#########################################"
+#define MENU_OPTIONS_PROMPT "############_LIST_OF_OPTIONS_############"
 #define COMMAND_1 "Command 1"
 #define MENU_1 "Menu 1"
 #define USERS_CHOICE_REQUEST "Please provide the command you want to execute: "
@@ -23,6 +24,8 @@
 #define SAVE_COMMAND "save "
 
 #define LOAD_COMMAND "load "
+
+
 
 #include <vector>
 #include "MenuItem.h"
