@@ -164,26 +164,49 @@ int MenuSerializer::findClosingChar(string &menuTree, char opening) {
 
 bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) {
     stack<char> openingStack;
-    char x;
+    stack<int> positionStack;
+    char opening;
+    int position;
     for (int i = 0; i < toValidate.length(); ++i) {
-        if (toValidate[i] == '(' || toValidate[i] == '[')
+        if (toValidate[i] == '(' || toValidate[i] == '[') {
             openingStack.push(toValidate[i]);
-
+            positionStack.push(i);
+        }
         switch (toValidate[i]) {
             case ')':
-                x = openingStack.top();
-                openingStack.pop();
-                if (x != '(') {
-                    cout << "There is no matching opening parenthesis for ')' on position " << i << " in file: "
+                if(!openingStack.empty()) {
+                    opening = openingStack.top();
+                    openingStack.pop();
+                    position = positionStack.top();
+                    positionStack.pop();
+                    if (opening != '(') {
+                        cout << "There is a sign: " << opening << " on position: " << position
+                             << " in file: "
+                             << fileName << ". The file is missing a '(' sign matched to ')' on position: " << i << endl;
+                        return false;
+                    }
+                } else {
+                    cout << "There is no matching opening parenthesis for ')' placed on position " << i
+                         << " in file: "
                          << fileName << endl;
                     return false;
                 }
                 break;
             case ']':
-                x = openingStack.top();
-                openingStack.pop();
-                if (x != '[') {
-                    cout << "There is no matching opening parenthesis for ']' on position " << i << " in file: "
+                if (!openingStack.empty()) {
+                    opening = openingStack.top();
+                    openingStack.pop();
+                    position = positionStack.top();
+                    positionStack.pop();
+                    if (opening != '[') {
+                        cout << "There is a sign: " << opening << " on position: " << position
+                             << " in file: "
+                             << fileName << ". The file is missing a '[' sign matched to ']' on position: " << i << endl;
+                        return false;
+                    }
+                } else {
+                    cout << "There is no matching opening parenthesis for ']' placed on position " << i
+                         << " in file: "
                          << fileName << endl;
                     return false;
                 }
@@ -195,7 +218,8 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
     if (openingStack.empty())
         return true;
     else {
-        cout << "There is a missing closing parenthesis for " << openingStack.top() << " at the end of file: "
+        cout << "There is a missing closing parenthesis for " << openingStack.top() << " at the position: "
+             << positionStack.top() << " in file: "
              << fileName << endl;
         return false;
     }
