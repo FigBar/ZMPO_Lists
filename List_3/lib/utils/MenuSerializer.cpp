@@ -19,6 +19,7 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
 
 bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer) {
     if (validate(menuTree)) {
+        delete toChange;
         *toChange = *createMenuFromString(menuTree, analyzer);
         return true;
     } else {
