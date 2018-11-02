@@ -50,6 +50,8 @@ private:
     static int findClosingChar(string &menuTree, char opening);
 
     static bool areParenthesisBalanced(string toValidate, string fileName);
+
+    static bool punctationMarksCheck(string toValidate, string fileName);
 };
 
 

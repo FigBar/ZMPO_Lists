@@ -35,7 +35,8 @@ bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuA
 }
 
 bool MenuSerializer::validate(string menuTree, string fileName) {
-    return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty());
+    return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty() &&
+            punctationMarksCheck(menuTree, fileName));
     //TODO still need to implement a validation algorithm
 }
 
@@ -174,7 +175,7 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
         }
         switch (toValidate[i]) {
             case ')':
-                if(!openingStack.empty()) {
+                if (!openingStack.empty()) {
                     opening = openingStack.top();
                     openingStack.pop();
                     position = positionStack.top();
@@ -182,7 +183,8 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
                     if (opening != '(') {
                         cout << "There is a sign: " << opening << " on position: " << position
                              << " in file: "
-                             << fileName << ". The file is missing a '(' sign matched to ')' on position: " << i << endl;
+                             << fileName << ". The file is missing a '(' sign matched to ')' on position: " << i
+                             << endl;
                         return false;
                     }
                 } else {
@@ -201,7 +203,8 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
                     if (opening != '[') {
                         cout << "There is a sign: " << opening << " on position: " << position
                              << " in file: "
-                             << fileName << ". The file is missing a '[' sign matched to ']' on position: " << i << endl;
+                             << fileName << ". The file is missing a '[' sign matched to ']' on position: " << i
+                             << endl;
                         return false;
                     }
                 } else {
@@ -223,5 +226,48 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
              << fileName << endl;
         return false;
     }
+}
+
+bool MenuSerializer::punctationMarksCheck(string toValidate, string fileName) {
+    char currentChar;
+    for (int i = 0; i < toValidate.length(); ++i) {
+        currentChar = toValidate[i];
+
+        switch (currentChar) {
+            case '\'':
+                if (toValidate[i + 1] == '\'') {
+                    cout << "Program expected a ',' sign on position: " << i + 1
+                         << " or a start of string <'   '> in file: " << fileName
+                         << endl;
+                    return false;
+                } else if (toValidate[i - 1] == ';') {
+                    cout << "Program expected a '[' or '(' sign on position: " << i - 1
+                         << " in file: " << fileName
+                         << endl;
+                    return false;
+                } else if ((toValidate[i - 1] == ',' && toValidate[i - 2] == ']') ||
+                           (toValidate[i - 1] == ',' && toValidate[i - 2] == ')')) {
+                    cout << "Program expected a '[' or '(' sign on position: " << i
+                         << " in file: " << fileName
+                         << endl;
+                    return false;
+                }
+                break;
+            case ',':
+                if (toValidate[i + 1] != '\'' && toValidate[i + 1] != '[' && toValidate[i + 1] != '(') {
+                    cout << "Program expected on of these three signs: ',' '[' '(' on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                } else if (toValidate[i - 1] != '\'' && toValidate[i - 1] != ']' && toValidate[i - 1] != ')') {
+                    cout << "Program expected on of these three signs: ',' ']' ')' on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return true;
 }
 
