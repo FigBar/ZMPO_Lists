@@ -36,7 +36,7 @@ bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuA
 
 bool MenuSerializer::validate(string menuTree, string fileName) {
     return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty() &&
-            punctationMarksCheck(menuTree, fileName));
+            punctuationMarksCheck(menuTree, fileName));
     //TODO still need to implement a validation algorithm
 }
 
@@ -228,7 +228,7 @@ bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) 
     }
 }
 
-bool MenuSerializer::punctationMarksCheck(string toValidate, string fileName) {
+bool MenuSerializer::punctuationMarksCheck(string toValidate, string fileName) {
     char currentChar;
     for (int i = 0; i < toValidate.length(); ++i) {
         currentChar = toValidate[i];
@@ -255,11 +255,60 @@ bool MenuSerializer::punctationMarksCheck(string toValidate, string fileName) {
                 break;
             case ',':
                 if (toValidate[i + 1] != '\'' && toValidate[i + 1] != '[' && toValidate[i + 1] != '(') {
-                    cout << "Program expected on of these three signs: ',' '[' '(' on position: " << i + 1
+                    cout << "Program expected on of these three signs: ' \' ' '[' '(' on position: " << i + 1
                          << " in file: " << fileName << endl;
                     return false;
                 } else if (toValidate[i - 1] != '\'' && toValidate[i - 1] != ']' && toValidate[i - 1] != ')') {
-                    cout << "Program expected on of these three signs: ',' ']' ')' on position: " << i + 1
+                    cout << "Program expected on of these three signs: ' \' ' ']' ')' on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                }
+                break;
+            case ';':
+                if (toValidate[i - 1] != '\'') {
+                    cout << "Program expected a ' \' ' sign on position: " << i - 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                } else if (toValidate[i + 1] != '[' && toValidate[i + 1] != '(') {
+                    cout << "Program expected on of these two signs: '[' '(' on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                }
+                break;
+            case '(':
+                if (i != 0) {
+                    if (toValidate[i - 1] != ';' && toValidate[i - 1] != ',') {
+                        cout << "Program expected ';' sign on position: " << i - 1
+                             << " in file: " << fileName << endl;
+                        return false;
+                    } else if (toValidate[i + 1] != '\'') {
+                        cout << "Program expected ' \' ' sign on position: " << i + 1
+                             << " in file: " << fileName << endl;
+                        return false;
+                    }
+                }
+                break;
+            case '[':
+                if (toValidate[i - 1] != ';' && toValidate[i - 1] != ',') {
+                    cout << "Program expected ';' sign on position: " << i - 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                } else if (toValidate[i + 1] != '\'') {
+                    cout << "Program expected ' \' ' sign on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                }
+                break;
+            case ']':
+                if (toValidate[i + 1] == '[') {
+                    cout << "Program expected ',' sign on position: " << i + 1
+                         << " in file: " << fileName << endl;
+                    return false;
+                }
+                break;
+            case ')':
+                if (toValidate[i + 1] == '(') {
+                    cout << "Program expected ',' sign on position: " << i + 1
                          << " in file: " << fileName << endl;
                     return false;
                 }

@@ -51,7 +51,7 @@ private:
 
     static bool areParenthesisBalanced(string toValidate, string fileName);
 
-    static bool punctationMarksCheck(string toValidate, string fileName);
+    static bool punctuationMarksCheck(string toValidate, string fileName);
 };
 
 
