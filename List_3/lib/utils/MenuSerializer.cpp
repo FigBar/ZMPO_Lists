@@ -37,7 +37,7 @@ bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuA
 bool MenuSerializer::validate(string menuTree, string fileName) {
     return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty() &&
             punctuationMarksCheck(menuTree, fileName));
-    //TODO still need to implement a validation algorithm
+    //TODO still need to implement a not stupid validation algorithm xD
 }
 
 bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
@@ -116,7 +116,7 @@ MenuCommand *MenuSerializer::createMenuCommandFromString(string menuCommandTree)
     string command;
     readNameAndCommand(name, command, menuCommandTree);
     string help = menuCommandTree.substr(1, menuCommandTree.length() - 2);
-    menuCommand = new MenuCommand(name, command, new Command(), help);
+    menuCommand = new MenuCommand(name, command, nullptr, help);
     return menuCommand;
 }
 
