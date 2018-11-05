@@ -9,6 +9,9 @@ using namespace std;
 
 class StringValidator {
 
+public:
+    static void validateMenu(string toValidate, char &errorCode, int &errorIndex, int &currentIndex, bool &correctness);
+
     static void validateMenuCommand(string toValidate, char &errorCode, int &errorIndex, int &currentIndex, bool &correctness);
 
     static void validateNameAndCommand(string &toValidate, char &errorCode, int &errorIndex, int &currentIndex, bool &correctness);

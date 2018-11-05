@@ -4,6 +4,84 @@
 
 #include "StringValidator.h"
 
+void StringValidator::validateMenu(string toValidate, char &errorCode, int &errorIndex, int &currentIndex,
+                                   bool &correctness) {
+    if (!checkSymbolInString(toValidate, 0, '(', errorCode, correctness) && errorIndex == -1)
+        errorIndex = currentIndex;
+    if (!checkSymbolInString(toValidate, toValidate.length() - 1, ')', errorCode, correctness) && errorIndex == -1)
+        errorIndex = currentIndex + toValidate.length() - 1;
+    if (toValidate.length() > 2)
+        toValidate = toValidate.substr(1, toValidate.length() - 2);
+    else {
+        correctness = false;
+        toValidate = "";
+    }
+    currentIndex++;
+    validateNameAndCommand(toValidate, errorCode, errorIndex, currentIndex, correctness);
+
+    if (!checkSymbolInString(toValidate, 0, ';', errorCode, correctness) && errorIndex == -1)
+        errorIndex = currentIndex;
+    if (toValidate.length() > 2)
+        toValidate = toValidate.substr(1, toValidate.length() - 1);
+    else {
+        toValidate = "";
+    }
+    currentIndex++;
+
+    while (!toValidate.empty() && correctness) {
+        if (toValidate[0] != '(' && toValidate[0] != '[') {
+            correctness = false;
+            errorIndex = currentIndex;
+            if (findClosingChar(toValidate, '[') == -1)
+                errorCode = '(';
+            else
+                errorCode = '[';
+        }
+
+        int innerMenuEnd = findClosingChar(toValidate, toValidate[0]);
+        if (innerMenuEnd == -1 && correctness) {
+            correctness = false;
+            if (toValidate[0] == '(')
+                errorCode = ')';
+            else
+                errorCode = ']';
+
+            errorIndex = currentIndex + toValidate.length();
+            int missingIndex = findIndexOfMissingChar(toValidate);
+            if (missingIndex == -1)
+                errorIndex = currentIndex + toValidate.length();
+            else
+                errorIndex = currentIndex + missingIndex;
+        } else {
+            string innerMenu = toValidate.substr(0, innerMenuEnd + 1);
+            if(innerMenuEnd + 1 < toValidate.length() - 1 ){
+                toValidate = toValidate.substr(innerMenuEnd + 1, toValidate.length() - (innerMenuEnd + 1));
+                currentIndex += 1;//innerMenuEnd + 1;
+                if(!checkSymbolInString(toValidate, 0, ',', errorCode, correctness) && errorIndex == -1)
+                    errorIndex = currentIndex;
+                if(toValidate.length() > 1)
+                    toValidate = toValidate.substr(1, toValidate.length() - 1);
+                else {
+                    correctness = false;
+                    toValidate = "";
+                }
+                currentIndex++;
+            } else {
+                toValidate = "";
+            }
+            if(correctness) {
+                if(innerMenu[0] == '(') {
+                    validateMenu(innerMenu, errorCode, errorIndex, currentIndex, correctness);
+                } else {
+                    validateMenuCommand(innerMenu, errorCode, errorIndex, currentIndex, correctness);
+                }
+            }
+        }
+
+    }
+
+}
+
 void StringValidator::validateMenuCommand(string toValidate, char &errorCode, int &errorIndex, int &currentIndex,
                                           bool &correctness) {
     if (!checkSymbolInString(toValidate, 0, '[', errorCode, correctness)) {
@@ -21,23 +99,23 @@ void StringValidator::validateMenuCommand(string toValidate, char &errorCode, in
     currentIndex++;
     validateNameAndCommand(toValidate, errorCode, errorIndex, currentIndex, correctness);
     //help prompt part
-    if(!checkSymbolInString(toValidate, 0, ',', errorCode, correctness)){
+    if (!checkSymbolInString(toValidate, 0, ',', errorCode, correctness)) {
         if (errorIndex == -1) {
             errorIndex = currentIndex;
         }
     }
-    toValidate = toValidate.substr(1, toValidate.length()-1);
+    toValidate = toValidate.substr(1, toValidate.length() - 1);
     currentIndex++;
 
-    if(!checkSymbolInString(toValidate, 0, '\'', errorCode, correctness)){
+    if (!checkSymbolInString(toValidate, 0, '\'', errorCode, correctness)) {
         if (errorIndex == -1) {
             errorIndex = currentIndex;
         }
     }
 
-    if(findClosingChar(toValidate, '\'') != toValidate.length() - 1 && correctness){
+    if (findClosingChar(toValidate, '\'') != toValidate.length() - 1 && correctness) {
         correctness = false;
-        if(errorIndex == -1){
+        if (errorIndex == -1) {
             errorIndex = currentIndex + toValidate.length() - 1;
             errorCode = '\'';
         }
@@ -104,7 +182,7 @@ bool StringValidator::checkSymbolInString(string &toValidate, int index, char co
 int StringValidator::findIndexOfMissingChar(string &menuSave) {
     int index = -1;
     int openingOccurrences = 1;
-    for (int i = 0; i < menuSave.size(); ++i) {
+    for (int i = 1; i < menuSave.size(); ++i) {
         if (menuSave[i] == '(' || menuSave[i] == '[') {
             if (menuSave[i - 1] == ',' && openingOccurrences == 1) {
                 return i - 2;
@@ -120,7 +198,7 @@ int StringValidator::findClosingChar(string &menuTree, char opening) {
     char closing;
     switch (opening) {
         case '\'':
-            for (int i = 0; i < menuTree.length(); ++i) {
+            for (int i = 1; i < menuTree.length(); ++i) {
                 if (menuTree[i] == opening)
                     return i;
             }

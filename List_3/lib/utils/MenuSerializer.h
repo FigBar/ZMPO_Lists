@@ -49,10 +49,6 @@ private:
 
     static int findClosingChar(string &menuTree, char opening);
 
-    static bool areParenthesisBalanced(string toValidate, string fileName);
-
-    static bool punctuationMarksCheck(string toValidate, string fileName);
 };
-
 
 #endif //LIST_3_MENUSERIALIZER_H

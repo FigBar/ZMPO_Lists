@@ -4,6 +4,7 @@
 
 #include "MenuSerializer.h"
 #include "../user_interface/MenuCommand.h"
+#include "StringValidator.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -35,9 +36,19 @@ bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuA
 }
 
 bool MenuSerializer::validate(string menuTree, string fileName) {
-    return (areParenthesisBalanced(menuTree, fileName) && !menuTree.empty() &&
-            punctuationMarksCheck(menuTree, fileName));
-    //TODO still need to implement a not stupid validation algorithm xD
+    if (menuTree.empty())
+        return false;
+
+    bool correct = true;
+    int errorIndex = -1;
+    int currentIndex = 0;
+    char errorCode = '~';
+    StringValidator::validateMenu(menuTree, errorCode, errorIndex, currentIndex, correct);
+    if (!correct) {
+        cout << "Program found error in file: " << fileName << " on index: " << errorIndex
+             << ". Expected char a this position is: " << errorCode << endl;
+    }
+    return correct;
 }
 
 bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
@@ -163,160 +174,4 @@ int MenuSerializer::findClosingChar(string &menuTree, char opening) {
     return -1;
 }
 
-bool MenuSerializer::areParenthesisBalanced(string toValidate, string fileName) {
-    stack<char> openingStack;
-    stack<int> positionStack;
-    char opening;
-    int position;
-    for (int i = 0; i < toValidate.length(); ++i) {
-        if (toValidate[i] == '(' || toValidate[i] == '[') {
-            openingStack.push(toValidate[i]);
-            positionStack.push(i);
-        }
-        switch (toValidate[i]) {
-            case ')':
-                if (!openingStack.empty()) {
-                    opening = openingStack.top();
-                    openingStack.pop();
-                    position = positionStack.top();
-                    positionStack.pop();
-                    if (opening != '(') {
-                        cout << "There is a sign: " << opening << " on position: " << position
-                             << " in file: "
-                             << fileName << ". The file is missing a '(' sign matched to ')' on position: " << i
-                             << endl;
-                        return false;
-                    }
-                } else {
-                    cout << "There is no matching opening parenthesis for ')' placed on position " << i
-                         << " in file: "
-                         << fileName << endl;
-                    return false;
-                }
-                break;
-            case ']':
-                if (!openingStack.empty()) {
-                    opening = openingStack.top();
-                    openingStack.pop();
-                    position = positionStack.top();
-                    positionStack.pop();
-                    if (opening != '[') {
-                        cout << "There is a sign: " << opening << " on position: " << position
-                             << " in file: "
-                             << fileName << ". The file is missing a '[' sign matched to ']' on position: " << i
-                             << endl;
-                        return false;
-                    }
-                } else {
-                    cout << "There is no matching opening parenthesis for ']' placed on position " << i
-                         << " in file: "
-                         << fileName << endl;
-                    return false;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    if (openingStack.empty())
-        return true;
-    else {
-        cout << "There is a missing closing parenthesis for " << openingStack.top() << " at the position: "
-             << positionStack.top() << " in file: "
-             << fileName << endl;
-        return false;
-    }
-}
-
-bool MenuSerializer::punctuationMarksCheck(string toValidate, string fileName) {
-    char currentChar;
-    for (int i = 0; i < toValidate.length(); ++i) {
-        currentChar = toValidate[i];
-
-        switch (currentChar) {
-            case '\'':
-                if (toValidate[i + 1] == '\'') {
-                    cout << "Program expected a ',' sign on position: " << i + 1
-                         << " or a start of string <'   '> in file: " << fileName
-                         << endl;
-                    return false;
-                } else if (toValidate[i - 1] == ';') {
-                    cout << "Program expected a '[' or '(' sign on position: " << i - 1
-                         << " in file: " << fileName
-                         << endl;
-                    return false;
-                } else if ((toValidate[i - 1] == ',' && toValidate[i - 2] == ']') ||
-                           (toValidate[i - 1] == ',' && toValidate[i - 2] == ')')) {
-                    cout << "Program expected a '[' or '(' sign on position: " << i
-                         << " in file: " << fileName
-                         << endl;
-                    return false;
-                }
-                break;
-            case ',':
-                if (toValidate[i + 1] != '\'' && toValidate[i + 1] != '[' && toValidate[i + 1] != '(') {
-                    cout << "Program expected on of these three signs: ' \' ' '[' '(' on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                } else if (toValidate[i - 1] != '\'' && toValidate[i - 1] != ']' && toValidate[i - 1] != ')') {
-                    cout << "Program expected on of these three signs: ' \' ' ']' ')' on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                }
-                break;
-            case ';':
-                if (toValidate[i - 1] != '\'') {
-                    cout << "Program expected a ' \' ' sign on position: " << i - 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                } else if (toValidate[i + 1] != '[' && toValidate[i + 1] != '(') {
-                    cout << "Program expected on of these two signs: '[' '(' on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                }
-                break;
-            case '(':
-                if (i != 0) {
-                    if (toValidate[i - 1] != ';' && toValidate[i - 1] != ',') {
-                        cout << "Program expected ';' sign on position: " << i - 1
-                             << " in file: " << fileName << endl;
-                        return false;
-                    } else if (toValidate[i + 1] != '\'') {
-                        cout << "Program expected ' \' ' sign on position: " << i + 1
-                             << " in file: " << fileName << endl;
-                        return false;
-                    }
-                }
-                break;
-            case '[':
-                if (toValidate[i - 1] != ';' && toValidate[i - 1] != ',') {
-                    cout << "Program expected ';' sign on position: " << i - 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                } else if (toValidate[i + 1] != '\'') {
-                    cout << "Program expected ' \' ' sign on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                }
-                break;
-            case ']':
-                if (toValidate[i + 1] == '[') {
-                    cout << "Program expected ',' sign on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                }
-                break;
-            case ')':
-                if (toValidate[i + 1] == '(') {
-                    cout << "Program expected ',' sign on position: " << i + 1
-                         << " in file: " << fileName << endl;
-                    return false;
-                }
-                break;
-            default:
-                break;
-        }
-    }
-    return true;
-}
 
