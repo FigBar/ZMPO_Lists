@@ -21,7 +21,6 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
 
 bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName) {
     if (validate(menuTree, fileName)) {
-        delete toChange;
         *toChange = *createMenuFromString(menuTree, analyzer);
         return true;
     } else {
@@ -42,11 +41,11 @@ bool MenuSerializer::validate(string menuTree, string fileName) {
     bool correct = true;
     int errorIndex = -1;
     int currentIndex = 0;
-    char errorCode = '~';
+    char errorCode = DEFAULT_ERROR_CODE;
     StringValidator::validateMenu(menuTree, errorCode, errorIndex, currentIndex, correct);
     if (!correct) {
-        cout << "Program found error in file: " << fileName << " on index: " << errorIndex
-             << ". Expected char a this position is: " << errorCode << endl;
+        cout << ERROR_FOUND_PROMPT << fileName << INDEX_PROMPT << errorIndex
+             << EXPECTED_CHAR_PROMPT << errorCode << endl;
     }
     return correct;
 }
@@ -109,10 +108,10 @@ Menu *MenuSerializer::createMenuFromString(string menuTree, MenuAnalyzer &analyz
         if (subMenuEnd + 2 < menuTree.length() - 1) {
             menuTree = menuTree.substr(subMenuEnd + 2, menuTree.length() - (subMenuEnd + 2));
         } else {
-            menuTree = "";
+            menuTree = EMPTY_STRING;
         }
 
-        if (subMenu[0] == '(') {
+        if (subMenu[0] == OP_PARENTHESIS1) {
             menu->addMenuItem(createMenuFromString(subMenu, analyzer));
         } else {
             menu->addMenuItem(createMenuCommandFromString(subMenu));
@@ -145,17 +144,17 @@ int MenuSerializer::findClosingChar(string &menuTree, char opening) {
     char closing;
 
     switch (opening) {
-        case '\'':
+        case APOSTROPHE1:
             for (int i = 0; i < menuTree.length(); ++i) {
                 if (menuTree[i] == opening)
                     return i;
             }
             return -1;
-        case '(':
-            closing = ')';
+        case OP_PARENTHESIS1:
+            closing = CLS_PARENTHESIS1;
             break;
-        case '[':
-            closing = ']';
+        case OP_SQR_BRACKET1:
+            closing = CLS_SQR_BRACKET1;
             break;
         default:
             return -1;

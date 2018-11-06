@@ -5,6 +5,15 @@
 
 #ifndef LIST_3_STRINGVALIDATOR_H
 #define LIST_3_STRINGVALIDATOR_H
+#define OP_PARENTHESIS1 '('
+#define CLS_PARENTHESIS1 ')'
+#define EMPTY_STRING ""
+#define SEMICOLON1 ';'
+#define OP_SQR_BRACKET1 '['
+#define COMA1 ','
+#define CLS_SQR_BRACKET1 ']'
+#define APOSTROPHE1 '\''
+#define DEFAULT_ERROR_CODE '~'
 using namespace std;
 
 class StringValidator {

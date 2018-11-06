@@ -45,6 +45,8 @@ public:
 
     ~Menu();
 
+    Menu &operator=(const Menu &copyOther);
+
     void run();
 
     void toString();

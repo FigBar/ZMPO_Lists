@@ -39,6 +39,24 @@ Menu::~Menu() {
     menuItems.clear();
 }
 
+Menu &Menu::operator=(const Menu &copyOther) {
+    this->name = copyOther.name;
+    this->command = copyOther.command;
+    vector<MenuItem *> tempItems;
+
+    for (int i = 0; i < copyOther.menuItems.size() ; ++i) {
+        tempItems.push_back(copyOther.menuItems.at(i));
+    }
+
+    for (int j = 0; j < this->menuItems.size() ; ++j) {
+        delete menuItems.at(j);
+    }
+    menuItems.clear();
+    menuItems = tempItems;
+
+    return *this;
+}
+
 void Menu::run() {
     string userChoice;
     bool valid = false;

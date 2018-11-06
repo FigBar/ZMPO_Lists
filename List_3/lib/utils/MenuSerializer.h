@@ -14,6 +14,12 @@
 #define CL_SQ_BRACKET "]"
 #define READING_FAILED_PROMPT "The file you tried to read does not exist or it has a invalid format!!!"
 
+#define ERROR_FOUND_PROMPT "Program found error in file: "
+
+#define INDEX_PROMPT " on index: "
+
+#define EXPECTED_CHAR_PROMPT ". Expected char a this position is: "
+
 #include <string>
 #include "../user_interface/Menu.h"
 #include "../user_interface/MenuCommand.h"
