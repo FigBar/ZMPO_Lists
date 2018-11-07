@@ -35,7 +35,7 @@
 using namespace std;
 
 class Menu : public MenuItem {
-
+friend class MenuSerializer;
 public:
     Menu();
 

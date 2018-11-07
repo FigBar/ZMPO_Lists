@@ -21,7 +21,10 @@ bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
 
 bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName) {
     if (validate(menuTree, fileName)) {
-        *toChange = *createMenuFromString(menuTree, analyzer);
+        Menu *temp = createMenuFromString(menuTree, analyzer);
+        *toChange = *temp;
+        temp->menuItems.clear();
+        delete temp;
         return true;
     } else {
         cout << READING_FAILED_PROMPT << endl;
