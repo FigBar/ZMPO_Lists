@@ -39,6 +39,26 @@
 #define PRINT_2 "Print all"
 #define PR_2_COM "print all"
 
+#define MULTIPLE_CREATE_HELP "Creates multiple Table objects, parametrized or not"
+
+#define SINGLE_CREATE_HELP "Creates a single Table object, parametrized or not"
+
+#define CLONE_HELP "Clones a Table object from specific index, and appends it to vector"
+
+#define SET_NAME_HELP "Sets new name to a Table object from specific index"
+
+#define SET_SIZE_HELP "Sets new size to a Table object from specific index"
+
+#define INSERT_NUMBER_HELP "Inserts a given number to a Table object from specific index"
+
+#define DELETE_SINGLE_HELP "Deletes a single Table object from specific index"
+
+#define DELETE_ALL_HELP "Deletes all Table objects which are held in vector"
+
+#define PRINT_ONE_HELP "Prints details about specific Table object from given index"
+
+#define PRINT_ALL_HELP "Prints details about all Table objects held in vector"
+
 class TableBootstrap {
 public:
     static Menu *initializeTableMenu(MenuAnalyzer &analyzer, TableHandler &handler1);
