@@ -26,7 +26,7 @@
 
 using namespace std;
 
-class MenuSerializer {
+class SerializeMenu {
 public:
     static string serialize(Menu *startPoint);
 
