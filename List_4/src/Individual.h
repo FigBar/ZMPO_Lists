@@ -13,19 +13,21 @@ using namespace std;
 class Individual {
 
 public:
-    Individual(const KnapsackProblem &instOfProblem);
+    Individual(KnapsackProblem &instOfProblem);
 
     Individual(const Individual& copyOther);
 
     ~Individual();
 
-    int calcFitness();
+    void calcFitness();
 
     void mutate(const double &mutProb);
 
     vector<Individual *> cross(Individual &crossWith);
 
 private:
+    int generateRandomNumber(int lowerBound, int upperBound);
+    void generateGenotype();
     int *genotype;
     int nOfGenes;
     double fitness;

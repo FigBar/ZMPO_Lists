@@ -4,6 +4,12 @@
 
 #include "KnapsackProblem.h"
 
+KnapsackProblem::KnapsackProblem(vector<Item *> *list, double bagCap) {
+    this->bagCapacity = bagCap;
+    this->nOfItems = (int)list->size();
+    this->itemList = list;
+}
+
 int KnapsackProblem::getNOfItems() const {
     return nOfItems;
 }
