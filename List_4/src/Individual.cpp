@@ -12,6 +12,13 @@ Individual::Individual(KnapsackProblem &instOfProblem) {
     calcFitness();
 }
 
+Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {
+    this->problem = &instOfProblem;
+    this->nOfGenes = (int) instOfProblem.getItemList()->size();
+    this->genotype = genotype;
+    calcFitness();
+}
+
 Individual::Individual(const Individual &copyOther) {
     this->problem = copyOther.problem;
     this->nOfGenes = copyOther.nOfGenes;
@@ -35,18 +42,22 @@ void Individual::calcFitness() {
 
     for (int i = 0; i < nOfGenes; ++i) {
         if (genotype[i] == 1) {
-            Item *current = listOfItems->[i];
+            Item *current = (*listOfItems)[i];
             weightSum += current->getWeight();
             valueSum += current->getValue();
         }
     }
 
-    fitness = (weightSum <= bagCapacity) ? valueSum : 0;
+    this->fitness = (weightSum <= bagCapacity) ? valueSum : 0;
 
 }
 
-void Individual::mutate(const double &mutProb) {
-
+void Individual::mutate(int index) {
+    if(genotype[index] == 1)
+        genotype[index] = 0;
+    else
+        genotype[index] = 1;
+    calcFitness();
 }
 
 void Individual::generateGenotype() {
@@ -62,6 +73,28 @@ int Individual::generateRandomNumber(int lowerBound, int upperBound) {
     return generate(gen);
 }
 
-vector<Individual *> Individual::cross(Individual &crossWith) {
-    return vector<Individual *>();
+vector<Individual *>* Individual::cross(Individual &crossWith) {
+    vector<Individual *> *offspring = new vector<Individual *>;
+
+    int crossingIndex = generateRandomNumber(1, nOfGenes - 1);
+
+    int *fstDescendantGenotype = new int[nOfGenes];
+    int *sndDescendantGenotype = new int[nOfGenes];
+
+    for (int i = 0; i < crossingIndex; ++i) {
+        fstDescendantGenotype[i] = this->genotype[i];
+        sndDescendantGenotype[i] = crossWith.genotype[i];
+    }
+    for (int j = crossingIndex; j < nOfGenes; ++j) {
+        fstDescendantGenotype[j] = crossWith.genotype[j];
+        sndDescendantGenotype[j] = this->genotype[j];
+    }
+
+    Individual *fstDescendant = new Individual(*(this->problem), fstDescendantGenotype);
+    Individual *sndDescendant = new Individual(*(this->problem), sndDescendantGenotype);
+
+    offspring->push_back(fstDescendant);
+    offspring->push_back(sndDescendant);
+
+    return offspring;
 }

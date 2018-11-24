@@ -15,15 +15,17 @@ class Individual {
 public:
     Individual(KnapsackProblem &instOfProblem);
 
+    Individual(KnapsackProblem &instOfProblem, int* genotype);
+
     Individual(const Individual& copyOther);
 
     ~Individual();
 
     void calcFitness();
 
-    void mutate(const double &mutProb);
+    void mutate(int index);
 
-    vector<Individual *> cross(Individual &crossWith);
+    vector<Individual *>* cross(Individual &crossWith);
 
 private:
     int generateRandomNumber(int lowerBound, int upperBound);
