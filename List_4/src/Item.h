@@ -6,6 +6,8 @@
 #define LIST_4_ITEM_H
 
 #include <string>
+#include <ostream>
+
 using namespace std;
 
 class Item {
@@ -17,6 +19,8 @@ public:
     double getValue() const;
 
     double getWeight() const;
+
+    friend ostream &operator<<(ostream &os, const Item &item);
 
 private:
     string name;

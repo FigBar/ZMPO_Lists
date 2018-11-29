@@ -21,17 +21,24 @@ public:
 
     ~Individual();
 
-    double calcFitness();
+    void calcFitness();
 
     void mutate(int index);
 
     vector<Individual *>* cross(Individual &crossWith);
+
+    double getFitness() const;
+
+    int *getGenotype() const;
+
+    int getNOfGenes() const;
 
 private:
 
     void generateGenotype();
     int *genotype;
     int nOfGenes;
+    double fitness;
     KnapsackProblem* problem;
 
 };

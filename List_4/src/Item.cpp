@@ -21,3 +21,9 @@ double Item::getValue() const {
 double Item::getWeight() const {
     return weight;
 }
+
+ostream &operator<<(ostream &os, const Item &item) {
+    os << "[name: " << item.name << " value: " << item.value << " weight: " << item.weight << "]" << endl;
+    return os;
+}
+

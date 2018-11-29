@@ -13,13 +13,16 @@ using namespace std;
 
 class KnapsackProblem {
 public:
-    KnapsackProblem(vector<Item *> *list, double bagCap);
+    KnapsackProblem(vector<Item *> &list, double bagCap);
 
     int getNOfItems() const;
 
     double getBagCapacity() const;
 
     vector<Item *> *getItemList() const;
+
+    vector<Item *> *decryptSolution(int *genotype, int nOfgenes);
+
 
 private:
     int nOfItems;

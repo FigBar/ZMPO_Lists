@@ -32,6 +32,12 @@ private:
 
     void crossPopulation(Individual *fstParent, Individual *sndParent, vector<Individual *> *population);
 
+    void destroyPopulation(vector<Individual*> *population);
+
+    Individual *findTheBestFittingOne(vector<Individual*> *population, int &bestIndex);
+
+    //Individual *findTheBestFittingOneAndDeleteOther(vector<Individual*> *population);
+
     Individual *selectBetterFitting(Individual *fst, Individual *snd);
 
     Individual *selectBetterFittingAndDeleteOther(Individual *fst, Individual *snd);
