@@ -3,4 +3,4 @@ project(List_4)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(List_4 main.cpp src/Individual.cpp src/Individual.h src/KnapsackProblem.cpp src/KnapsackProblem.h src/Item.cpp src/Item.h)
+add_executable(List_4 main.cpp src/Individual.cpp src/Individual.h src/KnapsackProblem.cpp src/KnapsackProblem.h src/Item.cpp src/Item.h src/utils/Tools.cpp src/utils/Tools.h src/GeneticAlgorithm.cpp src/GeneticAlgorithm.h)

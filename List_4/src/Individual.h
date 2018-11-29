@@ -28,7 +28,7 @@ public:
     vector<Individual *>* cross(Individual &crossWith);
 
 private:
-    int generateRandomNumber(int lowerBound, int upperBound);
+
     void generateGenotype();
     int *genotype;
     int nOfGenes;

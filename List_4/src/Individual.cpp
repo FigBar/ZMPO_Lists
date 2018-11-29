@@ -3,10 +3,11 @@
 //
 #include <random>
 #include "Individual.h"
+#include "utils/Tools.h"
 
 Individual::Individual(KnapsackProblem &instOfProblem) {
     this->problem = &instOfProblem;
-    this->nOfGenes = (int) instOfProblem.getItemList()->size();
+    this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new int[nOfGenes];
     generateGenotype();
     calcFitness();
@@ -14,7 +15,7 @@ Individual::Individual(KnapsackProblem &instOfProblem) {
 
 Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {
     this->problem = &instOfProblem;
-    this->nOfGenes = (int) instOfProblem.getItemList()->size();
+    this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = genotype;
     calcFitness();
 }
@@ -53,7 +54,7 @@ void Individual::calcFitness() {
 }
 
 void Individual::mutate(int index) {
-    if(genotype[index] == 1)
+    if (genotype[index] == 1)
         genotype[index] = 0;
     else
         genotype[index] = 1;
@@ -62,21 +63,14 @@ void Individual::mutate(int index) {
 
 void Individual::generateGenotype() {
     for (int i = 0; i < nOfGenes; ++i)
-        genotype[i] = generateRandomNumber(0, 1);
+        genotype[i] = Tools::generateRandomNumber(0, 1);
 
 }
 
-int Individual::generateRandomNumber(int lowerBound, int upperBound) {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> generate(lowerBound, upperBound);
-    return generate(gen);
-}
-
-vector<Individual *>* Individual::cross(Individual &crossWith) {
+vector<Individual *> *Individual::cross(Individual &crossWith) {
     vector<Individual *> *offspring = new vector<Individual *>;
 
-    int crossingIndex = generateRandomNumber(1, nOfGenes - 1);
+    int crossingIndex = Tools::generateRandomNumber(1, nOfGenes - 1);
 
     int *fstDescendantGenotype = new int[nOfGenes];
     int *sndDescendantGenotype = new int[nOfGenes];
