@@ -10,14 +10,12 @@ Individual::Individual(KnapsackProblem &instOfProblem) {
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new int[nOfGenes];
     generateGenotype();
-    calcFitness();
 }
 
 Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = genotype;
-    calcFitness();
 }
 
 Individual::Individual(const Individual &copyOther) {
@@ -28,14 +26,13 @@ Individual::Individual(const Individual &copyOther) {
     for (int i = 0; i < nOfGenes; ++i) {
         genotype[i] = copiedGenotype[i];
     }
-    calcFitness();
 }
 
 Individual::~Individual() {
     delete[] genotype;
 }
 
-void Individual::calcFitness() {
+double Individual::calcFitness() {
     double weightSum = 0;
     double valueSum = 0;
     double bagCapacity = problem->getBagCapacity();
@@ -49,8 +46,7 @@ void Individual::calcFitness() {
         }
     }
 
-    this->fitness = (weightSum <= bagCapacity) ? valueSum : 0;
-
+    return (weightSum <= bagCapacity) ? valueSum : 0;
 }
 
 void Individual::mutate(int index) {
@@ -58,7 +54,6 @@ void Individual::mutate(int index) {
         genotype[index] = 0;
     else
         genotype[index] = 1;
-    calcFitness();
 }
 
 void Individual::generateGenotype() {

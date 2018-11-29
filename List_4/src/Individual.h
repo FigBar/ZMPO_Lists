@@ -21,7 +21,7 @@ public:
 
     ~Individual();
 
-    void calcFitness();
+    double calcFitness();
 
     void mutate(int index);
 
@@ -32,7 +32,6 @@ private:
     void generateGenotype();
     int *genotype;
     int nOfGenes;
-    double fitness;
     KnapsackProblem* problem;
 
 };

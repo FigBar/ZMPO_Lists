@@ -18,6 +18,7 @@ public:
     ~GeneticAlgorithm();
 
     Individual *solveProblem(int nOfIterations);
+
 private:
     int popSize;
     double crossProb;
@@ -25,9 +26,20 @@ private:
     int nOfItems;
     KnapsackProblem *problem;
 
-    vector<Individual*> *generatePopulation();
-    void mutatePopulation(vector<Individual*> *population);
-    bool doesMutationAppear();
+    vector<Individual *> *generatePopulation();
+
+    void mutatePopulation(vector<Individual *> *population);
+
+    void crossPopulation(Individual *fstParent, Individual *sndParent, vector<Individual *> *population);
+
+    Individual *selectBetterFitting(Individual *fst, Individual *snd);
+
+    Individual *selectBetterFittingAndDeleteOther(Individual *fst, Individual *snd);
+
+    Individual *getRandomIndividual(vector<Individual *> *population);
+
+    bool doesActionAppear(double &probability);
+
 };
 
 
