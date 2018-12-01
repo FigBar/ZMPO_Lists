@@ -13,12 +13,12 @@
 Menu *CalculatorBootstrap::initializeCalculator(MenuAnalyzer &analyzer, int &a, int &b) {
     Menu *mainMenu = new Menu(MAIN_MENU, MAIN_COMMAND, analyzer);
     analyzer.setMainMenu(*mainMenu);
-    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe A", "zma", new ChangeA(a, b)));
-    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe B", "zmb", new ChangeB(a,b)));
+    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe A", "zma", new ChangeA(a, b), "Zmienia wartosc liczby A"));
+    mainMenu->addMenuItem(new MenuCommand("Zmien liczbe B", "zmb", new ChangeB(a,b), "Zmienia wartosc liczby B"));
 
     Menu *opMenu = new Menu("Operacje", "op", analyzer);
-    opMenu->addMenuItem(new MenuCommand("Dodaj", "dod", new Add(a,b)));
-    opMenu->addMenuItem(new MenuCommand("Odejmij", "ode", new Substract(a,b)));
+    opMenu->addMenuItem(new MenuCommand("Dodaj", "dod", new Add(a,b), "Dodaje liczby a i b"));
+    opMenu->addMenuItem(new MenuCommand("Odejmij", "ode", new Substract(a,b), "Odejmij liczby a i b"));
     opMenu->addMenuItem(new MenuCommand("default command", "defcom", new Command()));
 
     mainMenu->addMenuItem(opMenu);

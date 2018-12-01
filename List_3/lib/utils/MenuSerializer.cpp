@@ -2,7 +2,7 @@
 // Created by fig_bar98 on 31.10.18.
 //
 
-#include "SerializeMenu.h"
+#include "MenuSerializer.h"
 #include "../user_interface/MenuCommand.h"
 #include "StringValidator.h"
 #include <iostream>
@@ -10,16 +10,16 @@
 #include <sstream>
 #include <bits/stdc++.h>
 
-string SerializeMenu::serialize(Menu *startPoint) {
+string MenuSerializer::serialize(Menu *startPoint) {
     return transformMenuToString(startPoint);
 }
 
-bool SerializeMenu::serializeToFile(Menu *startPoint, string &fileName) {
+bool MenuSerializer::serializeToFile(Menu *startPoint, string &fileName) {
     string menuTree = serialize(startPoint);
     return writeToFile(menuTree, fileName);
 }
 
-bool SerializeMenu::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName) {
+bool MenuSerializer::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &analyzer, string fileName) {
     if (validate(menuTree, fileName)) {
         Menu *temp = createMenuFromString(menuTree, analyzer);
         *toChange = *temp;
@@ -32,12 +32,12 @@ bool SerializeMenu::deserialize(Menu *toChange, string &menuTree, MenuAnalyzer &
     }
 }
 
-bool SerializeMenu::deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer) {
+bool MenuSerializer::deserializeFromFile(Menu *toChange, string &fileName, MenuAnalyzer &analyzer) {
     string menuTree = readFromFile(fileName);
     return deserialize(toChange, menuTree, analyzer, fileName);
 }
 
-bool SerializeMenu::validate(string menuTree, string fileName) {
+bool MenuSerializer::validate(string menuTree, string fileName) {
     if (menuTree.empty())
         return false;
 
@@ -53,7 +53,7 @@ bool SerializeMenu::validate(string menuTree, string fileName) {
     return correct;
 }
 
-bool SerializeMenu::writeToFile(string &menuTree, string &fileName) {
+bool MenuSerializer::writeToFile(string &menuTree, string &fileName) {
     ofstream toFileStream(fileName);
     if (toFileStream.is_open()) {
         toFileStream << menuTree << endl;
@@ -65,7 +65,7 @@ bool SerializeMenu::writeToFile(string &menuTree, string &fileName) {
     }
 }
 
-string SerializeMenu::readFromFile(string &fileName) {
+string MenuSerializer::readFromFile(string &fileName) {
     ifstream fromFileStream(fileName);
     string menuTree;
     if (fromFileStream.is_open()) {
@@ -75,7 +75,7 @@ string SerializeMenu::readFromFile(string &fileName) {
     return menuTree;
 }
 
-string SerializeMenu::transformMenuToString(Menu *toTransform) {
+string MenuSerializer::transformMenuToString(Menu *toTransform) {
     stringstream stringRepresentation;
     stringRepresentation << OP_PARENTHESIS << APOSTROPHE << toTransform->getName() << APOSTROPHE
                          << COMA << APOSTROPHE << toTransform->getCommand() << APOSTROPHE << SEMICOLON;
@@ -91,7 +91,7 @@ string SerializeMenu::transformMenuToString(Menu *toTransform) {
     return stringRepresentation.str();
 }
 
-string SerializeMenu::transformMenuCommandToString(MenuCommand *toTransform) {
+string MenuSerializer::transformMenuCommandToString(MenuCommand *toTransform) {
     stringstream stringRepresentation;
     stringRepresentation << OP_SQ_BRACKET << APOSTROPHE << toTransform->getName() << APOSTROPHE << COMA
                          << APOSTROPHE << toTransform->getCommand() << APOSTROPHE << COMA
@@ -99,7 +99,7 @@ string SerializeMenu::transformMenuCommandToString(MenuCommand *toTransform) {
     return stringRepresentation.str();
 }
 
-Menu *SerializeMenu::createMenuFromString(string menuTree, MenuAnalyzer &analyzer) {
+Menu *MenuSerializer::createMenuFromString(string menuTree, MenuAnalyzer &analyzer) {
     string name;
     string command;
     readNameAndCommand(name, command, menuTree);
@@ -123,7 +123,7 @@ Menu *SerializeMenu::createMenuFromString(string menuTree, MenuAnalyzer &analyze
     return menu;
 }
 
-MenuCommand *SerializeMenu::createMenuCommandFromString(string menuCommandTree) {
+MenuCommand *MenuSerializer::createMenuCommandFromString(string menuCommandTree) {
     MenuCommand *menuCommand;
     string name;
     string command;
@@ -133,7 +133,7 @@ MenuCommand *SerializeMenu::createMenuCommandFromString(string menuCommandTree) 
     return menuCommand;
 }
 
-void SerializeMenu::readNameAndCommand(string &name, string &command, string &menuTree) {
+void MenuSerializer::readNameAndCommand(string &name, string &command, string &menuTree) {
     menuTree = menuTree.substr(2, menuTree.length() - 3);
     int nameEnd = findClosingChar(menuTree, '\'');
     name = menuTree.substr(0, nameEnd) + "_loaded";
@@ -143,7 +143,7 @@ void SerializeMenu::readNameAndCommand(string &name, string &command, string &me
     menuTree = menuTree.substr(commandEnd + 2, menuTree.length() - (commandEnd + 2));
 }
 
-int SerializeMenu::findClosingChar(string &menuTree, char opening) {
+int MenuSerializer::findClosingChar(string &menuTree, char opening) {
     char closing;
 
     switch (opening) {

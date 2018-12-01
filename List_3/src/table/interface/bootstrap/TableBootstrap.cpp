@@ -48,6 +48,7 @@ Menu *TableBootstrap::initializeTableMenu(MenuAnalyzer &analyzer, TableHandler &
     printMenu->addMenuItem(new MenuCommand(PRINT_1, PR_1_COM, new PrintTable(handler1), PRINT_ONE_HELP));
     printMenu->addMenuItem(new MenuCommand(PRINT_2, PR_2_COM, new PrintAll(handler1), PRINT_ALL_HELP));
     mainMenu->addMenuItem(printMenu);
+    mainMenu->addMenuItem(new MenuCommand(DELETE_2, DE_2_COM, new DeleteAll(handler1), DELETE_ALL_HELP));
 
     return mainMenu;
 }
