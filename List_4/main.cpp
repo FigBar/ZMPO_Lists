@@ -6,21 +6,28 @@
 #include <vector>
 using namespace std;
 int main() {
-    vector<Item *> firstItemTable {
-        new Item("item 0", 5, 4),
-        new Item("item 1", 1, 1),
-        new Item("item 2", 4, 3),
-        new Item("item 3", 3, 2)
+    vector<Item *> firstItemTable{
+            new Item("item 1", 4, 2),
+            new Item("item 2", 1, 9),
+            new Item("item 3", 10, 1),
+            new Item("item 4", 12, 8),
+            new Item("item 5", 13, 4),
+            new Item("item 6", 100, 20),
+            new Item("item 7", 19, 4),
+            new Item("item 8", 13, 32),
+            new Item("item 9", 22, 6),
+            new Item("item 10", 8, 3)
     };
-    double bagCapacity = 5;
-    KnapsackProblem problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm algorithm(4, 0.70, 0.20, problem);
 
-    Individual *bestSolution = algorithm.solveProblem(10);
+    double bagCapacity = 34;
+    KnapsackProblem problem(firstItemTable, bagCapacity);
+    GeneticAlgorithm algorithm(4, 0.50, 0.20, problem);
+
+    Individual *bestSolution = algorithm.solveProblem(1000);
     vector <Item*> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(), bestSolution->getNOfGenes());
 
     double sumOfWeights = 0;
-    cout << "#####BEST SOLUTION#####" << endl;
+    cout << endl << "#####BEST SOLUTION#####" << endl;
     for (Item *item : *solutionListOfItems){
         cout << *item;
         sumOfWeights += item->getWeight();

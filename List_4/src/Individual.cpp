@@ -9,7 +9,6 @@ Individual::Individual(KnapsackProblem &instOfProblem) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new int[nOfGenes];
-    generateGenotype();
     calcFitness();
 }
 
@@ -20,13 +19,13 @@ Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {
     calcFitness();
 }
 
-Individual::Individual(const Individual &copyOther) {
+Individual::Individual(Individual &copyOther) {
     this->problem = copyOther.problem;
     this->nOfGenes = copyOther.nOfGenes;
     this->genotype = new int[nOfGenes];
-    int *copiedGenotype = copyOther.genotype;
+
     for (int i = 0; i < nOfGenes; ++i) {
-        genotype[i] = copiedGenotype[i];
+        genotype[i] = copyOther.genotype[i];
     }
     calcFitness();
 }
@@ -59,11 +58,6 @@ void Individual::mutate(int index) {
     calcFitness();
 }
 
-void Individual::generateGenotype() {
-    for (int i = 0; i < nOfGenes; ++i)
-        genotype[i] = Tools::generateRandomNumber(0, 1);
-
-}
 
 vector<Individual *> *Individual::cross(Individual &crossWith) {
     vector<Individual *> *offspring = new vector<Individual *>;

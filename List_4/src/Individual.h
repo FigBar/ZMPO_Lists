@@ -17,7 +17,7 @@ public:
 
     Individual(KnapsackProblem &instOfProblem, int* genotype);
 
-    Individual(const Individual& copyOther);
+    Individual(Individual& copyOther);
 
     ~Individual();
 
@@ -35,7 +35,6 @@ public:
 
 private:
 
-    void generateGenotype();
     int *genotype;
     int nOfGenes;
     double fitness;

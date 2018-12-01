@@ -25,8 +25,11 @@ private:
     double mutProb;
     int nOfItems;
     KnapsackProblem *problem;
+    Individual *bestOfAll;
 
     vector<Individual *> *generatePopulation();
+
+    Individual* generateIndividualsGenotype();
 
     void mutatePopulation(vector<Individual *> *population);
 
@@ -45,6 +48,8 @@ private:
     Individual *getRandomIndividual(vector<Individual *> *population);
 
     bool doesActionAppear(double &probability);
+
+    void setBestOfAll(vector<Individual *> *population);
 
 };
 
