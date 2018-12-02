@@ -7,21 +7,17 @@
 using namespace std;
 int main() {
     vector<Item *> firstItemTable{
-            new Item("item 1", 4, 2),
-            new Item("item 2", 1, 9),
-            new Item("item 3", 10, 1),
-            new Item("item 4", 12, 8),
-            new Item("item 5", 13, 4),
-            new Item("item 6", 100, 20),
-            new Item("item 7", 19, 4),
-            new Item("item 8", 13, 32),
-            new Item("item 9", 22, 6),
-            new Item("item 10", 8, 3)
+            new Item("item 1", 5, 3),
+            new Item("item 2", 12, 10),
+            new Item("item 3", 10, 8),
+            new Item("item 4", 7, 6),
+            new Item("item 5", 1, 2),
+            new Item("item 6", 11, 9)
     };
 
-    double bagCapacity = 34;
+    double bagCapacity = 20;
     KnapsackProblem problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm algorithm(4, 0.50, 0.20, problem);
+    GeneticAlgorithm algorithm(4, 0.75, 0.25, problem);
 
     Individual *bestSolution = algorithm.solveProblem(500);
     vector <Item*> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(), bestSolution->getNOfGenes());
