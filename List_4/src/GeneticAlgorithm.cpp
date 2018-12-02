@@ -31,7 +31,7 @@ Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
 
     for (int i = 0; i < nOfIterations; ++i) {
 
-        setBestOfAll(population);
+        /*setBestOfAll(population);
 
         vector<Individual*> *nextGeneration = new vector<Individual *>();
         while (nextGeneration->size() < popSize) {
@@ -41,7 +41,7 @@ Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
         }
         destroyPopulation(population);
         population = nextGeneration;
-
+*/
         int bestIndex;
 
         //TODO only to check how it works
