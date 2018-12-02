@@ -153,9 +153,12 @@ void GeneticAlgorithm::setBestOfAll(vector <Individual *> *population) {
     Individual *contender = findTheBestFittingOne(population, index);
     if(bestOfAll) {
         Individual *newBest = selectBetterFitting(bestOfAll, contender);
-        if(bestOfAll != newBest)
+        if(bestOfAll != newBest) {
+            delete bestOfAll;
             bestOfAll = new Individual(*newBest);
+        }
     } else {
+        delete bestOfAll;
         bestOfAll = new Individual(*contender);
     }
 }
