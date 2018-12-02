@@ -24,31 +24,34 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &algorithm) {
     this->bestOfAll = algorithm.bestOfAll;
 }
 
-GeneticAlgorithm::~GeneticAlgorithm() = default;
+GeneticAlgorithm::~GeneticAlgorithm(){
+    delete bestOfAll;
+};
 
 Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
     vector<Individual *> *population = generatePopulation();
 
     for (int i = 0; i < nOfIterations; ++i) {
 
-        /*setBestOfAll(population);
-
-        vector<Individual*> *nextGeneration = new vector<Individual *>();
+        vector<Individual *> *nextGeneration = new vector<Individual *>();
         while (nextGeneration->size() < popSize) {
             Individual *fstParent = selectBetterFitting(getRandomIndividual(population), getRandomIndividual(population));
             Individual *sndParent = selectBetterFitting(getRandomIndividual(population), getRandomIndividual(population));
             crossPopulation(fstParent, sndParent, nextGeneration);
         }
-        destroyPopulation(population);
-        population = nextGeneration;
-*/
-        int bestIndex;
+        mutatePopulation(nextGeneration);
+        if (findTheBestFittingOne(population)->getFitness() >= findTheBestFittingOne(nextGeneration)->getFitness()) {
+            destroyPopulation(nextGeneration);
+        } else {
+            destroyPopulation(population);
+            population = nextGeneration;
+        }
+        //TODO delete it, only to check how it works
+        cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
+             << endl;
 
-        //TODO only to check how it works
-        cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population, bestIndex)->getFitness() << endl;
-        mutatePopulation(population);
     }
-    setBestOfAll(population);
+    bestOfAll = new Individual(*findTheBestFittingOne(population));
     destroyPopulation(population);
     return bestOfAll;
 }
@@ -64,7 +67,7 @@ vector<Individual *> *GeneticAlgorithm::generatePopulation() {
 Individual *GeneticAlgorithm::generateIndividualsGenotype() {
     int *generatedGenotype = new int[problem->getNOfItems()];
 
-    for (int i = 0; i < problem->getNOfItems() ; ++i) {
+    for (int i = 0; i < problem->getNOfItems(); ++i) {
         generatedGenotype[i] = Tools::generateRandomNumber(0, 1);
     }
     return new Individual(*problem, generatedGenotype);
@@ -112,13 +115,11 @@ void GeneticAlgorithm::destroyPopulation(vector<Individual *> *population) {
     delete population;
 }
 
-Individual *GeneticAlgorithm::findTheBestFittingOne(vector<Individual *> *population, int &bestIndex) {
+Individual *GeneticAlgorithm::findTheBestFittingOne(vector<Individual *> *population) {
     Individual *bestIndividual = population->at(0);
-    for (int i = 1; i < population->size() ; ++i) {
-        if(population->at(i)->getFitness() > bestIndividual->getFitness()){
+    for (int i = 1; i < population->size(); ++i) {
+        if (population->at(i)->getFitness() > bestIndividual->getFitness())
             bestIndividual = population->at(i);
-            bestIndex = i;
-        }
     }
     return bestIndividual;
 }
@@ -139,7 +140,7 @@ Individual *GeneticAlgorithm::selectBetterFitting(Individual *fst, Individual *s
 }
 
 Individual *GeneticAlgorithm::getRandomIndividual(vector<Individual *> *population) {
-    return population->at((unsigned long)Tools::generateRandomNumber(0, (int)population->size() - 1));
+    return population->at((unsigned long) Tools::generateRandomNumber(0, (int) population->size() - 1));
 }
 
 
@@ -148,12 +149,12 @@ bool GeneticAlgorithm::doesActionAppear(double &probability) {
     return randomProb < probability;
 }
 
-void GeneticAlgorithm::setBestOfAll(vector <Individual *> *population) {
+/*void GeneticAlgorithm::setBestOfAll(vector<Individual *> *population) {
     int index;
     Individual *contender = findTheBestFittingOne(population, index);
-    if(bestOfAll) {
+    if (bestOfAll) {
         Individual *newBest = selectBetterFitting(bestOfAll, contender);
-        if(bestOfAll != newBest) {
+        if (bestOfAll != newBest) {
             delete bestOfAll;
             bestOfAll = new Individual(*newBest);
         }
@@ -161,4 +162,4 @@ void GeneticAlgorithm::setBestOfAll(vector <Individual *> *population) {
         delete bestOfAll;
         bestOfAll = new Individual(*contender);
     }
-}
+}*/

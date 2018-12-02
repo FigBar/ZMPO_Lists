@@ -37,7 +37,7 @@ private:
 
     void destroyPopulation(vector<Individual*> *population);
 
-    Individual *findTheBestFittingOne(vector<Individual*> *population, int &bestIndex);
+    Individual *findTheBestFittingOne(vector<Individual*> *population);
 
     //Individual *findTheBestFittingOneAndDeleteOther(vector<Individual*> *population);
 
@@ -48,8 +48,8 @@ private:
     Individual *getRandomIndividual(vector<Individual *> *population);
 
     bool doesActionAppear(double &probability);
-
-    void setBestOfAll(vector<Individual *> *population);
+/*
+    void setBestOfAll(vector<Individual *> *population);*/
 
 };
 

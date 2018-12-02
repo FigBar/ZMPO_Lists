@@ -23,7 +23,7 @@ int main() {
     KnapsackProblem problem(firstItemTable, bagCapacity);
     GeneticAlgorithm algorithm(4, 0.50, 0.20, problem);
 
-    Individual *bestSolution = algorithm.solveProblem(1000);
+    Individual *bestSolution = algorithm.solveProblem(500);
     vector <Item*> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(), bestSolution->getNOfGenes());
 
     double sumOfWeights = 0;
@@ -39,7 +39,6 @@ int main() {
         delete item;
 
     delete solutionListOfItems;
-    delete bestSolution;
 
 
     return 0;
