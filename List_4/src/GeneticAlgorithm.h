@@ -6,6 +6,12 @@
 #define LIST_4_GENETICALGORITHM_H
 
 
+#define DEFAULT_POPSIZE 4
+
+#define DEAFULT_CROSSPROB 0.75
+
+#define DEFAULT_MUTPROB 0.25
+
 #include "KnapsackProblem.h"
 #include "Individual.h"
 
@@ -37,7 +43,7 @@ private:
 
     void destroyPopulation(vector<Individual*> *population);
 
-    Individual *findTheBestFittingOne(vector<Individual*> *population, int &bestIndex);
+    Individual *findTheBestFittingOne(vector<Individual*> *population);
 
     //Individual *findTheBestFittingOneAndDeleteOther(vector<Individual*> *population);
 

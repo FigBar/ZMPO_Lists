@@ -4,7 +4,9 @@
 #include "src/KnapsackProblem.h"
 #include "src/GeneticAlgorithm.h"
 #include <vector>
+
 using namespace std;
+
 int main() {
     vector<Item *> firstItemTable{
             new Item("item 1", 4, 2),
@@ -24,18 +26,19 @@ int main() {
     GeneticAlgorithm algorithm(4, 0.50, 0.20, problem);
 
     Individual *bestSolution = algorithm.solveProblem(1000);
-    vector <Item*> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(), bestSolution->getNOfGenes());
+    vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
+                                                                  bestSolution->getNOfGenes());
 
     double sumOfWeights = 0;
     cout << endl << "#####BEST SOLUTION#####" << endl;
-    for (Item *item : *solutionListOfItems){
+    for (Item *item : *solutionListOfItems) {
         cout << *item;
         sumOfWeights += item->getWeight();
     }
     cout << "Value sum: " << bestSolution->getFitness() << endl;
     cout << "Weight sum: " << sumOfWeights << endl;
 
-    for(Item *item : firstItemTable)
+    for (Item *item : firstItemTable)
         delete item;
 
     delete solutionListOfItems;

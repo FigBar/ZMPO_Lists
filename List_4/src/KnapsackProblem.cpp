@@ -5,16 +5,20 @@
 #include "KnapsackProblem.h"
 
 KnapsackProblem::KnapsackProblem(vector<Item *> &list, double bagCap) {
-    this->bagCapacity = bagCap;
-    this->nOfItems = (int)list.size();
+    if (bagCap <= 0)
+        this->bagCapacity = DEFAULT_BAG_CAPACITY;
+    else
+        this->bagCapacity = bagCap;
+
+    this->nOfItems = (int) list.size();
     this->itemList = &list;
 }
 
 vector<Item *> *KnapsackProblem::decryptSolution(int *genotype, int nOfGenes) {
-    vector<Item *> *toDisplay = new vector<Item*>();
+    vector<Item *> *toDisplay = new vector<Item *>();
 
     for (int i = 0; i < nOfGenes; ++i) {
-        if(genotype[i] == 1)
+        if (genotype[i] == 1)
             toDisplay->push_back(itemList->at(i));
     }
     return toDisplay;

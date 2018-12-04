@@ -5,6 +5,8 @@
 #ifndef LIST_4_KNAPSACKPROBLEM_H
 #define LIST_4_KNAPSACKPROBLEM_H
 
+#define DEFAULT_BAG_CAPACITY 20
+
 #include <vector>
 #include "Item.h"
 

@@ -9,7 +9,7 @@ Individual::Individual(KnapsackProblem &instOfProblem) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new int[nOfGenes];
-    calcFitness();
+    //calcFitness();
 }
 
 Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {

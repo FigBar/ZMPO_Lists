@@ -15,9 +15,9 @@ class Individual {
 public:
     Individual(KnapsackProblem &instOfProblem);
 
-    Individual(KnapsackProblem &instOfProblem, int* genotype);
+    Individual(KnapsackProblem &instOfProblem, int *genotype);
 
-    Individual(Individual& copyOther);
+    Individual(Individual &copyOther);
 
     ~Individual();
 
@@ -25,7 +25,7 @@ public:
 
     void mutate(int index);
 
-    vector<Individual *>* cross(Individual &crossWith);
+    vector<Individual *> *cross(Individual &crossWith);
 
     double getFitness() const;
 
@@ -38,7 +38,7 @@ private:
     int *genotype;
     int nOfGenes;
     double fitness;
-    KnapsackProblem* problem;
+    KnapsackProblem *problem;
 
 };
 
