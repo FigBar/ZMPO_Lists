@@ -6,6 +6,12 @@
 #define LIST_4_GENETICALGORITHM_H
 
 
+#define DEFAULT_POPSIZE 4
+
+#define DEFAULT_CROSSPROB 0.75
+
+#define DEFAULT_MUTPROB 0.25
+
 #include "KnapsackProblem.h"
 #include "Individual.h"
 

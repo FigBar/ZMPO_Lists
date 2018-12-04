@@ -7,9 +7,21 @@
 #include <iostream>
 
 GeneticAlgorithm::GeneticAlgorithm(int popSize, double crossProb, double mutProb, KnapsackProblem &problem) {
-    this->popSize = popSize;
-    this->crossProb = crossProb;
-    this->mutProb = mutProb;
+    if(popSize <= 0)
+        this->popSize = DEFAULT_POPSIZE;
+    else
+        this->popSize = popSize;
+    
+    if(crossProb <= 0 || crossProb > 1)
+        this->crossProb = DEFAULT_CROSSPROB;
+    else
+        this->crossProb = crossProb;
+    
+    if(mutProb <= 0 || mutProb > 1)
+        this->mutProb = DEFAULT_MUTPROB;
+    else
+        this->mutProb = mutProb;
+
     this->nOfItems = problem.getNOfItems();
     this->problem = &problem;
     this->bestOfAll = nullptr;

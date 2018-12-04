@@ -5,7 +5,10 @@
 #include "KnapsackProblem.h"
 
 KnapsackProblem::KnapsackProblem(vector<Item *> &list, double bagCap) {
-    this->bagCapacity = bagCap;
+    if(bagCap <= 0)
+        this->bagCapacity = DEFAULT_BAG_CAPACITY;
+    else
+        this->bagCapacity = bagCap;
     this->nOfItems = (int)list.size();
     this->itemList = &list;
 }

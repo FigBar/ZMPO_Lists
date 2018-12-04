@@ -6,8 +6,16 @@
 
 Item::Item(string name, double value, double weight) {
     this->name = name;
-    this->value = value;
-    this->weight = weight;
+    if (value <= 0) {
+        this->value = DEFAULT_ITEM_VALUE_AND_WEIGHT;
+    } else {
+        this->value = value;
+    }
+    if (weight <= 0) {
+        this->weight = DEFAULT_ITEM_VALUE_AND_WEIGHT;
+    } else {
+        this->weight = weight;
+    }
 }
 
 const string &Item::getName() const {

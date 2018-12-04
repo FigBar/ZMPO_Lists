@@ -5,6 +5,8 @@
 #ifndef LIST_4_ITEM_H
 #define LIST_4_ITEM_H
 
+#define DEFAULT_ITEM_VALUE_AND_WEIGHT 1
+
 #include <string>
 #include <ostream>
 
