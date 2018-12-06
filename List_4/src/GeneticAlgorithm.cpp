@@ -56,8 +56,8 @@ Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
         destroyPopulation(population);
         population = nextGeneration;
 
-        //TODO only to check how it works
-        cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness() << endl;
+        /*//TODO only to check how it works
+        cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness() << endl;*/
         mutatePopulation(population);
     }
     setBestOfAll(population);
@@ -108,12 +108,12 @@ void GeneticAlgorithm::crossPopulation(Individual *fstParent, Individual *sndPar
 
 void GeneticAlgorithm::mutatePopulation(vector<Individual *> *population) {
     for (Individual *individual : *population) {
-        if (doesActionAppear(mutProb)) {
+        //if (doesActionAppear(mutProb)) { //TODO gives more accurate results this way, but doesn't fulfill spec requirements
             for (int i = 0; i < nOfItems; ++i) {
                 if (doesActionAppear(mutProb))
                     individual->mutate(i);
             }
-        }
+        //}
     }
 }
 

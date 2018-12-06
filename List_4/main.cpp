@@ -5,6 +5,9 @@
 #include "src/GeneticAlgorithm.h"
 #include <vector>
 
+#define BEST_SOLUTION_PROMPT "#####BEST SOLUTION#####"
+#define VALUE_SUM "Value sum: "
+#define WEIGHT_SUM "Weight sum: "
 using namespace std;
 
 int main() {
@@ -25,18 +28,18 @@ int main() {
     KnapsackProblem problem(firstItemTable, bagCapacity);
     GeneticAlgorithm algorithm(4, 0.50, 0.20, problem);
 
-    Individual *bestSolution = algorithm.solveProblem(1000);
+    Individual *bestSolution = algorithm.solveProblem(250);
     vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
                                                                   bestSolution->getNOfGenes());
 
     double sumOfWeights = 0;
-    cout << endl << "#####BEST SOLUTION#####" << endl;
+    cout << endl << BEST_SOLUTION_PROMPT << endl;
     for (Item *item : *solutionListOfItems) {
         cout << *item;
         sumOfWeights += item->getWeight();
     }
-    cout << "Value sum: " << bestSolution->getFitness() << endl;
-    cout << "Weight sum: " << sumOfWeights << endl;
+    cout << VALUE_SUM << bestSolution->getFitness() << endl;
+    cout << WEIGHT_SUM << sumOfWeights << endl;
 
     for (Item *item : firstItemTable)
         delete item;
