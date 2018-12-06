@@ -43,6 +43,8 @@ GeneticAlgorithm::~GeneticAlgorithm(){
 Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
     vector<Individual *> *population = generatePopulation();
 
+    if(nOfIterations < 1) nOfIterations = 1;
+
     for (int i = 0; i < nOfIterations; ++i) {
 
         vector<Individual *> *nextGeneration = new vector<Individual *>();
@@ -58,9 +60,9 @@ Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
             destroyPopulation(population);
             population = nextGeneration;
         }
-        //TODO delete it, only to check how it works
+        /*//TODO delete it, only to check how it works
         cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
-             << endl;
+             << endl;*/
 
     }
     bestOfAll = new Individual(*findTheBestFittingOne(population));
@@ -161,17 +163,4 @@ bool GeneticAlgorithm::doesActionAppear(double &probability) {
     return randomProb < probability;
 }
 
-/*void GeneticAlgorithm::setBestOfAll(vector<Individual *> *population) {
-    int index;
-    Individual *contender = findTheBestFittingOne(population, index);
-    if (bestOfAll) {
-        Individual *newBest = selectBetterFitting(bestOfAll, contender);
-        if (bestOfAll != newBest) {
-            delete bestOfAll;
-            bestOfAll = new Individual(*newBest);
-        }
-    } else {
-        delete bestOfAll;
-        bestOfAll = new Individual(*contender);
-    }
-}*/
+

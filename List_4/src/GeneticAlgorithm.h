@@ -45,8 +45,6 @@ private:
 
     Individual *findTheBestFittingOne(vector<Individual*> *population);
 
-    //Individual *findTheBestFittingOneAndDeleteOther(vector<Individual*> *population);
-
     Individual *selectBetterFitting(Individual *fst, Individual *snd);
 
     Individual *selectBetterFittingAndDeleteOther(Individual *fst, Individual *snd);
@@ -54,8 +52,6 @@ private:
     Individual *getRandomIndividual(vector<Individual *> *population);
 
     bool doesActionAppear(double &probability);
-/*
-    void setBestOfAll(vector<Individual *> *population);*/
 
 };
 
