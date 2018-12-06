@@ -7,17 +7,17 @@
 #include <iostream>
 
 GeneticAlgorithm::GeneticAlgorithm(int popSize, double crossProb, double mutProb, KnapsackProblem &problem) {
-    if(popSize <= 0)
+    if (popSize <= 0)
         this->popSize = DEFAULT_POPSIZE;
     else
         this->popSize = popSize;
-    
-    if(crossProb <= 0 || crossProb > 1)
+
+    if (crossProb <= 0 || crossProb > 1)
         this->crossProb = DEFAULT_CROSSPROB;
     else
         this->crossProb = crossProb;
-    
-    if(mutProb <= 0 || mutProb > 1)
+
+    if (mutProb <= 0 || mutProb > 1)
         this->mutProb = DEFAULT_MUTPROB;
     else
         this->mutProb = mutProb;
@@ -36,21 +36,23 @@ GeneticAlgorithm::GeneticAlgorithm(GeneticAlgorithm &algorithm) {
     this->bestOfAll = algorithm.bestOfAll;
 }
 
-GeneticAlgorithm::~GeneticAlgorithm(){
+GeneticAlgorithm::~GeneticAlgorithm() {
     delete bestOfAll;
 };
 
 Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
     vector<Individual *> *population = generatePopulation();
 
-    if(nOfIterations < 1) nOfIterations = 1;
+    if (nOfIterations < 1) nOfIterations = 1;
 
     for (int i = 0; i < nOfIterations; ++i) {
 
         vector<Individual *> *nextGeneration = new vector<Individual *>();
         while (nextGeneration->size() < popSize) {
-            Individual *fstParent = selectBetterFitting(getRandomIndividual(population), getRandomIndividual(population));
-            Individual *sndParent = selectBetterFitting(getRandomIndividual(population), getRandomIndividual(population));
+            Individual *fstParent = selectBetterFitting(getRandomIndividual(population),
+                                                        getRandomIndividual(population));
+            Individual *sndParent = selectBetterFitting(getRandomIndividual(population),
+                                                        getRandomIndividual(population));
             crossPopulation(fstParent, sndParent, nextGeneration);
         }
         mutatePopulation(nextGeneration);
@@ -113,12 +115,12 @@ void GeneticAlgorithm::crossPopulation(Individual *fstParent, Individual *sndPar
 
 void GeneticAlgorithm::mutatePopulation(vector<Individual *> *population) {
     for (Individual *individual : *population) {
-        if (doesActionAppear(mutProb)) {
-            for (int i = 0; i < nOfItems; ++i) {
-                if (doesActionAppear(mutProb))
-                    individual->mutate(i);
-            }
+        //if (doesActionAppear(mutProb)) { //TODO gives better results, but doesn't fulfill specification requirements
+        for (int i = 0; i < nOfItems; ++i) {
+            if (doesActionAppear(mutProb))
+                individual->mutate(i);
         }
+        //}
     }
 }
 
