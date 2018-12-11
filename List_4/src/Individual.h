@@ -21,7 +21,7 @@ public:
 
     ~Individual();
 
-    void calcFitness();
+
 
     void mutate(int index);
 
@@ -34,6 +34,8 @@ public:
     int getNOfGenes() const;
 
 private:
+
+    void calcFitness();
 
     int *genotype;
     int nOfGenes;
