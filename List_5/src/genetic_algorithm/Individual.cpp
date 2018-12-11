@@ -6,17 +6,19 @@
 #include "utils/Tools.h"
 
 
-Individual::Individual(KnapsackProblem &instOfProblem) {
+Individual::Individual(KnapsackProblem &instOfProblem, double mutProb) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new int[nOfGenes];
+    this->mutProb = mutProb;
     //calcFitness();
 }
 
-Individual::Individual(KnapsackProblem &instOfProblem, int *genotype) {
+Individual::Individual(KnapsackProblem &instOfProblem, int *genotype, double mutProb) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = genotype;
+    this->mutProb = mutProb;
     calcFitness();
 }
 
@@ -24,6 +26,7 @@ Individual::Individual(Individual &copyOther) {
     this->problem = copyOther.problem;
     this->nOfGenes = copyOther.nOfGenes;
     this->genotype = new int[nOfGenes];
+    this->mutProb = copyOther.mutProb;
 
     for (int i = 0; i < nOfGenes; ++i) {
         genotype[i] = copyOther.genotype[i];
@@ -51,17 +54,21 @@ void Individual::calcFitness() {
     this->fitness = (weightSum <= bagCapacity) ? valueSum : 0;
 }
 
-void Individual::mutate(int index) {
-    if (genotype[index] == 1)
-        genotype[index] = 0;
-    else
-        genotype[index] = 1;
+void Individual::mutate() {
+    for (int i = 0; i < nOfGenes; ++i) {
+        if (((double) Tools::generateRandomNumber(0, 100) / 100.0) < mutProb) {
+            if (genotype[i] == 1)
+                genotype[i] = 0;
+            else
+                genotype[i] = 1;
+        }
+    }
+
     calcFitness();
 }
 
-Individual Individual::operator++(int) {
+void Individual::operator++(int) {
     this->mutate();
-    return *this;
 }
 
 Individual *Individual::operator+(Individual &crossWith) {
@@ -89,8 +96,8 @@ vector<Individual *> *Individual::cross(Individual &crossWith) {
         sndDescendantGenotype[j] = this->genotype[j];
     }
 
-    Individual *fstDescendant = new Individual(*(this->problem), fstDescendantGenotype);
-    Individual *sndDescendant = new Individual(*(this->problem), sndDescendantGenotype);
+    Individual *fstDescendant = new Individual(*(this->problem), fstDescendantGenotype, mutProb);
+    Individual *sndDescendant = new Individual(*(this->problem), sndDescendantGenotype, mutProb);
 
     offspring->push_back(fstDescendant);
     offspring->push_back(sndDescendant);

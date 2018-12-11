@@ -24,7 +24,7 @@ public:
 
     ~GeneticAlgorithm();
 
-    Individual *solveProblem(int nOfIterations);
+    Individual *solveProblem(long timeInSeconds);
 
 private:
     int popSize;

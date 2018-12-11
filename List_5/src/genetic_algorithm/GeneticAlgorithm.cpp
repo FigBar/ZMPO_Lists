@@ -5,6 +5,9 @@
 #include "GeneticAlgorithm.h"
 #include "utils/Tools.h"
 #include <iostream>
+#include <chrono>
+
+using namespace chrono;
 
 GeneticAlgorithm::GeneticAlgorithm(int popSize, double crossProb, double mutProb, KnapsackProblem &problem) {
     if (popSize <= 0)
@@ -40,12 +43,13 @@ GeneticAlgorithm::~GeneticAlgorithm() {
     delete bestOfAll;
 };
 
-Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
+Individual *GeneticAlgorithm::solveProblem(long timeInSeconds) {
     vector<Individual *> *population = generatePopulation();
-
-    if (nOfIterations < 1) nOfIterations = 1;
-
-    for (int i = 0; i < nOfIterations; ++i) {
+    long timeFlow = 0;
+    time_point<steady_clock> initialTime = steady_clock::now();
+    if (timeInSeconds < 1) timeInSeconds = 1;
+    int counter = 0;
+    while (timeFlow < timeInSeconds) {
 
         vector<Individual *> *nextGeneration = new vector<Individual *>();
         while (nextGeneration->size() < popSize) {
@@ -62,10 +66,11 @@ Individual *GeneticAlgorithm::solveProblem(int nOfIterations) {
             destroyPopulation(population);
             population = nextGeneration;
         }
-        /*//TODO delete it, only to check how it works
-        cout << "iteration: " << i << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
-             << endl;*/
-
+        //TODO delete it, only to check how it works
+        cout << "iteration: " << counter << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
+             << endl;
+        timeFlow = duration_cast<seconds>(steady_clock::now() - initialTime).count();
+        counter++;
     }
     bestOfAll = new Individual(*findTheBestFittingOne(population));
     destroyPopulation(population);
@@ -86,15 +91,15 @@ Individual *GeneticAlgorithm::generateIndividualsGenotype() {
     for (int i = 0; i < problem->getNOfItems(); ++i) {
         generatedGenotype[i] = Tools::generateRandomNumber(0, 1);
     }
-    return new Individual(*problem, generatedGenotype);
+    return new Individual(*problem, generatedGenotype, mutProb);
 }
 
 void GeneticAlgorithm::crossPopulation(Individual *fstParent, Individual *sndParent, vector<Individual *> *population) {
     if (doesActionAppear(crossProb)) { //cross parents and add their children to population
-        vector<Individual *> *offspring = fstParent->cross(*sndParent);
-        Individual *fstChild = offspring->at(0);
-        Individual *sndChild = offspring->at(1);
-        delete offspring;
+        //vector<Individual *> *offspring = fstParent->cross(*sndParent);
+        Individual *fstChild = new Individual(*(*fstParent + *sndParent));
+        Individual *sndChild = new Individual(*(*sndParent + *fstParent));
+        //delete offspring;
 
         if (population->size() + 1 < popSize) {
             population->push_back(fstChild);
@@ -116,10 +121,7 @@ void GeneticAlgorithm::crossPopulation(Individual *fstParent, Individual *sndPar
 void GeneticAlgorithm::mutatePopulation(vector<Individual *> *population) {
     for (Individual *individual : *population) {
         //if (doesActionAppear(mutProb)) { //TODO gives better results, but doesn't fulfill specification requirements
-        for (int i = 0; i < nOfItems; ++i) {
-            if (doesActionAppear(mutProb))
-                individual->mutate(i);
-        }
+        (*individual)++;
         //}
     }
 }

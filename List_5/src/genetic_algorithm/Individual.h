@@ -14,15 +14,15 @@ using namespace std;
 class Individual {
 
 public:
-    Individual(KnapsackProblem &instOfProblem);
+    Individual(KnapsackProblem &instOfProblem, double mutProb);
 
-    Individual(KnapsackProblem &instOfProblem, int *genotype);
+    Individual(KnapsackProblem &instOfProblem, int *genotype, double mutProb);
 
     Individual(Individual &copyOther);
 
     ~Individual();
 
-    Individual operator++(int);
+    void operator++(int);
 
     Individual *operator+(Individual &crossWith);
 
@@ -39,7 +39,7 @@ private:
     double fitness;
     KnapsackProblem *problem;
 
-    void mutate(int index);
+    void mutate();
 
     vector<Individual *> *cross(Individual &crossWith);
 
