@@ -3,11 +3,10 @@
 #include "src/knapsack_problem/KnapsackProblem.h"
 #include "src/genetic_algorithm/GeneticAlgorithm.h"
 #include "src/genetic_algorithm/Individual.h"
+#include "lib/user_interface/Menu.h"
+#include "src/knapsack_interface/KnapsackBootstrap.h"
 #include <vector>
 
-#define BEST_SOLUTION_PROMPT "#####BEST SOLUTION#####"
-#define VALUE_SUM "Value sum: "
-#define WEIGHT_SUM "Weight sum: "
 using namespace std;
 int main() {
     vector<Item *> firstItemTable{
@@ -20,28 +19,10 @@ int main() {
             new Item("item 7", 100, 10),
             new Item("item 8", 45, 20)
     };
+    Menu *mainMenu = KnapsackBootstrap::initializeKnapsackMenu(firstItemTable);
+    mainMenu->run();
 
-    double bagCapacity = 34;
-    KnapsackProblem<int> problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm<int> algorithm(10, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
-
-    Individual<int> *bestSolution = algorithm.solveProblem(1);
-    double solutionsWeight = 0;
-    vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
-                                                                  bestSolution->getNOfGenes(), solutionsWeight);
-
-    double sumOfWeights = 0;
-    cout << endl << BEST_SOLUTION_PROMPT << endl;
-    for (Item *item : *solutionListOfItems) {
-        cout << *item;
-    }
-    cout << VALUE_SUM << bestSolution->getFitness() << endl;
-    cout << WEIGHT_SUM << solutionsWeight << endl;
-
-    for (Item *item : firstItemTable)
-        delete item;
-
-    delete solutionListOfItems;
+    delete mainMenu;
 
 
     return 0;

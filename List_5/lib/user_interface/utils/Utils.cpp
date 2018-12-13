@@ -27,21 +27,6 @@ bool Utils::yesOrNo() {
     return false;
 }
 
-int Utils::provideAnInt(int lowerBound, int higherBound) {
-    cout << PROVIDE_INT << lowerBound << " and " << higherBound << ": ";
-
-    int answer;
-
-    bool valid;
-    do{
-        string string1;
-        stringstream stringstream1;
-        getline(cin, string1);
-        stringstream1 << string1;
-        valid = !(stringstream1 >> answer);
-    } while (valid || answer < lowerBound || higherBound < answer);
-    return answer;
-}
 
 int Utils::provideInt(int lowerBound, int higherBound) {
 

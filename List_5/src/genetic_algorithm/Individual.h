@@ -88,7 +88,7 @@ Individual<T>::~Individual() {
     delete[] genotype;
 }
 
-template<>
+template<> inline
 void Individual<bool>::calcFitness() {
     double weightSum = 0;
     double valueSum = 0;
@@ -137,7 +137,7 @@ void Individual<T>::mutate() {
     calcFitness();
 }
 
-template<>
+template<> inline
 void Individual<bool>::mutate() {
     for (int i = 0; i < nOfGenes; ++i) {
         if (((double) Tools::generateRandomNumber(0, 100) / 100.0) < mutProb) {

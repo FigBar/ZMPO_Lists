@@ -157,7 +157,7 @@ Individual<T> *GeneticAlgorithm<T>::generateIndividualsGenotype() {
     }
     return new Individual<T>(*problem, generatedGenotype, mutProb);
 }
-template<>
+template<> inline
 Individual<bool> *GeneticAlgorithm<bool>::generateIndividualsGenotype() {
     bool *generatedGenotype = new bool[problem->getNOfItems()];
 
