@@ -8,6 +8,7 @@
 #include <vector>
 #include "../knapsack_problem/KnapsackProblem.h"
 #include "utils/Tools.h"
+#include <random>
 
 
 using namespace std;
@@ -32,7 +33,7 @@ public:
 
     double getFitness() const;
 
-    int *getGenotype() const;
+    T *getGenotype() const;
 
     int getNOfGenes() const;
 
@@ -55,7 +56,7 @@ template<typename T>
 Individual<T>::Individual(KnapsackProblem<T> &instOfProblem, double mutProb) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
-    this->genotype = new int[nOfGenes];
+    this->genotype = new T[nOfGenes];
     this->mutProb = mutProb;
     //calcFitness();
 }
@@ -73,7 +74,7 @@ template<typename T>
 Individual<T>::Individual(Individual<T> &copyOther) {
     this->problem = copyOther.problem;
     this->nOfGenes = copyOther.nOfGenes;
-    this->genotype = new int[nOfGenes];
+    this->genotype = new T[nOfGenes];
     this->mutProb = copyOther.mutProb;
 
     for (int i = 0; i < nOfGenes; ++i) {
@@ -112,13 +113,13 @@ void Individual<T>::calcFitness() {
     vector<Item *> *listOfItems = problem->getItemList();
 
     for (int i = 0; i < nOfGenes; ++i) {
-        if (genotype[i] != 0) {
+        if (genotype[i] > T()) {
             Item *current = (*listOfItems)[i];
             weightSum += (current->getWeight() * genotype[i]);
             valueSum += (current->getValue() * genotype[i]);
         }
     }
-    this->fitness = (weightSum <= bagCapacity) ? valueSum : 0;
+    this->fitness = (weightSum <= bagCapacity) ? valueSum : T();
 }
 
 template<typename T>
@@ -130,7 +131,7 @@ void Individual<T>::mutate() {
             uniform_real_distribution<> generate(-(problem->getMaxAmountOfItem().at(i) / 2),
                                                  problem->getMaxAmountOfItem().at(i));
             T mutatedFactor = (T) generate(gen);
-            mutatedFactor > 0 ? genotype[i] = mutatedFactor : genotype[i] = T();
+            mutatedFactor > T() ? genotype[i] = mutatedFactor : genotype[i] = T();
         }
     }
     calcFitness();
@@ -209,7 +210,7 @@ double Individual<T>::getFitness() const {
 }
 
 template<typename T>
-int *Individual<T>::getGenotype() const {
+T *Individual<T>::getGenotype() const {
     return genotype;
 }
 

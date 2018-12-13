@@ -22,21 +22,21 @@ int main() {
     };
 
     double bagCapacity = 34;
-    KnapsackProblem problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm algorithm(4, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
+    KnapsackProblem<double> problem(firstItemTable, bagCapacity);
+    GeneticAlgorithm<double> algorithm(10, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
 
-    Individual *bestSolution = algorithm.solveProblem(1);
+    Individual<double> *bestSolution = algorithm.solveProblem(2);
+    double solutionsWeight = 0;
     vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
-                                                                  bestSolution->getNOfGenes());
+                                                                  bestSolution->getNOfGenes(), solutionsWeight);
 
     double sumOfWeights = 0;
     cout << endl << BEST_SOLUTION_PROMPT << endl;
     for (Item *item : *solutionListOfItems) {
         cout << *item;
-        sumOfWeights += item->getWeight();
     }
     cout << VALUE_SUM << bestSolution->getFitness() << endl;
-    cout << WEIGHT_SUM << sumOfWeights << endl;
+    cout << WEIGHT_SUM << solutionsWeight << endl;
 
     for (Item *item : firstItemTable)
         delete item;

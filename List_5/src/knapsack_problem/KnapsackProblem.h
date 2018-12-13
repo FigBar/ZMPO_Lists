@@ -12,7 +12,7 @@
 
 using namespace std;
 
-template <typename T>
+template<typename T>
 class KnapsackProblem {
 public:
     KnapsackProblem(vector<Item *> &list, double bagCap);
@@ -23,7 +23,8 @@ public:
 
     vector<Item *> *getItemList() const;
 
-    vector<Item *> *decryptSolution(int *genotype, int nOfGenes);
+    //TODO change calculating solutions weight to something more sophisticated xD
+    vector<Item *> *decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight);
 
     const vector<double> &getMaxAmountOfItem() const;
 
@@ -37,51 +38,69 @@ private:
     void countMaxAmount();
 };
 
-template <typename T>
+template<typename T>
 KnapsackProblem<T>::KnapsackProblem(vector<Item *> &list, double bagCap) {
-    if(bagCap <= 0)
+    if (bagCap <= 0)
         this->bagCapacity = DEFAULT_BAG_CAPACITY;
     else
         this->bagCapacity = bagCap;
-    this->nOfItems = (int)list.size();
+    this->nOfItems = (int) list.size();
     this->itemList = &list;
     countMaxAmount();
 }
-template <typename T>
-vector<Item *> *KnapsackProblem<T>::decryptSolution(int *genotype, int nOfGenes) {
-    vector<Item *> *toDisplay = new vector<Item*>();
+
+template<typename T>
+vector<Item *> *KnapsackProblem<T>::decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight) {
+    vector<Item *> *toDisplay = new vector<Item *>();
 
     for (int i = 0; i < nOfGenes; ++i) {
-        if(genotype[i] == 1)
+        if (genotype[i] != T()) {
             toDisplay->push_back(itemList->at(i));
+            decryptedWeight += (double)(genotype[i] * itemList->at(i)->getWeight());
+        }
+    }
+    return toDisplay;
+}
+
+template<>
+vector<Item *> *KnapsackProblem<bool>::decryptSolution(bool *genotype, int nOfGenes, double &decryptedWeight) {
+    vector<Item *> *toDisplay = new vector<Item *>();
+
+    for (int i = 0; i < nOfGenes; ++i) {
+        if (genotype[i]) {
+            toDisplay->push_back(itemList->at(i));
+            decryptedWeight += itemList->at(i)->getWeight();
+        }
     }
     return toDisplay;
 }
 
 template<typename T>
 void KnapsackProblem<T>::countMaxAmount() {
-    for(Item *item : itemList){
-        double weight = item->getWeight();
-        maxAmountOfItem.push_back(bagCapacity/weight);
+    for (int i = 0; i < itemList->size(); ++i) {
+        double weight = itemList->at(i)->getWeight();
+        maxAmountOfItem.push_back(bagCapacity / weight);
     }
 }
 
-template <>
+template<>
 void KnapsackProblem<bool>::countMaxAmount() {
-    for (int i = 0; i < itemList->size() ; ++i) {
+    for (int i = 0; i < itemList->size(); ++i) {
         maxAmountOfItem.push_back(1);
     }
 }
 
-template <typename T>
+template<typename T>
 int KnapsackProblem<T>::getNOfItems() const {
     return nOfItems;
 }
-template <typename T>
+
+template<typename T>
 double KnapsackProblem<T>::getBagCapacity() const {
     return bagCapacity;
 }
-template <typename T>
+
+template<typename T>
 vector<Item *> *KnapsackProblem<T>::getItemList() const {
     return itemList;
 }
