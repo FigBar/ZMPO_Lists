@@ -150,9 +150,10 @@ Individual<T> *GeneticAlgorithm<T>::generateIndividualsGenotype() {
     T *generatedGenotype = new T[problem->getNOfItems()];
 
     for (int i = 0; i < problem->getNOfItems(); ++i) {
-        uniform_real_distribution<> generate(0, problem->getMaxAmountOfItem().at(i));
+        uniform_real_distribution<> generate(-(problem->getMaxAmountOfItem().at(i) / 2),
+                                             problem->getMaxAmountOfItem().at(i));
         T generatedFactor = (T) generate(gen);
-        generatedGenotype[i] = generatedFactor;
+        generatedFactor > T() ? generatedGenotype[i] = generatedFactor : generatedGenotype[i] = T();
     }
     return new Individual<T>(*problem, generatedGenotype, mutProb);
 }

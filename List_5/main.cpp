@@ -22,10 +22,10 @@ int main() {
     };
 
     double bagCapacity = 34;
-    KnapsackProblem<double> problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm<double> algorithm(10, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
+    KnapsackProblem<int> problem(firstItemTable, bagCapacity);
+    GeneticAlgorithm<int> algorithm(10, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
 
-    Individual<double> *bestSolution = algorithm.solveProblem(2);
+    Individual<int> *bestSolution = algorithm.solveProblem(1);
     double solutionsWeight = 0;
     vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
                                                                   bestSolution->getNOfGenes(), solutionsWeight);
