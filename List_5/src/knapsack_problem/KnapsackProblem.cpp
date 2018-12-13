@@ -3,8 +3,9 @@
 //
 
 #include "KnapsackProblem.h"
-
-KnapsackProblem::KnapsackProblem(vector<Item *> &list, double bagCap) {
+/*
+template <typename T>
+KnapsackProblem<T>::KnapsackProblem(vector<Item *> &list, double bagCap) {
     if(bagCap <= 0)
         this->bagCapacity = DEFAULT_BAG_CAPACITY;
     else
@@ -12,8 +13,8 @@ KnapsackProblem::KnapsackProblem(vector<Item *> &list, double bagCap) {
     this->nOfItems = (int)list.size();
     this->itemList = &list;
 }
-
-vector<Item *> *KnapsackProblem::decryptSolution(int *genotype, int nOfGenes) {
+template <typename T>
+vector<Item *> *KnapsackProblem<T>::decryptSolution(int *genotype, int nOfGenes) {
     vector<Item *> *toDisplay = new vector<Item*>();
 
     for (int i = 0; i < nOfGenes; ++i) {
@@ -23,14 +24,31 @@ vector<Item *> *KnapsackProblem::decryptSolution(int *genotype, int nOfGenes) {
     return toDisplay;
 }
 
-int KnapsackProblem::getNOfItems() const {
+template<typename T>
+void KnapsackProblem<T>::countMaxAmount() {
+    for(Item *item : itemList){
+        double weight = item->getWeight();
+        maxAmountOfItem.push_back(bagCapacity/weight);
+    }
+}
+
+template <>
+void KnapsackProblem<bool>::countMaxAmount() {
+    for (int i = 0; i < itemList->size() ; ++i) {
+        maxAmountOfItem.push_back(1);
+    }
+}
+
+template <typename T>
+int KnapsackProblem<T>::getNOfItems() const {
     return nOfItems;
 }
-
-double KnapsackProblem::getBagCapacity() const {
+template <typename T>
+double KnapsackProblem<T>::getBagCapacity() const {
     return bagCapacity;
 }
-
-vector<Item *> *KnapsackProblem::getItemList() const {
+template <typename T>
+vector<Item *> *KnapsackProblem<T>::getItemList() const {
     return itemList;
 }
+*/
