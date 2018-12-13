@@ -26,6 +26,8 @@ public:
 
     Individual *operator+(Individual &crossWith);
 
+    Individual *operator=(Individual &copyOther);
+
     double getFitness() const;
 
     int *getGenotype() const;

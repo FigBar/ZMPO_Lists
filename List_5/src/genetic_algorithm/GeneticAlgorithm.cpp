@@ -97,8 +97,8 @@ Individual *GeneticAlgorithm::generateIndividualsGenotype() {
 void GeneticAlgorithm::crossPopulation(Individual *fstParent, Individual *sndParent, vector<Individual *> *population) {
     if (doesActionAppear(crossProb)) { //cross parents and add their children to population
         //vector<Individual *> *offspring = fstParent->cross(*sndParent);
-        Individual *fstChild = new Individual(*(*fstParent + *sndParent));
-        Individual *sndChild = new Individual(*(*sndParent + *fstParent));
+        Individual *fstChild = *fstParent + *sndParent; //new Individual(*(*fstParent + *sndParent));
+        Individual *sndChild = *sndParent + *fstParent; //new Individual(*(*sndParent + *fstParent));
         //delete offspring;
 
         if (population->size() + 1 < popSize) {

@@ -23,7 +23,7 @@ int main() {
 
     double bagCapacity = 34;
     KnapsackProblem problem(firstItemTable, bagCapacity);
-    GeneticAlgorithm algorithm(5, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
+    GeneticAlgorithm algorithm(4, 0.75, 0.25, problem); //best solution: items 1,7,8; value: 150; weight: 33
 
     Individual *bestSolution = algorithm.solveProblem(1);
     vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),

@@ -79,6 +79,21 @@ Individual *Individual::operator+(Individual &crossWith) {
     return descendant;
 }
 
+Individual *Individual::operator=(Individual &copyOther) {
+    this->problem = copyOther.problem;
+    if(genotype)
+        delete[] genotype;
+    this->nOfGenes = copyOther.nOfGenes;
+    this->genotype = new int[nOfGenes];
+    this->mutProb = copyOther.mutProb;
+
+    for (int i = 0; i < nOfGenes; ++i) {
+        genotype[i] = copyOther.genotype[i];
+    }
+    calcFitness();
+    return this;
+}
+
 vector<Individual *> *Individual::cross(Individual &crossWith) {
     vector<Individual *> *offspring = new vector<Individual *>;
 
@@ -116,3 +131,5 @@ int *Individual::getGenotype() const {
 int Individual::getNOfGenes() const {
     return nOfGenes;
 }
+
+
