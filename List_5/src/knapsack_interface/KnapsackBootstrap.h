@@ -8,11 +8,12 @@
 
 #include "../../lib/user_interface/Menu.h"
 #include "../knapsack_problem/Item.h"
+#include "../knapsack_handler/KnapsackHandler.h"
 
 class KnapsackBootstrap {
 
 public:
-    static Menu* initializeKnapsackMenu(vector<Item *> listOfItems);
+    static Menu* initializeKnapsackMenu(KnapsackHandler *handler);
 };
 
 

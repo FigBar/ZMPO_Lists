@@ -8,25 +8,24 @@
 #include <vector>
 
 using namespace std;
+
 int main() {
-    vector<Item *> firstItemTable{
-            new Item("item 1", 5, 3),
-            new Item("item 2", 12, 10),
-            new Item("item 3", 10, 8),
-            new Item("item 4", 7, 6),
-            new Item("item 5", 1, 2),
-            new Item("item 6", 11, 9),
-            new Item("item 7", 100, 10),
-            new Item("item 8", 45, 20)
-    };
-    Menu *mainMenu = KnapsackBootstrap::initializeKnapsackMenu(firstItemTable);
+    vector<Item *> *firstItemTable = new vector<Item *>();
+    firstItemTable->push_back(new Item("item 0", 5, 3));
+    firstItemTable->push_back(new Item("item 1", 12, 10));
+    firstItemTable->push_back(new Item("item 2", 10, 8));
+    firstItemTable->push_back(new Item("item 3", 7, 6));
+    firstItemTable->push_back(new Item("item 4", 1, 2));
+    firstItemTable->push_back(new Item("item 5", 11, 9));
+    firstItemTable->push_back(new Item("item 6", 100, 10));
+    firstItemTable->push_back(new Item("item 7", 45, 20));
+
+    KnapsackHandler *handler = new KnapsackHandler(firstItemTable);
+    Menu *mainMenu = KnapsackBootstrap::initializeKnapsackMenu(handler);
     mainMenu->run();
 
     delete mainMenu;
-    for (int i = 0; i < firstItemTable.size() ; ++i) {
-        delete firstItemTable[i];
-    }
-    firstItemTable.clear();
+    delete handler;
 
 
     return 0;

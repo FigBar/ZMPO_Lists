@@ -12,6 +12,7 @@
 #include "../../lib/user_interface/utils/Utils.h"
 #include "../knapsack_problem/KnapsackProblem.h"
 #include "../genetic_algorithm/GeneticAlgorithm.h"
+#include "../knapsack_handler/KnapsackHandler.h"
 
 
 #define BEST_SOLUTION_PROMPT "#####BEST SOLUTION#####"
@@ -23,48 +24,41 @@ using namespace std;
 template<typename T>
 class KnapsackSolverCommand : public Command {
 public:
-    KnapsackSolverCommand(vector<Item *> listOfItems);
-
-    ~KnapsackSolverCommand();
+    explicit KnapsackSolverCommand(KnapsackHandler *handler1);
 
     virtual void runCommand();
 
 private:
-    vector<Item *> listOfItems;
-
-    void printListOfItems();
+    KnapsackHandler *handler;
 
     void provideAlgorithmParameters(int &popSize, double &crossProb, double &mutProb, int &timeInSeconds);
+
+    double provideBagCapacity();
 
 };
 
 template<typename T>
-KnapsackSolverCommand<T>::KnapsackSolverCommand(vector<Item *> listOfItems) {
-    for (int i = 0; i < listOfItems.size(); ++i) {
-        this->listOfItems.push_back(new Item(*listOfItems.at(i)));
-    }
+KnapsackSolverCommand<T>::KnapsackSolverCommand(KnapsackHandler *handler1) {
+    this->handler = handler1;
 }
 
-template<typename T>
-KnapsackSolverCommand<T>::~KnapsackSolverCommand() {
-    for (int i = 0; i < listOfItems.size() ; ++i) {
-        delete listOfItems.at(i);
-    }
-    listOfItems.clear();
-}
 
 template<typename T>
 void KnapsackSolverCommand<T>::runCommand() {
-    printListOfItems();
-    double bagCapacity = 34;
-    KnapsackProblem<T> problem(this->listOfItems, bagCapacity);
+    vector<Item *> *listOfItems = new vector<Item *>();
+    for (int i = 0; i < handler->getItems()->size() ; ++i) {
+        listOfItems->push_back(new Item(*handler->getItems()->at(i)));
+    }
+
+    double bagCapacity = provideBagCapacity();
+    KnapsackProblem<T> problem(*listOfItems, bagCapacity);
     int popSize = 0;
     double mutProb = 0;
     double crossProb = 0;
     int timeInSeconds = 0;
     provideAlgorithmParameters(popSize, crossProb, mutProb, timeInSeconds);
     GeneticAlgorithm<T> algorithm(popSize, crossProb, mutProb,
-                                  problem); //best solution: items 1,7,8; value: 150; weight: 33
+                                  problem);
 
     Individual<T> *bestSolution = algorithm.solveProblem(timeInSeconds);
     double solutionsWeight = 0;
@@ -77,16 +71,17 @@ void KnapsackSolverCommand<T>::runCommand() {
     cout << VALUE_SUM << bestSolution->getFitness() << endl;
     cout << WEIGHT_SUM << solutionsWeight << endl;
 
+    for (Item *item : *listOfItems) {
+         delete item;
+    }
+    delete listOfItems;
     delete solutionListOfItems;
 }
 
 template<typename T>
-void KnapsackSolverCommand<T>::printListOfItems() {
-    cout << "#################ITEM_LIST#################" << endl;
-    for (int i = 0; i < listOfItems.size(); ++i) {
-        cout << *(listOfItems.at(i));
-    }
-    cout << "###########################################" << endl;
+double KnapsackSolverCommand<T>::provideBagCapacity() {
+    cout << "Please provide bag capacity: ";
+    return Utils::provideNumber<double>(1, 100);
 }
 
 template<typename T>
