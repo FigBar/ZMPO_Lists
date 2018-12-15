@@ -19,6 +19,13 @@ Item::Item(string name, double value, double weight) {
     this->partTaken = 0;
 }
 
+Item::Item(Item &copyOther) {
+    this->name = copyOther.name;
+    this->value = copyOther.value;
+    this->weight = copyOther.weight;
+    this->partTaken = 0;
+}
+
 const string &Item::getName() const {
     return name;
 }

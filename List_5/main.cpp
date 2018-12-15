@@ -23,6 +23,10 @@ int main() {
     mainMenu->run();
 
     delete mainMenu;
+    for (int i = 0; i < firstItemTable.size() ; ++i) {
+        delete firstItemTable[i];
+    }
+    firstItemTable.clear();
 
 
     return 0;

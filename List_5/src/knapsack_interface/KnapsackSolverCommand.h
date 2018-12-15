@@ -25,6 +25,8 @@ class KnapsackSolverCommand : public Command {
 public:
     KnapsackSolverCommand(vector<Item *> listOfItems);
 
+    ~KnapsackSolverCommand();
+
     virtual void runCommand();
 
 private:
@@ -39,8 +41,16 @@ private:
 template<typename T>
 KnapsackSolverCommand<T>::KnapsackSolverCommand(vector<Item *> listOfItems) {
     for (int i = 0; i < listOfItems.size(); ++i) {
-        this->listOfItems.push_back(listOfItems.at(i));
+        this->listOfItems.push_back(new Item(*listOfItems.at(i)));
     }
+}
+
+template<typename T>
+KnapsackSolverCommand<T>::~KnapsackSolverCommand() {
+    for (int i = 0; i < listOfItems.size() ; ++i) {
+        delete listOfItems.at(i);
+    }
+    listOfItems.clear();
 }
 
 template<typename T>
@@ -72,11 +82,11 @@ void KnapsackSolverCommand<T>::runCommand() {
 
 template<typename T>
 void KnapsackSolverCommand<T>::printListOfItems() {
-    cout << "###ITEM_LIST###" << endl;
+    cout << "#################ITEM_LIST#################" << endl;
     for (int i = 0; i < listOfItems.size(); ++i) {
         cout << *(listOfItems.at(i));
     }
-    cout << "######################################################" << endl;
+    cout << "###########################################" << endl;
 }
 
 template<typename T>

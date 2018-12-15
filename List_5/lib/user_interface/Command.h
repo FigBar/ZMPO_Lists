@@ -9,6 +9,7 @@
 class Command {
 public:
     virtual void runCommand();
+    virtual ~Command();
 };
 
 

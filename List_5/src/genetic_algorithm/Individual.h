@@ -88,23 +88,6 @@ Individual<T>::~Individual() {
     delete[] genotype;
 }
 
-template<> inline
-void Individual<bool>::calcFitness() {
-    double weightSum = 0;
-    double valueSum = 0;
-    double bagCapacity = problem->getBagCapacity();
-    vector<Item *> *listOfItems = problem->getItemList();
-
-    for (int i = 0; i < nOfGenes; ++i) {
-        if (genotype[i]) {
-            Item *current = (*listOfItems)[i];
-            weightSum += current->getWeight();
-            valueSum += current->getValue();
-        }
-    }
-    this->fitness = (weightSum <= bagCapacity) ? valueSum : 0;
-}
-
 template<typename T>
 void Individual<T>::calcFitness() {
     double weightSum = 0;
@@ -132,16 +115,6 @@ void Individual<T>::mutate() {
                                                  problem->getMaxAmountOfItem().at(i));
             T mutatedFactor = (T) generate(gen);
             mutatedFactor > T() ? genotype[i] = mutatedFactor : genotype[i] = T();
-        }
-    }
-    calcFitness();
-}
-
-template<> inline
-void Individual<bool>::mutate() {
-    for (int i = 0; i < nOfGenes; ++i) {
-        if (((double) Tools::generateRandomNumber(0, 100) / 100.0) < mutProb) {
-            genotype[i] = !genotype[i];
         }
     }
     calcFitness();

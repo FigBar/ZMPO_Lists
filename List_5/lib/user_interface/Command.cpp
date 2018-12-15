@@ -7,6 +7,9 @@
 #define DEFAULT "default command";
 using namespace std;
 
+Command::~Command() = default;
+
+
 void Command::runCommand() {
  cout << DEFAULT;
  cout << endl;

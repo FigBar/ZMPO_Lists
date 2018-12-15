@@ -16,6 +16,8 @@ class Item {
 public:
     Item(string name, double value, double weight);
 
+    Item(Item &copyOther);
+
     const string &getName() const;
 
     double getValue() const;

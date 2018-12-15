@@ -124,9 +124,9 @@ Individual<T> *GeneticAlgorithm<T>::solveProblem(long timeInSeconds) {
             destroyPopulation(population);
             population = nextGeneration;
         }
-      /*  //TODO delete it, only to check how it works
-        cout << "iteration: " << counter << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
-             << endl;*/
+        /*  //TODO delete it, only to check how it works
+          cout << "iteration: " << counter << " ||Best fitness: " << findTheBestFittingOne(population)->getFitness()
+               << endl;*/
         timeFlow = duration_cast<seconds>(steady_clock::now() - initialTime).count();
         counter++;
     }
@@ -143,7 +143,8 @@ vector<Individual<T> *> *GeneticAlgorithm<T>::generatePopulation() {
     }
     return population;
 }
-template <typename T>
+
+template<typename T>
 Individual<T> *GeneticAlgorithm<T>::generateIndividualsGenotype() {
     random_device rd;
     mt19937 gen(rd());
@@ -157,21 +158,10 @@ Individual<T> *GeneticAlgorithm<T>::generateIndividualsGenotype() {
     }
     return new Individual<T>(*problem, generatedGenotype, mutProb);
 }
-template<> inline
-Individual<bool> *GeneticAlgorithm<bool>::generateIndividualsGenotype() {
-    bool *generatedGenotype = new bool[problem->getNOfItems()];
 
-    for (int i = 0; i < problem->getNOfItems(); ++i) {
-        if(Tools::generateRandomNumber(0, 1) == 1)
-            generatedGenotype[i] = true;
-        else
-            generatedGenotype[i] = false;
-    }
-    return new Individual<bool>(*problem, generatedGenotype, mutProb);
-}
-
-template <typename T>
-void GeneticAlgorithm<T>::crossPopulation(Individual<T> *fstParent, Individual<T> *sndParent, vector<Individual<T> *> *population) {
+template<typename T>
+void GeneticAlgorithm<T>::crossPopulation(Individual<T> *fstParent, Individual<T> *sndParent,
+                                          vector<Individual<T> *> *population) {
     if (doesActionAppear(crossProb)) { //cross parents and add their children to population
         //vector<Individual *> *offspring = fstParent->cross(*sndParent);
         Individual<T> *fstChild = *fstParent + *sndParent; //new Individual(*(*fstParent + *sndParent));
@@ -195,7 +185,7 @@ void GeneticAlgorithm<T>::crossPopulation(Individual<T> *fstParent, Individual<T
     }
 }
 
-template <typename T>
+template<typename T>
 void GeneticAlgorithm<T>::mutatePopulation(vector<Individual<T> *> *population) {
     for (Individual<T> *individual : *population) {
         //if (doesActionAppear(mutProb)) { //TODO gives better results, but doesn't fulfill specification requirements
@@ -204,7 +194,7 @@ void GeneticAlgorithm<T>::mutatePopulation(vector<Individual<T> *> *population) 
     }
 }
 
-template <typename T>
+template<typename T>
 void GeneticAlgorithm<T>::destroyPopulation(vector<Individual<T> *> *population) {
     for (int i = 0; i < population->size(); ++i) {
         delete population->at(i);
@@ -212,7 +202,7 @@ void GeneticAlgorithm<T>::destroyPopulation(vector<Individual<T> *> *population)
     delete population;
 }
 
-template <typename T>
+template<typename T>
 Individual<T> *GeneticAlgorithm<T>::findTheBestFittingOne(vector<Individual<T> *> *population) {
     Individual<T> *bestIndividual = population->at(0);
     for (int i = 1; i < population->size(); ++i) {
@@ -222,7 +212,7 @@ Individual<T> *GeneticAlgorithm<T>::findTheBestFittingOne(vector<Individual<T> *
     return bestIndividual;
 }
 
-template <typename T>
+template<typename T>
 Individual<T> *GeneticAlgorithm<T>::selectBetterFittingAndDeleteOther(Individual<T> *fst, Individual<T> *snd) {
     if (fst->getFitness() > snd->getFitness()) {
         delete snd;
@@ -233,17 +223,17 @@ Individual<T> *GeneticAlgorithm<T>::selectBetterFittingAndDeleteOther(Individual
     }
 }
 
-template <typename T>
+template<typename T>
 Individual<T> *GeneticAlgorithm<T>::selectBetterFitting(Individual<T> *fst, Individual<T> *snd) {
     return (fst->getFitness() > snd->getFitness()) ? fst : snd;
 }
 
-template <typename T>
+template<typename T>
 Individual<T> *GeneticAlgorithm<T>::getRandomIndividual(vector<Individual<T> *> *population) {
     return population->at((unsigned long) Tools::generateRandomNumber(0, (int) population->size() - 1));
 }
 
-template <typename T>
+template<typename T>
 bool GeneticAlgorithm<T>::doesActionAppear(double &probability) {
     double randomProb = ((double) Tools::generateRandomNumber(0, 100) / 100.0);
     return randomProb < probability;
