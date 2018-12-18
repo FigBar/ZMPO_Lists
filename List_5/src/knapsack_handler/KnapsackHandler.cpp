@@ -46,7 +46,7 @@ vector<Item *> *KnapsackHandler::getItems() {
 void KnapsackHandler::printItems() {
     cout << "#################ITEM_LIST#################" << endl;
     for (int i = 0; i < itemsList->size(); ++i) {
-        cout << i << ". " <<  *(itemsList->at(i));
+        cout << i << ". " <<  *(itemsList->at(i)) << endl;
     }
     cout << "###########################################" << endl;
 }

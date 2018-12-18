@@ -163,10 +163,8 @@ template<typename T>
 void GeneticAlgorithm<T>::crossPopulation(Individual<T> *fstParent, Individual<T> *sndParent,
                                           vector<Individual<T> *> *population) {
     if (doesActionAppear(crossProb)) { //cross parents and add their children to population
-        //vector<Individual *> *offspring = fstParent->cross(*sndParent);
-        Individual<T> *fstChild = *fstParent + *sndParent; //new Individual(*(*fstParent + *sndParent));
-        Individual<T> *sndChild = *sndParent + *fstParent; //new Individual(*(*sndParent + *fstParent));
-        //delete offspring;
+        Individual<T> *fstChild = *fstParent + *sndParent;
+        Individual<T> *sndChild = *sndParent + *fstParent;
 
         if (population->size() + 1 < popSize) {
             population->push_back(fstChild);

@@ -24,17 +24,12 @@ public:
 
     double getWeight() const;
 
-    double getPartTaken() const;
-
-    void setPartTaken(double partTaken);
-
     friend ostream &operator<<(ostream &os, const Item &item);
 
 private:
     string name;
     double value;
     double weight;
-    double partTaken;
 
 };
 

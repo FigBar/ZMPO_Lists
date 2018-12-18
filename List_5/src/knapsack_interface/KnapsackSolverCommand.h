@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <vector>
+#include <tuple>
 #include "../../lib/user_interface/Command.h"
 #include "../knapsack_problem/Item.h"
 #include "../../lib/user_interface/utils/Utils.h"
@@ -45,13 +46,13 @@ KnapsackSolverCommand<T>::KnapsackSolverCommand(KnapsackHandler *handler1) {
 
 template<typename T>
 void KnapsackSolverCommand<T>::runCommand() {
-    vector<Item *> *listOfItems = new vector<Item *>();
+   /* vector<Item *> *listOfItems = new vector<Item *>();
     for (int i = 0; i < handler->getItems()->size() ; ++i) {
         listOfItems->push_back(new Item(*handler->getItems()->at(i)));
-    }
+    }*/
 
     double bagCapacity = provideBagCapacity();
-    KnapsackProblem<T> problem(*listOfItems, bagCapacity);
+    KnapsackProblem<T> problem(*handler->getItems(), bagCapacity);
     int popSize = 0;
     double mutProb = 0;
     double crossProb = 0;
@@ -62,19 +63,19 @@ void KnapsackSolverCommand<T>::runCommand() {
 
     Individual<T> *bestSolution = algorithm.solveProblem(timeInSeconds);
     double solutionsWeight = 0;
-    vector<Item *> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
+    vector<tuple<Item*, T>> *solutionListOfItems = problem.decryptSolution(bestSolution->getGenotype(),
                                                                   bestSolution->getNOfGenes(), solutionsWeight);
     cout << endl << BEST_SOLUTION_PROMPT << endl;
-    for (Item *item : *solutionListOfItems) {
-        cout << *item;
+    for (tuple<Item*, T> tuple1 : *solutionListOfItems) {
+        cout << *get<0>(tuple1) << " part taken: " << get<1>(tuple1) << endl;
     }
     cout << VALUE_SUM << bestSolution->getFitness() << endl;
-    cout << WEIGHT_SUM << solutionsWeight << endl;
+    cout << WEIGHT_SUM << solutionsWeight << endl << endl;
 
-    for (Item *item : *listOfItems) {
+    /*for (Item *item : *listOfItems) {
          delete item;
     }
-    delete listOfItems;
+    delete listOfItems;*/
     delete solutionListOfItems;
 }
 

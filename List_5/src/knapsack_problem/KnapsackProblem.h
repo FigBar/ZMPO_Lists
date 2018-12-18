@@ -24,7 +24,7 @@ public:
     vector<Item *> *getItemList() const;
 
     //TODO change calculating solutions weight to something more sophisticated xD
-    vector<Item *> *decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight);
+    vector<tuple<Item *, T>> *decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight);
 
     const vector<double> &getMaxAmountOfItem() const;
 
@@ -50,13 +50,13 @@ KnapsackProblem<T>::KnapsackProblem(vector<Item *> &list, double bagCap) {
 }
 
 template<typename T>
-vector<Item *> *KnapsackProblem<T>::decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight) {
-    vector<Item *> *toDisplay = new vector<Item *>();
+vector<tuple<Item*, T>> *KnapsackProblem<T>::decryptSolution(T *genotype, int nOfGenes, double &decryptedWeight) {
+    vector<tuple<Item*, T>> *toDisplay = new vector<tuple<Item*, T>>();
 
     for (int i = 0; i < nOfGenes; ++i) {
         if (genotype[i] != T()) {
-            toDisplay->push_back(itemList->at(i));
-            toDisplay->back()->setPartTaken((double) genotype[i]);
+            toDisplay->push_back(make_tuple(itemList->at(i), genotype[i]));
+            //toDisplay->back()->setPartTaken((double) genotype[i]);
             decryptedWeight += (double) (genotype[i] * itemList->at(i)->getWeight());
         }
     }

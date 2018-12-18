@@ -16,14 +16,12 @@ Item::Item(string name, double value, double weight) {
     } else {
         this->weight = weight;
     }
-    this->partTaken = 0;
 }
 
 Item::Item(Item &copyOther) {
     this->name = copyOther.name;
     this->value = copyOther.value;
     this->weight = copyOther.weight;
-    this->partTaken = 0;
 }
 
 const string &Item::getName() const {
@@ -39,15 +37,8 @@ double Item::getWeight() const {
 }
 
 ostream &operator<<(ostream &os, const Item &item) {
-    os << "[name: " << item.name << " value: " << item.value << " weight: " << item.weight << " partTaken: " << item.partTaken << "]" << endl;
+    os << "[name: " << item.name << " value: " << item.value << " weight: " << item.weight << "]";
     return os;
 }
 
-double Item::getPartTaken() const {
-    return partTaken;
-}
-
-void Item::setPartTaken(double partTaken) {
-    Item::partTaken = partTaken;
-}
 
