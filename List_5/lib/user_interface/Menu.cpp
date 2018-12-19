@@ -42,15 +42,13 @@ void Menu::run() {
 }
 
 void Menu::toString() {
-    cout << MENU_NAME << name << endl << MENU_COMMAND << command << endl;
+    cout << MENU_NAME << name << " (" <<  command << ")" << endl;
     cout << MENU_SEPARATOR << endl;
     for (int i = 0; i < menuItems.size(); ++i) {
         stringstream stream1;
         stream1 << i + 1 << ". ";
-        stream1 << NAME;
-        stream1 << menuItems[i]->getName() << endl;
-        stream1 << COMMAND;
-        stream1 << menuItems[i]->getCommand() << endl;
+        stream1 << menuItems[i]->getName();
+        stream1 << " (" << menuItems[i]->getCommand() << ")" << endl;
         string str1 = stream1.str();
         cout << str1;
     }

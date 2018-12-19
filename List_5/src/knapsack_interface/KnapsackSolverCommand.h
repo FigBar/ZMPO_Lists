@@ -19,7 +19,12 @@
 #define BEST_SOLUTION_PROMPT "#####BEST SOLUTION#####"
 #define VALUE_SUM "Value sum: "
 #define WEIGHT_SUM "Weight sum: "
-
+#define PART_TAKEN " part taken: "
+#define CAPACITY_REQUEST "Please provide bag capacity: "
+#define POP_SIZE_REQUEST "Please provide population size you want to generate: "
+#define CROSS_PROB_REQUEST "Now provide crossing probability: "
+#define MUT_PROB_REQUEST "Now provide mutation probability: "
+#define EVAL_TIME_REQUEST "Finally provide algorithm evaluation time in seconds: "
 using namespace std;
 
 template<typename T>
@@ -46,11 +51,7 @@ KnapsackSolverCommand<T>::KnapsackSolverCommand(KnapsackHandler *handler1) {
 
 template<typename T>
 void KnapsackSolverCommand<T>::runCommand() {
-   /* vector<Item *> *listOfItems = new vector<Item *>();
-    for (int i = 0; i < handler->getItems()->size() ; ++i) {
-        listOfItems->push_back(new Item(*handler->getItems()->at(i)));
-    }*/
-
+    
     double bagCapacity = provideBagCapacity();
     KnapsackProblem<T> problem(*handler->getItems(), bagCapacity);
     int popSize = 0;
@@ -67,34 +68,29 @@ void KnapsackSolverCommand<T>::runCommand() {
                                                                   bestSolution->getNOfGenes(), solutionsWeight);
     cout << endl << BEST_SOLUTION_PROMPT << endl;
     for (tuple<Item*, T> tuple1 : *solutionListOfItems) {
-        cout << *get<0>(tuple1) << " part taken: " << get<1>(tuple1) << endl;
+        cout << *get<0>(tuple1) << PART_TAKEN << get<1>(tuple1) << endl;
     }
     cout << VALUE_SUM << bestSolution->getFitness() << endl;
     cout << WEIGHT_SUM << solutionsWeight << endl << endl;
-
-    /*for (Item *item : *listOfItems) {
-         delete item;
-    }
-    delete listOfItems;*/
     delete solutionListOfItems;
 }
 
 template<typename T>
 double KnapsackSolverCommand<T>::provideBagCapacity() {
-    cout << "Please provide bag capacity: ";
+    cout << CAPACITY_REQUEST;
     return Utils::provideNumber<double>(1, 100);
 }
 
 template<typename T>
 void KnapsackSolverCommand<T>::provideAlgorithmParameters(int &popSize, double &crossProb, double &mutProb,
                                                           int &timeInSeconds) {
-    cout << "Please provide population size you want to generate: " << endl;
+    cout << POP_SIZE_REQUEST << endl;
     popSize = Utils::provideNumber<int>(1, 20);
-    cout << "Now provide crossing probability: " << endl;
+    cout << CROSS_PROB_REQUEST << endl;
     crossProb = Utils::provideNumber<double>(0, 1);
-    cout << "Now provide mutation probability: " << endl;
+    cout << MUT_PROB_REQUEST << endl;
     mutProb = Utils::provideNumber<double>(0, 1);
-    cout << "Finally provide algorithm evaluation time in seconds: " << endl;
+    cout << EVAL_TIME_REQUEST << endl;
     timeInSeconds = Utils::provideNumber<int>(1, 5);
 }
 

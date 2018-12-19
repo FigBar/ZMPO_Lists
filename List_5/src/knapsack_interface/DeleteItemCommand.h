@@ -6,6 +6,8 @@
 #define LIST_5_DELETEITEMCOMMAND_H
 
 
+#define DELETION_PROMPT "Please provide the index of item you want to remove: "
+
 #include "../../lib/user_interface/Command.h"
 #include "../knapsack_handler/KnapsackHandler.h"
 
@@ -15,7 +17,7 @@ public:
     virtual void runCommand();
 
 private:
-    int getItemIdex();
+    int getItemIndex();
     KnapsackHandler *handler;
 };
 

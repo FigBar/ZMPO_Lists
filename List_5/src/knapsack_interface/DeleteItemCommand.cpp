@@ -10,10 +10,10 @@ DeleteItemCommand::DeleteItemCommand(KnapsackHandler *handler1) {
 }
 
 void DeleteItemCommand::runCommand() {
-    this->handler->deleteItem(getItemIdex());
+    this->handler->deleteItem(getItemIndex());
 }
 
-int DeleteItemCommand::getItemIdex() {
-    cout << "Please provide the index of item you want to remove: " << endl;
+int DeleteItemCommand::getItemIndex() {
+    cout << DELETION_PROMPT << endl;
     return Utils::provideNumber<int>(0, handler->getItems()->size());
 }

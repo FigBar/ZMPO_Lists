@@ -6,6 +6,12 @@
 #define LIST_5_ADDITEMCOMMAND_H
 
 
+#define NAME_OF_ITEM "Provide name of item: "
+
+#define VALUE_OF_ITEM "Provide value of item: "
+
+#define WEIGHT_OF_ITEM "Provide weight of item: "
+
 #include "../../lib/user_interface/Command.h"
 #include "../knapsack_handler/KnapsackHandler.h"
 

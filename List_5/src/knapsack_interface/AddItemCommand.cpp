@@ -15,11 +15,11 @@ void AddItemCommand::runCommand() {
 }
 
 Item *AddItemCommand::createItem() {
-    cout << "Provide name of item: " << endl;
+    cout << NAME_OF_ITEM << endl;
     string name = Utils::provideString();
-    cout << "Provide value of item: " << endl;
+    cout << VALUE_OF_ITEM << endl;
     double value = Utils::provideNumber<double>(0, 1000);
-    cout << "Provide weight of item: " << endl;
+    cout << WEIGHT_OF_ITEM << endl;
     double weight = Utils::provideNumber<double>(1, 1000);
     return new Item(name, value, weight);
 }
