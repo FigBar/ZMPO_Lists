@@ -5,7 +5,7 @@ Individual<bool> *GeneticAlgorithm<bool>::generateIndividualsGenotype() {
     bool *generatedGenotype = new bool[problem->getNOfItems()];
 
     for (int i = 0; i < problem->getNOfItems(); ++i) {
-        if (Tools::generateRandomNumber(0, 1) == 1)
+        if (Tools::generateRandomNumber(0, 1))
             generatedGenotype[i] = true;
         else
             generatedGenotype[i] = false;
