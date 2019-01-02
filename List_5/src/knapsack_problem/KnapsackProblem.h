@@ -56,7 +56,6 @@ vector<tuple<Item*, T>> *KnapsackProblem<T>::decryptSolution(T *genotype, int nO
     for (int i = 0; i < nOfGenes; ++i) {
         if (genotype[i] != T()) {
             toDisplay->push_back(make_tuple(itemList->at(i), genotype[i]));
-            //toDisplay->back()->setPartTaken((double) genotype[i]);
             decryptedWeight += (double) (genotype[i] * itemList->at(i)->getWeight());
         }
     }

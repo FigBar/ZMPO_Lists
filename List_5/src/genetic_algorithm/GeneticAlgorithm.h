@@ -156,7 +156,7 @@ Individual<T> *GeneticAlgorithm<T>::generateIndividualsGenotype() {
         T generatedFactor = (T) generate(gen);
         generatedFactor > T() ? generatedGenotype[i] = generatedFactor : generatedGenotype[i] = T();
     }
-    return new Individual<T>(*problem, generatedGenotype, mutProb);
+    return new Individual<T>(*problem, generatedGenotype, mutProb, crossProb);
 }
 
 template<typename T>

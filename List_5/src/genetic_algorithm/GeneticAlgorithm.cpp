@@ -10,5 +10,5 @@ Individual<bool> *GeneticAlgorithm<bool>::generateIndividualsGenotype() {
         else
             generatedGenotype[i] = false;
     }
-    return new Individual<bool>(*problem, generatedGenotype, mutProb);
+    return new Individual<bool>(*problem, generatedGenotype, mutProb, crossProb);
 }

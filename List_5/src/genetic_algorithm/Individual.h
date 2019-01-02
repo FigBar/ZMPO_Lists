@@ -17,9 +17,9 @@ template<typename T>
 class Individual {
 
 public:
-    Individual(KnapsackProblem<T> &instOfProblem, double mutProb);
+    Individual(KnapsackProblem<T> &instOfProblem, double mutProb, double crossProb);
 
-    Individual(KnapsackProblem<T> &instOfProblem, T *genotype, double mutProb);
+    Individual(KnapsackProblem<T> &instOfProblem, T *genotype, double mutProb, double crossProb);
 
     Individual(Individual<T> &copyOther);
 
@@ -39,6 +39,7 @@ public:
 
 private:
     double mutProb;
+    double crossProb;
     T *genotype;
     int nOfGenes;
     double fitness;
@@ -53,20 +54,22 @@ private:
 };
 
 template<typename T>
-Individual<T>::Individual(KnapsackProblem<T> &instOfProblem, double mutProb) {
+Individual<T>::Individual(KnapsackProblem<T> &instOfProblem, double mutProb, double crossProb) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = new T[nOfGenes];
     this->mutProb = mutProb;
+    this->crossProb = crossProb;
     //calcFitness();
 }
 
 template<typename T>
-Individual<T>::Individual(KnapsackProblem<T> &instOfProblem, T *genotype, double mutProb) {
+Individual<T>::Individual(KnapsackProblem<T> &instOfProblem, T *genotype, double mutProb, double crossProb) {
     this->problem = &instOfProblem;
     this->nOfGenes = instOfProblem.getNOfItems();
     this->genotype = genotype;
     this->mutProb = mutProb;
+    this->crossProb = crossProb;
     calcFitness();
 }
 
@@ -76,6 +79,7 @@ Individual<T>::Individual(Individual<T> &copyOther) {
     this->nOfGenes = copyOther.nOfGenes;
     this->genotype = new T[nOfGenes];
     this->mutProb = copyOther.mutProb;
+    this->crossProb = copyOther.crossProb;
 
     for (int i = 0; i < nOfGenes; ++i) {
         genotype[i] = copyOther.genotype[i];
@@ -153,23 +157,33 @@ Individual<T> *Individual<T>::operator=(Individual<T> &copyOther) {
 template<typename T>
 vector<Individual<T> *> *Individual<T>::cross(Individual<T> &crossWith) {
     vector<Individual<T> *> *offspring = new vector<Individual<T> *>;
-
-    int crossingIndex = Tools::generateRandomNumber(1, nOfGenes - 1);
-
+    //int crossingIndex = Tools::generateRandomNumber(1, nOfGenes - 1);
     T *fstDescendantGenotype = new T[nOfGenes];
     T *sndDescendantGenotype = new T[nOfGenes];
 
-    for (int i = 0; i < crossingIndex; ++i) {
+    bool changeOriginalGenotype = true;
+
+    for (int i = 0; i < nOfGenes ; ++i) {
+        if(changeOriginalGenotype){
+            fstDescendantGenotype[i] = this->genotype[i];
+            sndDescendantGenotype[i] = crossWith.genotype[i];
+        } else {
+            fstDescendantGenotype[i] = crossWith.genotype[i];
+            sndDescendantGenotype[i] = this->genotype[i];
+        }
+        if(((double) Tools::generateRandomNumber(0, 100) / 100.0) < crossProb)
+            changeOriginalGenotype = !changeOriginalGenotype;
+    }
+    /*for (int i = 0; i < crossingIndex; ++i) {
         fstDescendantGenotype[i] = this->genotype[i];
         sndDescendantGenotype[i] = crossWith.genotype[i];
     }
     for (int j = crossingIndex; j < nOfGenes; ++j) {
         fstDescendantGenotype[j] = crossWith.genotype[j];
         sndDescendantGenotype[j] = this->genotype[j];
-    }
-
-    Individual<T> *fstDescendant = new Individual(*(this->problem), fstDescendantGenotype, mutProb);
-    Individual<T> *sndDescendant = new Individual(*(this->problem), sndDescendantGenotype, mutProb);
+    }*/
+    Individual<T> *fstDescendant = new Individual(*(this->problem), fstDescendantGenotype, mutProb, crossProb);
+    Individual<T> *sndDescendant = new Individual(*(this->problem), sndDescendantGenotype, mutProb, crossProb);
 
     offspring->push_back(fstDescendant);
     offspring->push_back(sndDescendant);
